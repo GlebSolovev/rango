@@ -6,7 +6,7 @@ sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
 
 search:
   alias: straight_line
-  timeout: 3 # seconds, ~ 3 proofs will be generated
+  timeout: 3 # seconds, ~ 1-3 proofs will be generated
   print_proofs: True
 
   # alias: classical

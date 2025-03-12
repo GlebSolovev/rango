@@ -1,13 +1,8 @@
-import argparse
-import json
-import pickle
 import yaml
 import time
 from pathlib import Path
 import subprocess
-import multiprocessing as mp
-from coqpilot_adapter.structs import DataLocPaths, ProofGenerationTarget, parse_target
-from data_management.splits import DataSplit, FileInfo
+from coqpilot_adapter.structs import DataLocPaths, ProofGenerationTarget
 from data_management.sentence_db import SentenceDB
 from evaluation.eval_utils import EvalConf
 from evaluation.find_coqstoq_idx import get_thm_desc
@@ -18,9 +13,6 @@ from model_deployment.conf_utils import (
     start_servers,
     StartModelCommand,
 )
-from model_deployment.classical_searcher import ClassicalSearchConf
-from model_deployment.straight_line_searcher import StraightLineSearcherConf
-from model_deployment.whole_proof_searcher import WholeProofSearcherConf
 from model_deployment.prove import (
     LocationInfo,
     RunProofConf,
@@ -35,14 +27,12 @@ from model_deployment.tactic_gen_client import (
     TacticGenConf,
     TacticGenClient,
 )
-from util.constants import CLEAN_CONFIG, RANGO_LOGGER
+from util.constants import RANGO_LOGGER
 from util.util import set_rango_logger, clear_port_map
 from util.coqstoq_utils import get_file_loc, get_workspace_loc
 
 import logging
-# from coqstoq import EvalTheorem
-from coqstoq.eval_thms import EvalTheorem, Position, Project, Split
-from coqstoq import get_theorem_list
+from coqstoq.eval_thms import EvalTheorem, Project, Split
 
 
 _logger = logging.getLogger(RANGO_LOGGER)
