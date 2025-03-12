@@ -27,7 +27,8 @@ def create_data_loc(target_project_path: str) -> DataLocPaths:
 
 
 def create_conf(rango_dir: Path, save_loc: Path, data_loc: DataLocPaths) -> Path:
-    conf_template_path = rango_dir / "coqpilot-resources" / "eval.yaml"
+    conf_template_path = rango_dir / "src" / \
+        "coqpilot_adapter" / "resources" / "template_eval.yaml"
     # TODO: handle and alter as yaml
     replacements = {
         "SAVE_LOC_COQPILOT": str(save_loc),
