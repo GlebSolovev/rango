@@ -1,13 +1,20 @@
 split: test # mock value
 save_loc: SAVE_LOC_COQPILOT
 data_loc: DATA_LOC_COQPILOT
-coqstoq_loc: DATA_LOC_PARENT_DIR_COQPILOT
+coqstoq_loc: DATA_LOC_COQPILOT
 sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
 
 search:
   alias: straight_line
-  timeout: 600 
+  timeout: 3 # seconds, ~ 3 proofs will be generated
   print_proofs: True
+
+  # alias: classical
+  # timeout: 600
+  # max_search_steps: 10
+  # max_branch: 2
+  # depth_limit: 3
+  # beam_decode: False
 
 tactic_gen:
   alias: openai

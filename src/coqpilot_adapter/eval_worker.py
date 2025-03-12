@@ -172,7 +172,7 @@ def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data
             save_loc = get_save_loc(eval_conf.save_loc, eval_thm)
             if save_loc.exists():
                 _logger.info(
-                    f"Skipping {eval_thm.path}::{run_conf.theorem_id}")
+                    f"Skipping {eval_thm.path}::{run_conf.theorem_id}: save loc already exists")
                 continue
 
             orig_summary.save(save_loc)

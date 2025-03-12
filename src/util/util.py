@@ -122,7 +122,7 @@ def set_rango_logger(main_path: str, level: int):
 
     rango_logger = logging.getLogger(RANGO_LOGGER)
     rango_logger.setLevel(level)
-    assert len(rango_logger.handlers) == 0
+    # assert len(rango_logger.handlers) == 0
     rango_logger.handlers.clear()
     fileHandler = logging.FileHandler(log_loc)
     fileHandler.setFormatter(

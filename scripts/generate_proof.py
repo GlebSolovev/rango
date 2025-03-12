@@ -30,10 +30,9 @@ def create_conf(rango_dir: Path, save_loc: Path, data_loc: DataLocPaths) -> Path
     conf_template_path = rango_dir / "coqpilot-resources" / "eval.yaml"
     # TODO: handle and alter as yaml
     replacements = {
-        "SAVE_LOC_COQPILOT": save_loc,
-        "DATA_LOC_COQPILOT": data_loc.base_dir,
-        "DATA_LOC_PARENT_DIR_COQPILOT": data_loc.base_dir.parent,
-        "SENTENCE_DB_LOC_COQPILOT": data_loc.sentence_db_path
+        "SAVE_LOC_COQPILOT": str(save_loc),
+        "DATA_LOC_COQPILOT": str(data_loc.base_dir),
+        "SENTENCE_DB_LOC_COQPILOT": str(data_loc.sentence_db_path)
     }
 
     conf_template = conf_template_path.read_text(encoding="utf-8")
@@ -44,7 +43,7 @@ def create_conf(rango_dir: Path, save_loc: Path, data_loc: DataLocPaths) -> Path
         temp_file.write(conf_template)
         conf_path = temp_file.name
 
-    return conf_path
+    return Path(conf_path)
 
 
 if __name__ == "__main__":
