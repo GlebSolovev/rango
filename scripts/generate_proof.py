@@ -74,7 +74,10 @@ if __name__ == "__main__":
     conf_loc = create_conf(rango_dir, output_dir, data_loc)
 
     create_data_points(repo_loc=data_loc.target_project_link,
-                       save_loc=data_loc.data_points_dir, sentence_db_loc=data_loc.sentence_db_path)
+                       save_loc=data_loc.data_points_dir,
+                       sentence_db_loc=data_loc.sentence_db_path,
+                       target_theorem_range=target.theorem_range
+                       )
 
     execute_proof_generation(
         target=target, conf_loc=conf_loc, data_loc=data_loc)

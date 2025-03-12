@@ -14,11 +14,17 @@ class CodeElementPosition:
     def toCoqStoqPosition(self) -> Position:
         return Position(line=self.line, column=self.character)
 
+    def __str__(self):
+        return f"{self.line}:{self.character}"
+
 
 @dataclass
 class CodeElementRange:
     start: CodeElementPosition
     end: CodeElementPosition
+
+    def __str__(self):
+        return f"{self.start}/{self.end}"
 
 
 @dataclass

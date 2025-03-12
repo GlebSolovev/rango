@@ -1,0 +1,25 @@
+{
+    "theorem_name": "test",
+    "theorem_range": {
+        "start": {
+            "line": 2,
+            "character": 0
+        },
+        "end": {
+            "line": 2,
+            "character": 69
+        }
+    },
+    "proof_range": {
+        "start": {
+            "line": 3,
+            "character": 0
+        },
+        "end": {
+            "line": 5,
+            "character": 9
+        }
+    },
+    "source_file_path": "theories/D.v",
+    "project_path": "/rango/coqpilot-test/repos/coqProj"
+}

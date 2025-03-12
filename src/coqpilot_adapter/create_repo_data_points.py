@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 import traceback
 
+from coqpilot_adapter.structs import CodeElementRange
 from data_management.sentence_db import SentenceDB
 from data_management.create_file_data_point import (
     get_data_point,
@@ -38,7 +39,11 @@ def get_expected_save_loc(
 
 
 def create_and_save_dp(
-    file_path: Path, workspace_path: Path, sentence_db_loc: Path, save_loc: Path
+    file_path: Path,
+    workspace_path: Path,
+    sentence_db_loc: Path,
+    save_loc: Path,
+    target_theorem_range: CodeElementRange | None
 ) -> None:
     expected_save_loc = get_expected_save_loc(
         file_path, workspace_path, save_loc)
@@ -49,6 +54,8 @@ def create_and_save_dp(
     _logger.info(f"Creating data point for {file_path}")
     sentence_db = SentenceDB.load(sentence_db_loc)
     switch_loc = get_switch_loc()
+    target_theorem_range_str = str(
+        target_theorem_range) if target_theorem_range else ""
     try:
         dp = get_data_point(
             file_path,
@@ -56,6 +63,7 @@ def create_and_save_dp(
             sentence_db,
             add_to_dataset=True,
             switch_loc=switch_loc,
+            ignore_skipping_admitted_proof_at_range=target_theorem_range_str
         )
         dp.save(save_loc / dp.dp_name, sentence_db, insert_allowed=False)
     except NoProofsError as e:
@@ -67,7 +75,12 @@ def create_and_save_dp(
         sentence_db.close()
 
 
-def create_data_points(repo_loc: Path, save_loc: Path, sentence_db_loc: Path):
+def create_data_points(
+    repo_loc: Path,
+    save_loc: Path,
+    sentence_db_loc: Path,
+    target_theorem_range: CodeElementRange | None = None
+):
     set_rango_logger(__file__, logging.DEBUG)
 
     if sentence_db_loc.exists():
@@ -89,6 +102,7 @@ def create_data_points(repo_loc: Path, save_loc: Path, sentence_db_loc: Path):
             repo_loc,
             sentence_db_loc,
             save_loc,
+            target_theorem_range
         )
         futures.append(f)
 

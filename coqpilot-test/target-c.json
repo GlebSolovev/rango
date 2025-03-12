@@ -2,24 +2,24 @@
     "theorem_name": "test",
     "theorem_range": {
         "start": {
-            "line": 2,
+            "line": 0,
             "character": 0
         },
         "end": {
-            "line": 2,
-            "character": 60
+            "line": 0,
+            "character": 69
         }
     },
     "proof_range": {
         "start": {
-            "line": 3,
+            "line": 1,
             "character": 0
         },
         "end": {
-            "line": 5,
-            "character": 4
+            "line": 3,
+            "character": 9
         }
     },
-    "source_file_path": "theories/B.v",
+    "source_file_path": "theories/C.v",
     "project_path": "/rango/coqpilot-test/repos/coqProj"
 }

@@ -57,6 +57,7 @@ def proof_file_to_data_point(
     repository: Path,
     add_to_dataset: bool,
     switch_loc: Optional[Path],
+    ignore_skipping_admitted_proof_at_range: str = "" # format: "line:char/line:char"
 ) -> DatasetFile:
     proof_file_steps: list[Any] = []
     proof_file_path: Optional[Path] = None
@@ -64,9 +65,18 @@ def proof_file_to_data_point(
 
     for proof in proof_file.proofs:
         proof_file_path = Path(proof.file_path)
-        if len(proof.steps) == 0 or proof.steps[-1].text.strip().endswith(
-            ("Admitted.", "Aborted.")
-        ):
+        if len(proof.steps) == 0:
+            continue
+
+        is_aborted = proof.steps[-1].text.strip().endswith("Aborted.")
+        is_admitted = proof.steps[-1].text.strip().endswith("Admitted.")
+        skip_admitted = False
+        if is_admitted:
+            range = proof.ast.range
+            range_as_str = f"{range.start.line}:{range.start.character}/{range.end.line}:{range.end.character}"
+            skip_admitted = range_as_str != ignore_skipping_admitted_proof_at_range
+        
+        if is_aborted or skip_admitted:
             continue
         
         no_proofs = False
@@ -136,6 +146,7 @@ def get_data_point(
     add_to_dataset: bool,
     switch_loc: Optional[Path],
     compile_timeout: int = 600,
+    ignore_skipping_admitted_proof_at_range: str = "" # format: "line:char/line:char"
 ) -> DatasetFile:
     _logger.info("Compiling coq file...")
     with CoqFile(
@@ -163,6 +174,7 @@ def get_data_point(
             workspace_loc,
             add_to_dataset,
             switch_loc,
+            ignore_skipping_admitted_proof_at_range=ignore_skipping_admitted_proof_at_range
         )
 
 
