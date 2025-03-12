@@ -60,12 +60,16 @@ def proof_file_to_data_point(
 ) -> DatasetFile:
     proof_file_steps: list[Any] = []
     proof_file_path: Optional[Path] = None
+    no_proofs: bool = True
+
     for proof in proof_file.proofs:
         proof_file_path = Path(proof.file_path)
         if len(proof.steps) == 0 or proof.steps[-1].text.strip().endswith(
             ("Admitted.", "Aborted.")
         ):
             continue
+        
+        no_proofs = False
         for i, step in enumerate(proof.steps):
             goals = list(map(lambda goal: repr(goal), step.goals.goals.goals))
             data_point = {
@@ -92,7 +96,7 @@ def proof_file_to_data_point(
             }
             proof_file_steps.append(data_point)
 
-    if len(proof_file.proofs) == 0:
+    if no_proofs:
         raise NoProofsError(f"No proofs.")
 
     proof_steps = [
