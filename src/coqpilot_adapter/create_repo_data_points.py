@@ -2,6 +2,7 @@ from concurrent.futures import ProcessPoolExecutor, Future, as_completed
 import os
 import argparse
 from pathlib import Path
+import traceback
 
 from data_management.sentence_db import SentenceDB
 from data_management.create_file_data_point import (
@@ -60,7 +61,8 @@ def create_and_save_dp(
     except NoProofsError as e:
         _logger.warning(f"No proofs found for {file_path}: {e}")
     except Exception as e:
-        _logger.error(f"Error with {file_path}: {e}")
+        _logger.error(
+            f"Error with {file_path}: {e}\n{traceback.format_exc()}\n")
     finally:
         sentence_db.close()
 
