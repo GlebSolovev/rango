@@ -1,0 +1,88 @@
+split: test # mock value
+save_loc: SAVE_LOC_COQPILOT
+data_loc: DATA_LOC_COQPILOT
+coqstoq_loc: DATA_LOC_PARENT_DIR_COQPILOT
+sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
+
+search:
+  alias: straight_line
+  timeout: 600 
+  print_proofs: True
+
+tactic_gen:
+  alias: openai
+  model: gpt-4o
+  # checkpoint_loc: models/deepseek-bm25-proof-tfidf-proj-thm-prem-final/checkpoint-54500
+
+  formatters:
+  - alias: general 
+    num_proofs: 3
+    num_premises: 10
+    n_step_conf:
+      alias: one
+
+    proof_ret:
+      alias: sparse 
+      kind: bm25 
+      max_examples: 10
+      data_loc: DATA_LOC_COQPILOT
+      sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
+      # cached_proof_loc: data/bm25-proof-db
+
+    premise:
+      alias: sparse 
+      kind: tfidf
+      context_format_alias: basic
+      premise_format_alias: basic
+      sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
+      # cached_premise_loc: data/tfidf-proj-thm-prem-db
+      premise_filter:
+        coq_excludes:
+        - THEOREM
+        - LEMMA
+        - DEFINITION
+        - NOTATION
+        - INDUCTIVE
+        - COINDUCTIVE
+        - RECORD
+        - CLASS
+        - INSTANCE
+        - FIXPOINT
+        - COFIXPOINT
+        - SCHEME
+        - VARIANT
+        - FACT
+        - REMARK
+        - COROLLARY
+        - PROPOSITION
+        - PROPERTY
+        - OBLIGATION
+        - TACTIC
+        - RELATION
+        - SETOID
+        - FUNCTION
+        - DERIVE
+        - OTHER
+
+        non_coq_excludes:
+        - DEFINITION
+        - NOTATION
+        - INDUCTIVE
+        - COINDUCTIVE
+        - RECORD
+        - CLASS
+        - INSTANCE
+        - FIXPOINT
+        - COFIXPOINT
+        - SCHEME
+        - VARIANT
+        - OBLIGATION
+        - TACTIC
+        - RELATION
+        - SETOID
+        - FUNCTION
+        - DERIVE
+        - OTHER
+
+        general_excludes: [] 
+
