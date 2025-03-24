@@ -1,6 +1,6 @@
 {
-    "theorem_name": "test",
-    "theorem_range": {
+    "theoremName": "test_admitted",
+    "theoremRange": {
         "start": {
             "line": 2,
             "character": 0
@@ -10,7 +10,7 @@
             "character": 69
         }
     },
-    "proof_range": {
+    "proofRange": {
         "start": {
             "line": 3,
             "character": 0
@@ -20,6 +20,6 @@
             "character": 9
         }
     },
-    "source_file_path": "theories/D.v",
-    "project_path": "/rango/coqpilot-test/repos/coqProj"
+    "relativeSourceFilePath": "theories/D.v",
+    "projectPath": "/rango/coqpilot-test/repos/coqProj"
 }

@@ -29,17 +29,16 @@ class CodeElementRange:
 
 @dataclass
 class ProofGenerationTarget:
-    VALID_FIELDS = {'theorem_name', 'theorem_range',
-                    'proof_range', 'source_file_path', 'project_path'}
-    REQUIRED_FIELDS = {'theorem_name', 'theorem_range',
-                       'proof_range', 'source_file_path', 'project_path'}
+    REQUIRED_FIELDS = {'theoremName', 'theoremRange',
+                       'proofRange', 'relativeSourceFilePath', 'projectPath'}
+    VALID_FIELDS = REQUIRED_FIELDS
 
     theorem_name: str
 
     theorem_range: CodeElementRange
     proof_range: CodeElementRange
 
-    source_file_path: Path
+    rel_source_file_path: Path
     project_path: Path
 
 
@@ -65,11 +64,11 @@ def parse_target(target_file_path: Path) -> ProofGenerationTarget:
         return CodeElementRange(start=parse_position(data['start']), end=parse_position(data['end']))
 
     return ProofGenerationTarget(
-        theorem_name=json_data['theorem_name'],
-        theorem_range=parse_range(json_data['theorem_range']),
-        proof_range=parse_range(json_data['theorem_range']),
-        source_file_path=Path(json_data['source_file_path']),
-        project_path=Path(json_data['project_path'])
+        theorem_name=json_data['theoremName'],
+        theorem_range=parse_range(json_data['theoremRange']),
+        proof_range=parse_range(json_data['theoremRange']),
+        rel_source_file_path=Path(json_data['relativeSourceFilePath']),
+        project_path=Path(json_data['projectPath'])
     )
 
 

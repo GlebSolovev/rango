@@ -102,7 +102,7 @@ def construct_eval_theorem(target: ProofGenerationTarget, data_loc: DataLocPaths
     )
     return EvalTheorem(
         project=eval_project,
-        path=target.source_file_path,
+        path=target.rel_source_file_path,
         theorem_start_pos=target.theorem_range.start.toCoqStoqPosition(),
         theorem_end_pos=target.theorem_range.end.toCoqStoqPosition(),
         proof_start_pos=target.proof_range.start.toCoqStoqPosition(),

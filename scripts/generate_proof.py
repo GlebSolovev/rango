@@ -17,6 +17,7 @@ def create_data_loc(target_project_path: str) -> DataLocPaths:
     data_points_dir.mkdir(exist_ok=False)
 
     target_link = repos_dir / "target_project"
+    # TODO: check `target_project_path` is corrrect
     if target_link.exists():
         raise ValueError("Created temporary directory is expected to be empty")
     target_link.symlink_to(Path(target_project_path))
