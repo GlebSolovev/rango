@@ -1,4 +1,5 @@
 import argparse
+import os
 from pathlib import Path
 import tempfile
 
@@ -31,10 +32,12 @@ def create_conf(rango_dir: Path, save_loc: Path, data_loc: DataLocPaths) -> Path
     conf_template_path = rango_dir / "src" / \
         "coqpilot_adapter" / "resources" / "template_eval.yaml"
     # TODO: handle and alter as yaml
+    requested_timeout = os.environ.get("COQPILOT_RANGO_TIMEOUT_PARAMETER", 3)
     replacements = {
         "SAVE_LOC_COQPILOT": str(save_loc),
         "DATA_LOC_COQPILOT": str(data_loc.base_dir),
-        "SENTENCE_DB_LOC_COQPILOT": str(data_loc.sentence_db_path)
+        "SENTENCE_DB_LOC_COQPILOT": str(data_loc.sentence_db_path),
+        "TIMEOUT_PARAMETER": str(requested_timeout)
     }
 
     conf_template = conf_template_path.read_text(encoding="utf-8")
