@@ -141,8 +141,7 @@ def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data
             # set up
             thm_desc = get_thm_desc(eval_thm, eval_conf.data_loc, sentence_db)
             if thm_desc is None:
-                _logger.error(f"Failed to get thm desc for {eval_thm}")
-                continue
+                raise ValueError(f"Failed to get thm desc for {eval_thm}")
             assert thm_desc is not None
 
             proof_dp = thm_desc.dp
