@@ -36,7 +36,7 @@ def create_data_loc(target_project_path: str) -> DataLocPaths:
 
 def create_conf(rango_dir: Path, save_loc: Path, data_loc: DataLocPaths) -> Path:
     conf_template_path = rango_dir / "src" / \
-        "coqpilot_adapter" / "resources" / "template_eval.yaml"
+        "coqpilot_adapter" / "resources" / "template_openai_eval.yaml"
     # TODO: handle and alter as yaml
     requested_timeout = os.environ.get("COQPILOT_RANGO_TIMEOUT_PARAMETER", 3)
     replacements = {

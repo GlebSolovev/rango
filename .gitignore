@@ -1,7 +1,7 @@
 # Data and model locations
 /raw-data/
 /data/
-/models/
+# /models/
 /evaluations/
 /docker/
 /logs/

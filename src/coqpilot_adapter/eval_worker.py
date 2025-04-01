@@ -177,26 +177,3 @@ def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data
     finally:
         for p in tactic_gen_procs:
             p.kill()
-
-
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument(
-#         "--target_loc", required=True, help="Location of the JSON file describing a proof generation target."
-#     )
-#     parser.add_argument(
-#         "--conf_loc", required=True, help="Location of the eval configuration."
-#     )
-
-#     args = parser.parse_args()
-#     target_loc = Path(args.target_loc)
-#     conf_loc = Path(args.conf_loc)
-
-#     set_rango_logger(__file__, logging.DEBUG)
-
-#     assert target_loc.exists()
-#     assert conf_loc.exists()
-
-#     target = parse_target(target_loc)
-
-#     execute_proof_generation(target, conf_loc, None) # TODO: support DataLoc?
