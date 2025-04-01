@@ -7,6 +7,12 @@ from coqpilot_adapter.create_repo_data_points import create_data_points
 from coqpilot_adapter.eval_worker import execute_proof_generation
 from coqpilot_adapter.structs import DataLocPaths, parse_target
 
+import logging
+from util.constants import RANGO_LOGGER
+from util.util import set_rango_logger
+
+_logger = logging.getLogger(RANGO_LOGGER)
+
 
 def create_data_loc(target_project_path: str) -> DataLocPaths:
     temp_dir = tempfile.mkdtemp(prefix="coqpilot-request-")
@@ -52,6 +58,8 @@ def create_conf(rango_dir: Path, save_loc: Path, data_loc: DataLocPaths) -> Path
 
 
 if __name__ == "__main__":
+    set_rango_logger(__file__, logging.DEBUG)
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--rango_dir", required=True, type=str, help="Path to the Rango directory."
@@ -67,6 +75,8 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
+    _logger.info("Started `generate_proof.py` script execution...\n")
+
     rango_dir = Path(args.rango_dir)
     target_file_path = Path(args.target)
     output_dir = Path(args.output_dir)
@@ -80,7 +90,8 @@ if __name__ == "__main__":
     create_data_points(repo_loc=data_loc.target_project_link,
                        save_loc=data_loc.data_points_dir,
                        sentence_db_loc=data_loc.sentence_db_path,
-                       target_theorem_range=target.theorem_range
+                       target_theorem_range=target.theorem_range,
+                       target_rel_source_file_path=target.rel_source_file_path
                        )
 
     execute_proof_generation(

@@ -14,7 +14,6 @@ from data_management.create_file_data_point import (
 
 import logging
 from util.constants import RANGO_LOGGER
-from util.util import set_rango_logger
 
 _logger = logging.getLogger(RANGO_LOGGER)
 
@@ -79,9 +78,17 @@ def create_data_points(
     repo_loc: Path,
     save_loc: Path,
     sentence_db_loc: Path,
-    target_theorem_range: CodeElementRange | None = None
+    target_theorem_range: CodeElementRange | None = None,
+    target_rel_source_file_path: Path | None = None
 ):
-    set_rango_logger(__file__, logging.DEBUG)
+    """
+    Creates data points from the given repository.
+
+    If `target_theorem_range` is provided, the corresponding theorem will be included
+    even if it is admitted, by passing it as `ignore_skipping_admitted_proof_at_range`.
+
+    If `target_rel_source_file_path` is provided, only that file will be processed.
+    """
 
     if sentence_db_loc.exists():
         SentenceDB.load(sentence_db_loc)
@@ -91,11 +98,23 @@ def create_data_points(
     os.makedirs(save_loc, exist_ok=True)
     repo_coq_files = get_repo_coq_files(repo_loc)
 
+    def path_ends_with(path: Path, suffix: Path) -> bool:
+        return path.parts[-len(suffix.parts):] == suffix.parts
+
+    def skip_repo_coq_file(cf: Path) -> bool:
+        if target_rel_source_file_path is None:
+            return False
+        return not path_ends_with(cf, target_rel_source_file_path)
+
     os_cpus = os.cpu_count()
     pool = ProcessPoolExecutor(max_workers=min(
         8, 1 if os_cpus is None else os_cpus))
     futures: list[Future] = []
     for cf in repo_coq_files:
+        if skip_repo_coq_file(cf):
+            continue
+        _logger.info(f"Submit task to create data point: ${cf}")
+
         f = pool.submit(
             create_and_save_dp,
             cf,
