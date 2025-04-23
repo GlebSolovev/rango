@@ -2,7 +2,7 @@ import yaml
 import time
 from pathlib import Path
 import subprocess
-from coqpilot_adapter.structs import DataLocPaths, ProofGenerationTarget
+from coqpilot_adapter.structs import DataLocPaths, ModelSettings, ProofGenerationTarget
 from data_management.sentence_db import SentenceDB
 from evaluation.eval_utils import EvalConf
 from evaluation.find_coqstoq_idx import get_thm_desc
@@ -66,7 +66,7 @@ def parse_conf(conf_loc: Path) -> EvalConf:
     return EvalConf.from_yaml(yaml_conf)
 
 
-def init_tactic_generators(eval_conf: EvalConf) -> tuple[list[TacticGenClient], list[subprocess.Popen[bytes]]]:
+def init_tactic_generators(eval_conf: EvalConf, settings: ModelSettings) -> tuple[list[TacticGenClient], list[subprocess.Popen[bytes]]]:
     clean_tactic_confs: list[TacticGenConf] = []
     all_commands: list[StartModelCommand] = []
     next_num = 0
@@ -81,8 +81,18 @@ def init_tactic_generators(eval_conf: EvalConf) -> tuple[list[TacticGenClient], 
     procs = []
     if 0 < len(all_commands):
         clear_port_map()
-        procs = start_servers(all_commands)
-        port_map = wait_for_servers(next_num)
+        if settings.mode == 'remote':
+            # Connect to the port mapped to the remote server by SSH
+            if settings.mapped_to_remote_port is None:
+                raise ValueError(
+                    f"Port mapped to the remote server is required to be specified in the 'remote' mode")
+            port_map = {
+                0: ("127.0.0.1", settings.mapped_to_remote_port)
+            }
+        else:
+            procs = start_servers(all_commands)
+            port_map = wait_for_servers(next_num)
+
         for tactic_conf in clean_tactic_confs:
             tactic_conf_update_ips(tactic_conf, port_map)
 
@@ -125,7 +135,7 @@ def log_result(save_loc: Path):
             f"Final result: SUCCESS\nProof:\n```\n{result.proof}\n```")
 
 
-def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data_loc: DataLocPaths):
+def execute_proof_generation(target: ProofGenerationTarget, settings: ModelSettings, conf_loc: Path, data_loc: DataLocPaths):
     set_rango_logger(__file__, logging.DEBUG)
 
     eval_conf = parse_conf(conf_loc)
@@ -134,7 +144,8 @@ def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data
     eval_thms = [construct_eval_theorem(target, data_loc)]
     sentence_db = SentenceDB.load(eval_conf.sentence_db_loc)
 
-    tactic_clients, tactic_gen_procs = init_tactic_generators(eval_conf)
+    tactic_clients, tactic_gen_procs = init_tactic_generators(
+        eval_conf, settings)
 
     try:
         for eval_thm in eval_thms:
@@ -142,7 +153,6 @@ def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data
             thm_desc = get_thm_desc(eval_thm, eval_conf.data_loc, sentence_db)
             if thm_desc is None:
                 raise ValueError(f"Failed to get thm desc for {eval_thm}")
-            assert thm_desc is not None
 
             proof_dp = thm_desc.dp
 
@@ -160,9 +170,8 @@ def execute_proof_generation(target: ProofGenerationTarget, conf_loc: Path, data
             orig_summary = RangoResult(eval_thm, None, None, None)
             save_loc = get_save_loc(eval_conf.save_loc, eval_thm)
             if save_loc.exists():
-                _logger.info(
-                    f"Skipping {eval_thm.path}::{run_conf.theorem_id}: save loc already exists")
-                continue
+                raise ValueError(
+                    f"Save loc already exists for {eval_thm.path}::{run_conf.theorem_id}")
 
             orig_summary.save(save_loc)
             _logger.info(

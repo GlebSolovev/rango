@@ -6,24 +6,24 @@ sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
 
 search:
   alias: straight_line
-  timeout: TIMEOUT_PARAMETER
+  timeout: TIMEOUT_PARAMETER 
   print_proofs: True
 
 tactic_gen:
-  alias: openai
-  model: gpt-4o
+  alias: decoder 
+  checkpoint_loc: CHECKPOINT_PATH_PARAMETER
 
   formatters:
   - alias: general 
-    num_proofs: 3
-    num_premises: 10
+    num_proofs: 20
+    num_premises: 50
     n_step_conf:
       alias: one
 
     proof_ret:
       alias: sparse 
       kind: bm25 
-      max_examples: 10
+      max_examples: 20
       data_loc: DATA_LOC_COQPILOT
       sentence_db_loc: SENTENCE_DB_LOC_COQPILOT
       # cached_proof_loc: data/bm25-proof-db
@@ -83,5 +83,4 @@ tactic_gen:
         - DERIVE
         - OTHER
 
-        general_excludes: [] 
-
+        general_excludes: []

@@ -79,7 +79,7 @@ def create_data_points(
     save_loc: Path,
     sentence_db_loc: Path,
     target_theorem_range: CodeElementRange | None = None,
-    target_rel_source_file_path: Path | None = None
+    only_target_rel_file_path: Path | None = None
 ):
     """
     Creates data points from the given repository.
@@ -87,7 +87,7 @@ def create_data_points(
     If `target_theorem_range` is provided, the corresponding theorem will be included
     even if it is admitted, by passing it as `ignore_skipping_admitted_proof_at_range`.
 
-    If `target_rel_source_file_path` is provided, only that file will be processed.
+    If `only_target_rel_file_path` is provided, only that file will be processed.
     """
 
     if sentence_db_loc.exists():
@@ -102,9 +102,9 @@ def create_data_points(
         return path.parts[-len(suffix.parts):] == suffix.parts
 
     def skip_repo_coq_file(cf: Path) -> bool:
-        if target_rel_source_file_path is None:
+        if only_target_rel_file_path is None:
             return False
-        return not path_ends_with(cf, target_rel_source_file_path)
+        return not path_ends_with(cf, only_target_rel_file_path)
 
     os_cpus = os.cpu_count()
     pool = ProcessPoolExecutor(max_workers=min(
