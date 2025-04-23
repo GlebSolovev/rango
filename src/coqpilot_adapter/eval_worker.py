@@ -37,6 +37,8 @@ from coqstoq.eval_thms import EvalTheorem, Project, Split
 
 _logger = logging.getLogger(RANGO_LOGGER)
 
+WAIT_FOR_SERVERS_TO_START_UP_TIMEOUT_SECONDS = 10
+
 
 def run_and_save_proof(thm: EvalTheorem, run_conf: RunProofConf, save_dir: Path):
     start = time.time()
@@ -91,7 +93,8 @@ def init_tactic_generators(eval_conf: EvalConf, settings: ModelSettings) -> tupl
             }
         else:
             procs = start_servers(all_commands)
-            port_map = wait_for_servers(next_num)
+            port_map = wait_for_servers(
+                next_num, WAIT_FOR_SERVERS_TO_START_UP_TIMEOUT_SECONDS)
 
         for tactic_conf in clean_tactic_confs:
             tactic_conf_update_ips(tactic_conf, port_map)

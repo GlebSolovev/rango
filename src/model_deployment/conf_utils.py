@@ -1,3 +1,4 @@
+import logging
 from typing import Any, Optional
 import time
 import os
@@ -56,6 +57,7 @@ from util.util import get_basic_logger, read_port_map
 from util.util import FlexibleUrl, get_flexible_url
 from util.constants import (
     PREMISE_DATA_CONF_NAME,
+    RANGO_LOGGER,
     RERANK_DATA_CONF_NAME,
     DATA_CONF_NAME,
     TRAINING_CONF_NAME,
@@ -63,7 +65,8 @@ from util.constants import (
     SERVER_LOC,
 )
 
-_logger = get_basic_logger(__name__)
+# _logger = get_basic_logger(__name__) # Note: does not log for some reason
+_logger = logging.getLogger(RANGO_LOGGER)
 
 
 @dataclass
@@ -464,7 +467,7 @@ def start_servers(commands: list[StartModelCommand]) -> list[subprocess.Popen[by
     return procs
 
 
-def wait_for_servers(next_server_num: int) -> dict[int, tuple[str, int]]:
+def wait_for_servers(next_server_num: int, timeout_seconds: int | None = None) -> dict[int, tuple[str, int]]:
     """Returns a map of port -> ip addr"""
     session = requests.Session()
     urls: list[str] = []
@@ -472,9 +475,12 @@ def wait_for_servers(next_server_num: int) -> dict[int, tuple[str, int]]:
     cur_port_map = read_port_map()
     total_time_slept = 0
     while len(cur_port_map) < next_server_num:
-        if 1 < total_time_slept and total_time_slept % 10 == 0:
+        if timeout_seconds is not None and total_time_slept > timeout_seconds:
+            raise ValueError(
+                f"Waiting for the servers timeout has been reached ({timeout_seconds} seconds)")
+        if 1 < total_time_slept and total_time_slept % 5 == 0:
             _logger.info(
-                f"Port map of length {len(cur_port_map)} not complete after {total_time_slept}."
+                f"Port map of length {len(cur_port_map)} not complete after {total_time_slept} seconds."
             )
         time.sleep(1)
         total_time_slept += 1
