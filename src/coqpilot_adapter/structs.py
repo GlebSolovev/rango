@@ -1,9 +1,11 @@
-import json
+from enum import Enum
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Any
 
 from coqstoq.eval_thms import Position
+
+from coqpilot_adapter.validatable import JSONValidatable, parse_json, to_path_or_none
 
 
 @dataclass
@@ -28,10 +30,10 @@ class CodeElementRange:
 
 
 @dataclass
-class ProofGenerationTarget:
+class ProofGenerationTarget(JSONValidatable):
     REQUIRED_FIELDS = {'theoremName', 'theoremRange',
                        'proofRange', 'relativeSourceFilePath', 'projectPath'}
-    VALID_FIELDS = REQUIRED_FIELDS
+    OPTIONAL_FIELDS = set()
 
     theorem_name: str
 
@@ -43,19 +45,7 @@ class ProofGenerationTarget:
 
 
 def parse_target(target_file_path: Path) -> ProofGenerationTarget:
-    with open(target_file_path, 'r', encoding='utf-8') as f:
-        json_data = json.load(f)
-
-    data_fields = set(json_data.keys())
-    extra_fields = data_fields - ProofGenerationTarget.VALID_FIELDS
-    if extra_fields:
-        raise ValueError(
-            f"Unexpected fields in the target JSON: {extra_fields}")
-
-    missing_fields = ProofGenerationTarget.REQUIRED_FIELDS - data_fields
-    if missing_fields:
-        raise ValueError(
-            f"Missing required fields in the target JSON: {missing_fields}")
+    json_data = parse_json(target_file_path, ProofGenerationTarget)
 
     def parse_position(data: Any) -> CodeElementPosition:
         return CodeElementPosition(line=data['line'], character=data['character'])
@@ -69,6 +59,41 @@ def parse_target(target_file_path: Path) -> ProofGenerationTarget:
         proof_range=parse_range(json_data['theoremRange']),
         rel_source_file_path=Path(json_data['relativeSourceFilePath']),
         project_path=Path(json_data['projectPath'])
+    )
+
+
+class ModelMode(str, Enum):
+    local = 'local'
+    remote = 'remote'
+    mock_open_ai = 'mockOpenAI'
+
+
+@dataclass
+class ModelSettings(JSONValidatable):
+    REQUIRED_FIELDS = {'mode', 'timeoutSeconds',
+                       'enableWholeProjectDataPoints', 'dataLocDirectoryPath'}
+    OPTIONAL_FIELDS = {'localCheckpointPath', 'mappedToRemotePort'}
+
+    mode: ModelMode
+    timeout_seconds: int
+    enable_whole_project_data_points: bool
+    data_loc_dir: Path
+
+    local_checkpoint_path: Path | None
+    mapped_to_remote_port: int | None
+
+
+def parse_settings(settings_file_path: Path) -> ModelSettings:
+    json_data = parse_json(settings_file_path, ModelSettings)
+
+    return ModelSettings(
+        mode=json_data['mode'],
+        timeout_seconds=json_data['timeoutSeconds'],
+        enable_whole_project_data_points=json_data['enableWholeProjectDataPoints'],
+        data_loc_dir=Path(json_data['dataLocDirectoryPath']),
+        local_checkpoint_path=to_path_or_none(
+            json_data.get('localCheckpointPath')),
+        mapped_to_remote_port=json_data.get('mappedToRemotePort')
     )
 
 
