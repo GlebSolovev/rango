@@ -479,7 +479,7 @@ def wait_for_servers(next_server_num: int, timeout_seconds: int | None = None) -
             raise ValueError(
                 f"Waiting for the servers timeout has been reached ({timeout_seconds} seconds)")
         if 1 < total_time_slept and total_time_slept % 5 == 0:
-            _logger.info(
+            _logger.debug(
                 f"Port map of length {len(cur_port_map)} not complete after {total_time_slept} seconds."
             )
         time.sleep(1)
@@ -525,7 +525,7 @@ def tactic_gen_to_client_conf(
 ) -> tuple[TacticGenConf, int, list[StartModelCommand]]:
     match conf:
         case FidTacticGenConf() | DecoderTacticGenConf():
-            assert conf.checkpoint_loc.exists()
+            # assert conf.checkpoint_loc.exists() # not true in case of server being remote
             if conf.formatter_confs is None:
                 assert 0 < len(conf.checkpoint_loc.parents)
                 model_loc = conf.checkpoint_loc.parents[0]
