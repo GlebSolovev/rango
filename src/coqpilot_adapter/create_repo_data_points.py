@@ -102,18 +102,31 @@ def create_data_points(
         return path.parts[-len(suffix.parts):] == suffix.parts
 
     def skip_repo_coq_file(cf: Path) -> bool:
-        if only_target_rel_file_path is None:
-            return False
-        return not path_ends_with(cf, only_target_rel_file_path)
+        skip_any_other_than_target_file = only_target_rel_file_path is not None and not path_ends_with(
+            cf, only_target_rel_file_path)
+        if skip_any_other_than_target_file:
+            return True
+
+        if get_expected_save_loc(cf, repo_loc, save_loc).exists():
+            _logger.debug(
+                f"Existing data point is found for file: ${cf}; it will not be rebuilt")
+            return True
+
+        return False
 
     os_cpus = os.cpu_count()
     pool = ProcessPoolExecutor(max_workers=min(
         8, 1 if os_cpus is None else os_cpus))
     futures: list[Future] = []
+
+    if only_target_rel_file_path is not None:
+        _logger.info(
+            f"Data point will be built only for the target file: {only_target_rel_file_path}")
+
     for cf in repo_coq_files:
         if skip_repo_coq_file(cf):
             continue
-        _logger.info(f"Submit task to create data point: ${cf}")
+        _logger.info(f"Submit task to create data point: {cf}")
 
         f = pool.submit(
             create_and_save_dp,

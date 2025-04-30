@@ -159,11 +159,13 @@ def get_data_point(
             raise ValueError(f"Could not compile coq file: {str(file_loc.resolve())}")
 
     _logger.info("Generating proof file...")
+    # Note: unfortunately, passing `use_disk_cache=True` here 
+    # causes an exception for some big projects (built with nix?) 
     with ProofFile(
         str(file_loc.resolve()),
         workspace=str(workspace_loc.resolve()),
         timeout=compile_timeout,
-        use_disk_cache=True,
+        use_disk_cache=False,
         error_mode="warning",
     ) as proof_file:
         proof_file.run()
