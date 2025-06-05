@@ -57,12 +57,15 @@ def proof_file_to_data_point(
     repository: Path,
     add_to_dataset: bool,
     switch_loc: Optional[Path],
+    include_admitted: bool = False,
 ) -> DatasetFile:
     proof_file_steps: list[Any] = []
     proof_file_path: Optional[Path] = None
     for proof in proof_file.proofs:
         proof_file_path = Path(proof.file_path)
-        if len(proof.steps) == 0 or proof.steps[-1].text.strip().endswith(
+        if len(proof.steps) == 0:
+            continue
+        if not include_admitted and proof.steps[-1].text.strip().endswith(
             ("Admitted.", "Aborted.")
         ):
             continue
@@ -132,6 +135,7 @@ def get_data_point(
     add_to_dataset: bool,
     switch_loc: Optional[Path],
     compile_timeout: int = 600,
+    include_admitted: bool = False,
 ) -> DatasetFile:
     _logger.info("Compiling coq file...")
     with CoqFile(
@@ -159,6 +163,7 @@ def get_data_point(
             workspace_loc,
             add_to_dataset,
             switch_loc,
+            include_admitted,
         )
 
 

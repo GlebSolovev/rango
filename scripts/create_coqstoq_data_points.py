@@ -60,7 +60,7 @@ def get_coqstoq_files(
     return files
 
 
-def get_coqstoq_data_point(f: CoqStoqFile, sentence_db: SentenceDB, save_loc: Path):
+def get_coqstoq_data_point(f: CoqStoqFile, sentence_db: SentenceDB, save_loc: Path, include_admitted: bool):
     add_to_dataset = True
     switch_loc = get_switch_loc()
     compile_timeout = 6000
@@ -72,6 +72,7 @@ def get_coqstoq_data_point(f: CoqStoqFile, sentence_db: SentenceDB, save_loc: Pa
             add_to_dataset,
             switch_loc,
             compile_timeout,
+            include_admitted,
         )
         dp.save(save_loc / dp.dp_name, sentence_db, insert_allowed=True)
     except ResponseError as e:
@@ -93,6 +94,11 @@ if __name__ == "__main__":
     parser.add_argument("split")
     parser.add_argument("save_loc")
     parser.add_argument("sentence_db_loc")
+    parser.add_argument(
+        "--include_admitted",
+        action="store_true",
+        help="Include admitted theorems in the data point.",
+    )
 
     args = parser.parse_args()
     coqstoq_loc = Path(args.coqstoq_loc)
@@ -100,6 +106,7 @@ if __name__ == "__main__":
     coqstoq_split: str = args.split
     sentence_db_loc = Path(args.sentence_db_loc)
     save_loc = Path(args.save_loc)
+    include_admitted = args.include_admitted
 
     if sentence_db_loc.exists():
         sentence_db = SentenceDB.load(sentence_db_loc)
@@ -117,4 +124,4 @@ if __name__ == "__main__":
             _logger.info(f"Skipping {f}")
             continue
         _logger.info(f"Processing {f}")
-        get_coqstoq_data_point(f, sentence_db, save_loc)
+        get_coqstoq_data_point(f, sentence_db, save_loc, include_admitted)

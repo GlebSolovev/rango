@@ -91,12 +91,15 @@ def test_theorem(thm: EvalTheorem, coqstoq_loc: Path, timeout: int) -> Optional[
     thm_workspace = coqstoq_loc / thm.project.workspace
     options = " ".join(thm.project.compile_args)
     eval_file = mk_eval_file(thm, coqstoq_loc)
+    print("Eval file:", eval_file)
+    print("options: ", options)
+    exit()
 
     # Complie file
     try:
         coq_top = CoqTop(
             str(eval_file.resolve()),
-            timeout=max(timeout + 60, 120),
+            timeout=max(timeout + 120, 120),
             workdir=str(thm_workspace.resolve()),
             options=options,
         )
@@ -111,8 +114,9 @@ def test_theorem(thm: EvalTheorem, coqstoq_loc: Path, timeout: int) -> Optional[
     # Synthesize Proof
     start_time = time.time()
     try:
-        logging.warning("Setting hammer limit.")
+        logging.warning("Requiring Import Hammer.")
         coq_top.run("From Hammer Require Import Hammer.")
+        logging.warning("Setting hammer limit.")
         coq_top.run(f"Set Hammer ATPLimit {timeout}.")
         logging.warning("Running hammer.")
         stdout = coq_top.run(
@@ -133,9 +137,11 @@ def test_theorem(thm: EvalTheorem, coqstoq_loc: Path, timeout: int) -> Optional[
             return None
 
     except pexpect.exceptions.TIMEOUT:
+        logging.warning("TIMEOUT Error")
         return None
 
     except pexpect.exceptions.EOF:
+        logging.warning("EOF Error")
         return None
 
     finally:
@@ -192,6 +198,10 @@ def run_slurm(args: argparse.Namespace):
             break
 
         result_save_loc = get_save_loc(thm, save_loc)
+        if result_save_loc.exists():
+            logging.warning(f"Result already exists: {result_save_loc}")
+            continue
+
         print("Running ", result_save_loc)
         result = test_theorem(thm, coqstoq_loc, args.timeout)
         if result is not None:
