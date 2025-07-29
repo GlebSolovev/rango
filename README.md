@@ -1,3 +1,24 @@
+# Benchmarking Rango on `imm project`
+
+Setup steps:
+
+1. Initialize this repo and setup its Python dependencies. 
+
+    Download and run the setup script:
+    ```bash
+    curl -O "https://raw.githubusercontent.com/GlebSolovev/rango/imm-benchmark/setup/setup-rango-from-scratch.sh"
+    chmod +x setup-rango-from-scratch.sh
+    ./setup-rango-from-scratch.sh
+    ```
+    It will:
+    * first, make sure `pyenv` is installed: its needed to activate the proper Python version;
+    * clone this repo into `$HOME/rango` and initialize its submodules properly (SSH keys are not required);
+    * download the model and properly place it inside the repo;
+    * create and prepare virtual environment with necessary Python dependencies at `$HOME/rango/venv`.
+
+2. TODO
+
+
 # Rango
 Rango is a neural proof synthesis tool for the Coq theorem prover [(see paper)](paper.pdf).
 Rango uses _retrieval augmentation_ to adapt to its environment.
