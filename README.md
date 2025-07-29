@@ -59,14 +59,14 @@ Setup steps:
       source venv/bin/activate
       ```
 
-    * Comment `# compile_file(project, path, timeout)` in the [CoqStoq/coqstoq/eval_thms.py](CoqStoq/coqstoq/eval_thms.py).
-
     * Run CoqStoq scripts to create a split.
       ```bash
+      cd CoqStoq
+
       python3 coqstoq/find_eval_thms.py --custom-split-name coqpilot
       # check `CoqStoq/test-theorems-reports/imm.json` reports successes only 
 
-      python3 coqstoq/create_theorem_lists.py coqpilot
+      python3 coqstoq/create_theorem_lists.py coqpilot imm-targets
       ```
 
 
