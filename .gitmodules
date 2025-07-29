@@ -3,4 +3,4 @@
 	url = git@github.com:rkthomps/coqpyt.git
 [submodule "CoqStoq"]
 	path = CoqStoq
-	url = git@github.com:rkthomps/CoqStoq
+	url = git@github.com:GlebSolovev/CoqStoq.git

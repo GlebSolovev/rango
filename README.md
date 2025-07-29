@@ -18,24 +18,13 @@ Setup steps:
 
 2. Bring `imm` project to the CoqStoq dataset and build it.
 
-    * Bring to CoqStoq
-        ```bash
-        cd CoqStoq
-        mkdir coqpilot-repos/imm
-        git clone https://github.com/weakmemory/imm.git coqpilot-repos/imm
-        ```
+    * Check `imm` project has been initialized in [coqpilot-repos/imm](coqpilot-repos/imm).
 
-    * Create compilation config (won't be actually used, but is required)
-        ```bash
-        cat <<EOF > coqpilot.yaml
-        imm:
-          compile_args: []
-        EOF
-        ```
+    * Check the compilation config [CoqStoq/coqpilot.yaml](CoqStoq/coqpilot.yaml) contains the desired projects (it won't be actually used, but is required).
 
-    * Build `imm` with Nix
+    * Build `imm` with Nix.
         ```bash
-        cd coqpilot-repos/imm
+        cd $HOME/rango/CoqStoq/coqpilot-repos/imm
 
         # might fail, but Nix will suggest fixing the user permissions
         nix-env -iA nixpkgs.cachix && cachix use coq && cachix use coq-community && cachix use math-comp 
@@ -47,7 +36,7 @@ Setup steps:
 
 3. Create a split from `imm`.
 
-    * `cd $HOME/rango` while still staying in the `nix-shell` of the `imm`.
+    * `cd $HOME/rango` while still staying inside the `nix-shell` of the `imm`.
 
     * Enter Python virtual environment.
       ```bash
