@@ -16,7 +16,58 @@ Setup steps:
     * download the model and properly place it inside the repo;
     * create and prepare virtual environment with necessary Python dependencies at `$HOME/rango/venv`.
 
-2. TODO
+2. Bring `imm` project to the CoqStoq dataset and build it.
+
+    * Bring to CoqStoq
+        ```bash
+        cd CoqStoq
+        mkdir coqpilot-repos/imm
+        git clone https://github.com/weakmemory/imm.git coqpilot-repos/imm
+        ```
+
+    * Create compilation config (won't be actually used, but is required)
+        ```bash
+        cat <<EOF > coqpilot.yaml
+        imm:
+          compile_args: []
+        EOF
+        ```
+
+    * Build `imm` with Nix
+        ```bash
+        cd coqpilot-repos/imm
+
+        # might fail, but Nix will suggest fixing the user permissions
+        nix-env -iA nixpkgs.cachix && cachix use coq && cachix use coq-community && cachix use math-comp 
+        cachix use weakmemory
+
+        nix-shell
+        make -j
+        ```
+
+3. Create a split from `imm`.
+
+    * `cd $HOME/rango` while still staying in the `nix-shell` of the `imm`.
+
+    * Enter Python virtual environment.
+      ```bash
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      pyenv shell ${RANGO_PYTHON_VERSION}
+
+      source venv/bin/activate
+      ```
+
+    * Comment `# compile_file(project, path, timeout)` in the [CoqStoq/coqstoq/eval_thms.py](CoqStoq/coqstoq/eval_thms.py).
+
+    * Run CoqStoq scripts to create a split.
+      ```bash
+      python3 coqstoq/find_eval_thms.py --custom-split-name coqpilot
+      # check `CoqStoq/test-theorems-reports/imm.json` reports successes only 
+
+      python3 coqstoq/create_theorem_lists.py coqpilot
+      ```
 
 
 # Rango
