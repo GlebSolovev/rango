@@ -41,9 +41,11 @@
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
+      # Alternatively, you can set it via `pyenv global` and/or `pyenv local`
       pyenv shell 3.11
 
-      source venv/bin/activate
+      # Environment variables configuration is needed here to isolate `venv` from Nix Python modules 
+      unset PYTHONPATH && export PYTHONNOUSERSITE=1 && source venv/bin/activate
       ```
 
     * Run CoqStoq scripts to create a split.
