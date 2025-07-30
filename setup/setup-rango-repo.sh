@@ -130,4 +130,11 @@ pip3 install .
 cd ../CoqStoq
 pip3 install -e .
 
+# Fix Python dependencies for the modern GPU machine
+cd ..
+pip3 install --upgrade --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+pip3 install --upgrade --force-reinstall bitsandbytes
+pip3 install transformers==4.34.0 trl==0.7.1
+python3 -c "import torch; print('Torch CUDA:', torch.cuda.is_available(), torch.version.cuda)"
+
 echo "Rango environment setup complete!"
