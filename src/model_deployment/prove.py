@@ -95,7 +95,7 @@ def get_proof_info(
     raise ValueError(f"Could not find step defining theorem {term.term.text}")
 
 
-def run_proof(conf: RunProofConf) -> SuccessfulSearch | FailedSearch:
+def run_proof(conf: RunProofConf, task_id: str = str(os.getpid())) -> SuccessfulSearch | FailedSearch:
     for f in glob.glob(".*.cache"):
         os.remove(f)
     target_theorem = conf.loc.dataset_file.proofs[conf.loc.dp_proof_idx].theorem
@@ -103,7 +103,7 @@ def run_proof(conf: RunProofConf) -> SuccessfulSearch | FailedSearch:
     for proof in conf.loc.dataset_file.proofs[: conf.loc.dp_proof_idx]:
         if normalize(target_theorem.term.text) == normalize(proof.theorem.term.text):
             occurance += 1
-    print("Compiling File...")
+    print(f"{task_id} Compiling File...")
     proof_info = get_proof_info(
         conf.loc.data_loc,
         conf.loc.file_loc,
@@ -124,7 +124,7 @@ def run_proof(conf: RunProofConf) -> SuccessfulSearch | FailedSearch:
         tree_manager = searcher_from_conf(
             conf.search_conf, conf.tactic_gens, proof_manager
         )
-        print("Starting search...")
+        print(f"{task_id} Starting search...")
         result = tree_manager.search(
             print_proofs=conf.print_proofs, print_trees=conf.print_trees
         )

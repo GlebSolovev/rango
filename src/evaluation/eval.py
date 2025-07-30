@@ -92,11 +92,11 @@ if __name__ == "__main__":
     remote_port = read_remote_port_env()
     remote_port_flag = "" if remote_port is None else f" --remote_port {remote_port}"
     worker_command = (
-        f"python3 {WORKER_LOC} --conf_loc {conf_loc} --queue_loc {queue_loc}${remote_port_flag}"
+        f"python3 {WORKER_LOC} --conf_loc {conf_loc} --queue_loc {queue_loc}{remote_port_flag}"
     )
     match job_conf:
         case LocalJobConf(_, n_workers):
-            run_local(worker_command, n_workers)
+            run_local(worker_command, n_workers, True)
         case SlurmJobConf(_, slurm_conf):
             commands = [
                 f"cp -r {conf.sentence_db_loc} /tmp/{conf.sentence_db_loc.name}",

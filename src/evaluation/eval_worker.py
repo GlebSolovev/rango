@@ -1,3 +1,4 @@
+import os
 from coqstoq import EvalTheorem
 import logging
 from util.coqstoq_utils import get_file_loc, get_workspace_loc
@@ -46,28 +47,30 @@ mp.set_start_method("fork")
 _logger = logging.getLogger(RANGO_LOGGER)
 
 
-def run_and_save_proof(thm: EvalTheorem, run_conf: RunProofConf, save_dir: Path):
+def run_and_save_proof(thm: EvalTheorem, run_conf: RunProofConf, save_dir: Path, worker_id: int, task_index: int):
     start = time.time()
     save_loc = get_save_loc(save_dir, thm)
+
+    task_id = f"[Worker-{worker_id}:task-{task_index}]"
+    _logger.info(
+        f"{task_id} ▶ Starting proof: {thm.path}::{run_conf.theorem_id} ({run_conf.loc.file_loc.name})")
     try:
-        result = run_proof(run_conf)
+        result = run_proof(run_conf, task_id)
         rango_result = RangoResult.from_search_result(thm, result)
     except TimeoutError:
         _logger.error(
-            f"Got timeout error running proof: {run_conf.theorem_id} from {run_conf.loc.file_loc}"
-        )
+            f"{task_id} ⏳ Timeout for {run_conf.theorem_id}\n")
         stop = time.time()
         rango_result = RangoResult(thm, None, stop - start, None)
 
     rango_result.save(save_loc)
-    if rango_result.proof is not None:
-        _logger.info(
-            f"Eval theorem for {thm.path}::{run_conf.theorem_id} : SUCCESS")
-    else:
-        _logger.info(f"Eval theorem for {thm.path} : FAILURE")
+
+    status = "✅ SUCCESS" if rango_result.proof is not None else "❌ FAILURE"
+    _logger.info(
+        f"{task_id} Finished: {thm.path}::{run_conf.theorem_id} | {status} | Time: {round(time.time()-start, 2)}s\n")
 
 
-WAIT_FOR_SERVERS_TO_START_UP_TIMEOUT_SECONDS = 10
+WAIT_FOR_SERVERS_TO_START_UP_TIMEOUT_SECONDS = 10 * 60
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -82,6 +85,12 @@ if __name__ == "__main__":
         type=int,
         default=None,
         help="If specified, connect to that port mapped to the remote server by SSH.",
+    )
+    parser.add_argument(
+        "--worker_id",
+        type=int,
+        default=os.getpid(),
+        help="Worker id for better logging.",
     )
 
     args = parser.parse_args()
@@ -142,9 +151,11 @@ if __name__ == "__main__":
 
     strikes = 0
     MAX_STRIKES_IN_A_ROW = 3
+    task_counter = 0
     while True:
         try:
             eval_thm = q.get()
+            task_counter += 1
         except EmptyFileQueueError:
             break
 
@@ -174,12 +185,9 @@ if __name__ == "__main__":
             continue
 
         orig_summary.save(save_loc)
-        _logger.info(
-            f"running proof of {run_conf.theorem_id} from {location_info.file_loc}"
-        )
         worker_process = mp.Process(
             target=run_and_save_proof, args=(
-                eval_thm, run_conf, eval_conf.save_loc)
+                eval_thm, run_conf, eval_conf.save_loc, args.worker_id, task_counter)
         )
         worker_process.start()
         worker_process.join(2 * run_conf.search_conf.timeout)

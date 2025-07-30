@@ -100,11 +100,12 @@ def slurm_conf_from_yaml(yaml_data: Any) -> SlurmConf:
             raise ValueError(f"Unknown alias {attempted_alias}.")
 
 
-def run_local(command: str, n_workers: int):
+def run_local(command: str, n_workers: int, pass_worker_id: bool = False):
     open_procs: list[subprocess.Popen[bytes]] = []
-    for _ in range(n_workers):
+    for worker_id in range(n_workers):
+        subprocess_command = f"{command} --worker_id {worker_id}" if pass_worker_id else command
         p = subprocess.Popen(
-            command, shell=True, stdout=sys.stdout, stderr=sys.stderr, env=os.environ
+            subprocess_command, shell=True, stdout=sys.stdout, stderr=sys.stderr, env=os.environ
         )
         open_procs.append(p)
     for p in open_procs:
