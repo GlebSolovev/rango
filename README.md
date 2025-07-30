@@ -90,12 +90,12 @@
       rm -rf evaluations/coqpilot-results/test-openai
       ```
 
-    * Run the actual evaluation. Don't forget to configure the number of workers. According to the estimates, the model being used is super lightweight, so workers are not really limited by VRAM size. Thus, the main limiting factor is the number of CPU cores: there are around 2 processes per worker (evaluation + Coq LSP); therefore, it'd be recommended to run around `CPU_CORES_NUMBER / 2` workers per time.
+    * Run the actual evaluation. Don't forget to configure the number of workers. According to the estimates and practical experience, the process serving the model being used can easily consume around `~6 GB` of VRAM. At the same time, each worker spawns around 2-3 subprocesses (main, Coq LSP, client interacting with the model server), so the number of CPU cores should be considered too.
       ```bash
       OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
       ```
     
-    * (alternative) Run the actual evaluation locally, while hosting the Rango instance serving the model remotely. It can be beneficial, since rented nods having GPUs usually lack powerful CPUs that results in a very significant slowdown. However, the current implementation of the server might not be optimized enough to handle concurrent request &mdash; it still _requires some testing_ first.
+    * _(alternative, not tested yet)_ Run the actual evaluation locally, while hosting the Rango instance serving the model remotely. It can be beneficial, since rented nods having GPUs usually lack powerful CPUs that results in a very significant slowdown. However, the current implementation of the server might not be optimized enough to handle concurrent request &mdash; it still _requires some testing_ first.
 
       a. Connect to the remote machine specifying the mapped port:
         ```bash
