@@ -92,6 +92,23 @@
       ```bash
       OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
       ```
+    
+    * (alternative) Run the actual evaluation locally, while hosting the Rango instance serving the model remotely. It can be beneficial, since rented nods having GPUs usually lack powerful CPUs that results in a very significant slowdown.
+
+      a. Connect to the remote machine specifying the mapped port:
+        ```bash
+        ssh -L 5000:localhost:5000 zebra
+        ```
+      b. Setup Rango (only step 1. is needed) on the remote machine.
+
+      c. Start the server on the remote machine:
+        ```bash
+        cd $HOME/rango && export OPENAI_API_KEY="" && pyenv shell 3.11 && source ./venv/bin/activate && exec python3 src/model_deployment/tactic_gen_server_remote.py decoder-local models/deepseek-bm25-proof-tfidf-proj-thm-prem-final/checkpoint-54500 0 5000
+        ```
+      d. Finally, run the evaluation locally.
+        ```bash
+        OPENAI_API_KEY="" OPENAI_ORG_KEY="" RANGO_REMOTE_PORT=5000 python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
+        ```
 
 
 # Rango
