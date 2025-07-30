@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any
+from typing import Any, Optional
 
 import os
 import yaml
@@ -54,6 +54,20 @@ def fill_queue(
     _logger.info(f"Added {queue_num_thms} theorems to the queue.")
 
 
+def read_remote_port_env() -> Optional[int]:
+    remote_port_env = os.getenv("RANGO_REMOTE_PORT")
+    if remote_port_env is None:
+        return None
+    try:
+        remote_port = int(remote_port_env)
+        if not (1 <= remote_port <= 65535):
+            raise ValueError(f"Invalid port number: {remote_port}")
+        return remote_port
+    except ValueError as e:
+        raise RuntimeError(
+            f"RANGO_REMOTE_PORT must be a valid integer (1-65535): {e}")
+
+
 if __name__ == "__main__":
     job_conf = main_get_conf_slurm_conf()
     set_rango_logger(__file__, logging.DEBUG)
@@ -75,8 +89,10 @@ if __name__ == "__main__":
     conf_loc, queue_loc, slurm_loc = get_conf_queue_slurm_loc(job_conf.conf_loc)
     fill_queue(queue_loc, conf)
 
+    remote_port = read_remote_port_env()
+    remote_port_flag = "" if remote_port is None else f" --remote_port {remote_port}"
     worker_command = (
-        f"python3 {WORKER_LOC} --conf_loc {conf_loc} --queue_loc {queue_loc}"
+        f"python3 {WORKER_LOC} --conf_loc {conf_loc} --queue_loc {queue_loc}${remote_port_flag}"
     )
     match job_conf:
         case LocalJobConf(_, n_workers):
@@ -89,5 +105,6 @@ if __name__ == "__main__":
                 f"eval $(opam env)",
                 worker_command,
             ]
-            slurm_conf.write_script(f"eval-{conf.save_loc.name}", commands, slurm_loc)
+            slurm_conf.write_script(
+                f"eval-{conf.save_loc.name}", commands, slurm_loc)
             subprocess.run(["sbatch", str(slurm_loc)])

@@ -61,10 +61,13 @@ def run_and_save_proof(thm: EvalTheorem, run_conf: RunProofConf, save_dir: Path)
 
     rango_result.save(save_loc)
     if rango_result.proof is not None:
-        _logger.info(f"Eval theorem for {thm.path}::{run_conf.theorem_id} : SUCCESS")
+        _logger.info(
+            f"Eval theorem for {thm.path}::{run_conf.theorem_id} : SUCCESS")
     else:
         _logger.info(f"Eval theorem for {thm.path} : FAILURE")
 
+
+WAIT_FOR_SERVERS_TO_START_UP_TIMEOUT_SECONDS = 10
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -73,6 +76,12 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--queue_loc", required=True, help="Location of the work queue."
+    )
+    parser.add_argument(
+        "--remote_port",
+        type=int,
+        default=None,
+        help="If specified, connect to that port mapped to the remote server by SSH.",
     )
 
     args = parser.parse_args()
@@ -111,8 +120,19 @@ if __name__ == "__main__":
     procs = []
     if 0 < len(all_commands):
         clear_port_map()
-        procs = start_servers(all_commands)
-        port_map = wait_for_servers(next_num)
+
+        if args.remote_port is None:
+            procs = start_servers(all_commands)
+            port_map = wait_for_servers(
+                next_num,
+                WAIT_FOR_SERVERS_TO_START_UP_TIMEOUT_SECONDS
+            )
+        else:
+            # Connect to the port mapped to the remote server by SSH
+            port_map = {
+                0: ("127.0.0.1", args.remote_port)
+            }
+
         for tactic_conf in clean_tactic_confs:
             tactic_conf_update_ips(tactic_conf, port_map)
 
@@ -158,7 +178,8 @@ if __name__ == "__main__":
             f"running proof of {run_conf.theorem_id} from {location_info.file_loc}"
         )
         worker_process = mp.Process(
-            target=run_and_save_proof, args=(eval_thm, run_conf, eval_conf.save_loc)
+            target=run_and_save_proof, args=(
+                eval_thm, run_conf, eval_conf.save_loc)
         )
         worker_process.start()
         worker_process.join(2 * run_conf.search_conf.timeout)
