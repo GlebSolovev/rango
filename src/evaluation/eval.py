@@ -22,7 +22,7 @@ from util.slurm import (
     SlurmJobConf,
 )
 from util.file_queue import FileQueue
-from util.constants import RANGO_LOGGER
+from util.constants import RANGO_LOGGER, TMP_LOC
 from util.util import set_rango_logger
 import subprocess
 
@@ -70,6 +70,8 @@ if __name__ == "__main__":
                 raise FileExistsError(f"{conf.save_loc} already exists.")
     os.makedirs(conf.save_loc, exist_ok=True)
     shutil.copy(job_conf.conf_loc, conf.save_loc / "conf.yaml")
+
+    os.makedirs(TMP_LOC, exist_ok=True)
     conf_loc, queue_loc, slurm_loc = get_conf_queue_slurm_loc(job_conf.conf_loc)
     fill_queue(queue_loc, conf)
 

@@ -1,25 +1,15 @@
-import argparse
-import json
-import pickle
-import yaml
-import time
-from pathlib import Path
-import subprocess
-import multiprocessing as mp
-from data_management.splits import DataSplit, FileInfo
-from data_management.sentence_db import SentenceDB
-from evaluation.eval_utils import EvalConf
-from evaluation.find_coqstoq_idx import get_thm_desc
-
-from model_deployment.conf_utils import (
-    tactic_gen_to_client_conf,
-    wait_for_servers,
-    start_servers,
-    StartModelCommand,
+from coqstoq import EvalTheorem
+import logging
+from util.coqstoq_utils import get_file_loc, get_workspace_loc
+from util.file_queue import FileQueue, EmptyFileQueueError
+from util.util import set_rango_logger, clear_port_map
+from util.constants import CLEAN_CONFIG, RANGO_LOGGER
+from model_deployment.tactic_gen_client import (
+    tactic_gen_client_from_conf,
+    tactic_conf_update_ips,
+    TacticGenConf,
+    TacticGenClient,
 )
-from model_deployment.classical_searcher import ClassicalSearchConf
-from model_deployment.straight_line_searcher import StraightLineSearcherConf
-from model_deployment.whole_proof_searcher import WholeProofSearcherConf
 from model_deployment.prove import (
     LocationInfo,
     RunProofConf,
@@ -28,19 +18,29 @@ from model_deployment.prove import (
     RangoResult,
     load_result,
 )
-from model_deployment.tactic_gen_client import (
-    tactic_gen_client_from_conf,
-    tactic_conf_update_ips,
-    TacticGenConf,
-    TacticGenClient,
+from model_deployment.whole_proof_searcher import WholeProofSearcherConf
+from model_deployment.straight_line_searcher import StraightLineSearcherConf
+from model_deployment.classical_searcher import ClassicalSearchConf
+from model_deployment.conf_utils import (
+    tactic_gen_to_client_conf,
+    wait_for_servers,
+    start_servers,
+    StartModelCommand,
 )
-from util.constants import CLEAN_CONFIG, RANGO_LOGGER
-from util.util import set_rango_logger, clear_port_map
-from util.file_queue import FileQueue, EmptyFileQueueError
-from util.coqstoq_utils import get_file_loc, get_workspace_loc
+from evaluation.find_coqstoq_idx import get_thm_desc
+from evaluation.eval_utils import EvalConf
+from data_management.sentence_db import SentenceDB
+from data_management.splits import DataSplit, FileInfo
+import argparse
+import json
+import pickle
+import yaml
+import time
+from pathlib import Path
+import subprocess
 
-import logging
-from coqstoq import EvalTheorem
+import multiprocessing as mp
+mp.set_start_method("fork")
 
 
 _logger = logging.getLogger(RANGO_LOGGER)
