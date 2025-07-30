@@ -20,7 +20,7 @@
 
     * Check the compilation config [CoqStoq/coqpilot.yaml](CoqStoq/coqpilot.yaml) contains the desired projects (it won't be actually used, but is required).
 
-    * Build `imm` with Nix.
+    * **Build `imm` with Nix.**
         ```bash
         cd $HOME/rango/CoqStoq/coqpilot-repos/imm
 
@@ -48,7 +48,7 @@
       unset PYTHONPATH && export PYTHONNOUSERSITE=1 && source venv/bin/activate
       ```
 
-    * Run CoqStoq scripts to create a split.
+    * Run CoqStoq scripts to **create a split**.
       ```bash
       cd CoqStoq
 
@@ -67,7 +67,7 @@
       mkdir -p coqpilot && ln -s "$HOME/rango/CoqStoq/coqpilot-repos" coqpilot/repos
       ```
 
-    * Create data points.
+    * **Create data points.**
       ```bash
       rm -rf ~/.cache/coqpyt_cache
       mkdir -p raw-data/coqpilot
@@ -80,7 +80,7 @@
 
     * Check and select the configuration of the evaluation. It might be a good idea to first check the pipeline is working on the test one &mdash; [coqpilot-confs/test-openai-eval.yaml](oqpilot-confs/test-openai-eval.yaml) configures proofs to be generated via very simple requests to OpenAI. Afterwards, the actual evaluation via the trained model can be conducted, it's configuration is located at [coqpilot-confs/model-eval.yaml](oqpilot-confs/model-eval.yaml).
 
-    * (optional) Run the mock evaluation to test the pipeline (stop it once you see it goes well).
+    * _(optional)_ Run the mock evaluation to test the pipeline (stop it once you see it goes well).
       ```bash
       export OPENAI_API_KEY=... # put the actual key here
       export OPENAI_ORG_KEY=""  # can be empty, just needs to be defined
@@ -90,7 +90,16 @@
       rm -rf evaluations/coqpilot-results/test-openai
       ```
 
-    * Run the actual evaluation. Don't forget to configure the number of workers. According to the estimates and practical experience, the process serving the model being used can easily consume around `~6 GB` of VRAM. At the same time, each worker spawns around 2-3 subprocesses (main, Coq LSP, client interacting with the model server), so the number of CPU cores should be considered too.
+    * _(optional)_ Sometimes, when the evaluation process is aborted manually or due to a failure, the spawned processes might keep running in the background. To prevent resources consumption and complications during next evaluation startups, kill the following processes after each pipeline termination.
+      ```bash
+      pkill -f "tactic_gen_server.py" && pkill -f "eval_worker.py"
+
+      # If you're unsure about the processes names and/or would like to check them before killing, run:
+      ps aux | grep tactic_gen_server.py
+      ps aux | grep eval_worker.py
+      ```
+
+    * **Run the actual evaluation.** Don't forget to configure the number of workers. According to the estimates and practical experience, the process serving the model being used can easily consume around `~6 GB` of VRAM. At the same time, each worker spawns around 2-3 subprocesses (main, Coq LSP, client interacting with the model server), so the number of CPU cores should be considered too.
       ```bash
       OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
       ```
