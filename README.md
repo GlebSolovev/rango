@@ -41,7 +41,7 @@
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
-      pyenv shell ${RANGO_PYTHON_VERSION}
+      pyenv shell 3.11
 
       source venv/bin/activate
       ```
@@ -88,9 +88,9 @@
       rm -rf evaluations/coqpilot-results/test-openai
       ```
 
-    * Run the actual evaluation. Don't forget to configure the number of workers. According to the raw estimates, each worker might need around ~20GB of VRAM, resulting into 2-3 workers for a 48 GB VRAM GPU. 
+    * Run the actual evaluation. Don't forget to configure the number of workers. According to the estimates, the model being used is super lightweight, so workers are not really limited by VRAM size. Thus, the main limiting factor is the number of CPU cores: there are around 2 processes per worker (evaluation + Coq LSP); therefore, it'd be recommended to run around `CPU_CORES_NUMBER / 2` workers per time.
       ```bash
-      OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=3
+      OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
       ```
 
 
