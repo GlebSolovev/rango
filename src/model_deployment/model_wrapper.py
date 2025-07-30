@@ -172,8 +172,9 @@ class DecoderLocalWrapper:
                 num_return_sequences=n,
                 temperature=None if beam else 1,
                 do_sample=not beam,
-                num_beams=n if beam and 1 < n else None,
+                num_beams=n if beam and n > 1 else 1,
                 attention_mask=attention_mask.cuda(),
+                pad_token_id=self.tokenizer.eos_token_id
             )
         input_num_tokens = inputs["input_ids"].shape[1]
         generated_seqs = outputs.sequences[:, input_num_tokens:]
