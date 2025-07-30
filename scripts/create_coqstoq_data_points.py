@@ -138,6 +138,7 @@ if __name__ == "__main__":
 
     Thus, currently parallelization seems a bit too risky and complicated to implement. 
     """
+    total_time = 0
     for idx, f in enumerate(files, start=1):
         predicted_dp_name = get_predicted_dp_name(f)
         if os.path.exists(save_loc / predicted_dp_name):
@@ -151,4 +152,8 @@ if __name__ == "__main__":
         elapsed_time = time.time() - start_time
 
         _logger.info(
-            f"[{idx}/{total_files_number}] Done {f} in {elapsed_time:.2f} seconds\n")
+            f"[{idx}/{total_files_number}] Done {f} in {elapsed_time:.2f} seconds")
+
+        total_time += elapsed_time
+        avg_time = 1.0 * total_time / idx
+        _logger.info(f"Average per data point: {avg_time:.2f} seconds\n")
