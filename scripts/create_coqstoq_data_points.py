@@ -2,6 +2,7 @@ import os
 import argparse
 from pathlib import Path
 from dataclasses import dataclass
+import time
 from coqstoq import get_theorem_list, Split
 from coqstoq.eval_thms import EvalTheorem, get_file_hash
 
@@ -117,11 +118,37 @@ if __name__ == "__main__":
         save_loc.mkdir(parents=True)
 
     theorem_list = get_theorem_list(coqstoq_split, coqstoq_loc)
-    files = get_coqstoq_files(theorem_list, coqstoq_loc)
-    for f in files:
+    files = list(get_coqstoq_files(theorem_list, coqstoq_loc))
+    total_files_number = len(files)
+
+    """
+    Note about parallelization.
+
+    Yes, it'd be nice to parallelize data-points creation, but:
+
+    1. CoqPyt interacts with Coq via Coq LSP server, so multiple instances / requests
+       might lead to the failure or caches being invalidated.
+
+    2. Each data point creation is a heavy IO operation also loading CPU,
+       so parallelization will be limited to some extent.
+
+    3. Current SQL sentences database does not support concurrent writes
+       and will just throw an error on attempt to access it from different subprocesses.
+       Separate databases should be used and then merged together.
+
+    Thus, currently parallelization seems a bit too risky and complicated to implement. 
+    """
+    for idx, f in enumerate(files, start=1):
         predicted_dp_name = get_predicted_dp_name(f)
         if os.path.exists(save_loc / predicted_dp_name):
-            _logger.info(f"Skipping {f}")
+            _logger.info(f"Skipping {f} ({idx}/{total_files_number})")
             continue
-        _logger.info(f"Processing {f}")
+
+        _logger.info(f"[{idx}/{total_files_number}] Processing {f}")
+
+        start_time = time.time()
         get_coqstoq_data_point(f, sentence_db, save_loc, include_admitted)
+        elapsed_time = time.time() - start_time
+
+        _logger.info(
+            f"[{idx}/{total_files_number}] Done {f} in {elapsed_time:.2f} seconds\n")
