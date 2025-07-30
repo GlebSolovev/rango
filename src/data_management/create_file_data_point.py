@@ -177,8 +177,12 @@ def to_dataset_format(path: Path, workspace: Path, switch_path: Path) -> Path:
         return (DATASET_PREFIX / workspace.name) / path.relative_to(workspace.resolve())
     elif path.is_relative_to(switch_path.resolve()):
         return DATASET_OPAM_PREFIX / path.relative_to(switch_path.resolve())
+    # Allow absolute path for Nix
+    elif path.is_absolute():
+        return path
     else:
-        raise ValueError(f"Path {path} is not relative to {workspace} or {switch_path}")
+        raise ValueError(
+            f"Path {path} is not relative to {workspace} or {switch_path}, and even is not absolute")
 
 
 def translate_path(
