@@ -93,7 +93,7 @@
       OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
       ```
     
-    * (alternative) Run the actual evaluation locally, while hosting the Rango instance serving the model remotely. It can be beneficial, since rented nods having GPUs usually lack powerful CPUs that results in a very significant slowdown.
+    * (alternative) Run the actual evaluation locally, while hosting the Rango instance serving the model remotely. It can be beneficial, since rented nods having GPUs usually lack powerful CPUs that results in a very significant slowdown. However, the current implementation of the server might not be optimized enough to handle concurrent request &mdash; it still _requires some testing_ first.
 
       a. Connect to the remote machine specifying the mapped port:
         ```bash

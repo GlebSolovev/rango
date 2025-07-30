@@ -30,7 +30,8 @@ def get_recs(
     token_mask: Optional[str],
 ) -> ModelResult:
     example = LmExample.from_json(example_json)
-    result = wrapper.get_recs(example, n, current_proof, beam, token_mask).to_json()
+    result = wrapper.get_recs(
+        example, n, current_proof, beam, token_mask).to_json()
     return result
 
 
@@ -56,6 +57,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "port", type=int, help="Number of a port mapped to the client by the SSH")
     args = parser.parse_args(sys.argv[1:])
+
+    # TODO: support concurrent requests
 
     conf = {
         "alias": args.alias,
