@@ -478,13 +478,16 @@ def wait_for_servers(next_server_num: int, timeout_seconds: int | None = None) -
         if timeout_seconds is not None and total_time_slept > timeout_seconds:
             raise ValueError(
                 f"Waiting for the servers timeout has been reached ({timeout_seconds} seconds)")
-        if 1 < total_time_slept and total_time_slept % 5 == 0:
+        if 1 < total_time_slept and total_time_slept % 10 == 0:
             _logger.debug(
                 f"Port map of length {len(cur_port_map)} not complete after {total_time_slept} seconds."
             )
         time.sleep(1)
         total_time_slept += 1
         cur_port_map = read_port_map()
+    _logger.debug(
+        f"Port map is complete after {total_time_slept} seconds!"
+    )
 
     for port_incr in range(next_server_num):
         ip_addr, port = cur_port_map[port_incr]
