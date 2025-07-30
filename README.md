@@ -58,6 +58,8 @@
 
 4. Build data points for the split.
 
+    * `cd $HOME/rango` while still staying both inside the `nix-shell` of the `imm` and the Python `venv`.
+    
     * Create a symbolic link to the split.
       ```bash
       mkdir -p coqpilot && ln -s "$HOME/rango/CoqStoq/coqpilot-repos" coqpilot/repos
@@ -69,6 +71,27 @@
       mkdir -p raw-data/coqpilot
       python3 scripts/create_coqstoq_data_points.py CoqStoq coqpilot raw-data/coqpilot/data_points raw-data/coqpilot/coqpilot-sentences.db
       ```
+
+5. Run evaluation on the built split.
+
+* `cd $HOME/rango` while still staying both inside the `nix-shell` of the `imm` and the Python `venv`.
+
+* Check and select the configuration of the evaluation. It might be a good idea to first check the pipeline is working on the test one &mdash; [coqpilot-confs/test-openai-eval.yaml](oqpilot-confs/test-openai-eval.yaml) configures proofs to be generated via very simple requests to OpenAI. Afterwards, the actual evaluation via the trained model can be conducted, it's configuration is located at [coqpilot-confs/model-eval.yaml](oqpilot-confs/model-eval.yaml).
+
+* (optional) Run the mock evaluation to test the pipeline (stop it once you see it goes well).
+```bash
+export OPENAI_API_KEY=... # put the actual key here
+export OPENAI_ORG_KEY=""  # can be empty, just needs to be defined
+python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/test-openai-eval.yaml --n_workers=1
+
+# (optional) After the test evaluation is stopped
+rm -rf evaluations/coqpilot-results/test-openai
+```
+
+* Run the actual evaluation.
+```bash
+OPENAI_API_KEY="" OPENAI_ORG_KEY="" python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=10
+```
 
 
 # Rango
