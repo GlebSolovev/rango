@@ -1,6 +1,4 @@
-# Benchmarking Rango on `imm project`
-
-Setup steps:
+# Benchmarking Rango on `imm` project
 
 1. Initialize this repo and setup its Python dependencies. 
 
@@ -56,6 +54,20 @@ Setup steps:
       # check `CoqStoq/test-theorems-reports/imm.json` reports successes only 
 
       python3 coqstoq/create_theorem_lists.py coqpilot imm-targets
+      ```
+
+4. Build data points for the split.
+
+    * Create a symbolic link to the split.
+      ```bash
+      mkdir -p coqpilot && ln -s "$HOME/rango/CoqStoq/coqpilot-repos" coqpilot/repos
+      ```
+
+    * Create data points.
+      ```bash
+      rm -rf ~/.cache/coqpyt_cache
+      mkdir -p raw-data/coqpilot
+      python3 scripts/create_coqstoq_data_points.py CoqStoq coqpilot raw-data/coqpilot/data_points raw-data/coqpilot/coqpilot-sentences.db
       ```
 
 
