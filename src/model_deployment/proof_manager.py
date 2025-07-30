@@ -97,6 +97,7 @@ class ProofManager:
         workspace_loc: Path,
         sentence_db: SentenceDB,
         data_loc: Path,
+        print_diagnostic: bool = False
     ) -> None:
         self.same_file_proofs = same_file_proofs
         self.file_context = file_context
@@ -105,6 +106,7 @@ class ProofManager:
         self.workspace_loc = workspace_loc
         self.sentence_db = sentence_db
         self.data_loc = data_loc
+        self.print_diagnostic = print_diagnostic
         self.__start_clients()
 
     def __make_empty(self, p: Path):
@@ -218,7 +220,7 @@ class ProofManager:
 
     def check_valid(self, client: FastLspClient) -> bool:
         for diagnostic in client.lsp_endpoint.diagnostics[self.fast_client.file_uri]:
-            if diagnostic.severity == 1:
+            if self.print_diagnostic and diagnostic.severity == 1:
                 print(diagnostic.message)
                 return False
         return True

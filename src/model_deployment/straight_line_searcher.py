@@ -75,6 +75,7 @@ class StraightLineSearcher:
         initial_proof: Optional[str],
         token_mask: Optional[str],
         interleave_hammer: bool = False,
+        save_logs: bool = False
     ):
         self.tactic_clients = tactic_clients
         self.proof_manager = proof_manager
@@ -83,6 +84,7 @@ class StraightLineSearcher:
         self.initial_proof = initial_proof
         self.token_mask = token_mask
         self.interleave_hammer = interleave_hammer
+        self.save_logs = save_logs
 
         initial_dset_file = proof_manager.get_initial_context()
         if initial_dset_file is None:
@@ -136,7 +138,8 @@ class StraightLineSearcher:
                 self.tactic_clients[len(attempts) % len(self.tactic_clients)],
                 logs,
             )
-            self.write_logs(logs)
+            if self.save_logs:
+                self.write_logs(logs)
             if self.print_proofs:
                 print(attempt)
             attempts.append(attempt)

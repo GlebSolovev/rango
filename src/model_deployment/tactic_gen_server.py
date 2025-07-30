@@ -13,7 +13,7 @@ import logging
 _logger = get_basic_logger(__name__)
 
 log = logging.getLogger("werkzeug")
-log.setLevel(logging.DEBUG)
+log.setLevel(logging.ERROR)
 
 import requests
 from jsonrpc import JSONRPCResponseManager, dispatcher
