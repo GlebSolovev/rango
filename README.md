@@ -133,6 +133,19 @@
         OPENAI_API_KEY="" OPENAI_ORG_KEY="" RANGO_REMOTE_PORT=5000 python3 src/evaluation/eval.py --conf_loc=coqpilot-confs/model-eval.yaml --n_workers=4
         ```
 
+6. Postprocess Rango evaluation output.
+
+    * `cd $HOME/rango`, only Python `venv` is needed.
+
+    * **Resolve evaluation results**, i.e. pack evaluation output into a single file with better navigation.
+      ```bash
+      python3 scripts/postprocessing/resolve_evaluation_results.py --results_dir evaluations/coqpilot-results/actual-model --resolved_theorems CoqStoq/imm-targets-resolved/all_target_theorems.json --output evaluations/results.json
+      ```
+
+    * _(optional)_ Print statistics of the conducted evaluation.
+      ```bash
+      python3 scripts/postprocessing/report_statistics.py --resolved_results evaluations/results.json --targets_dir CoqStoq/imm-targets
+      ```
 
 # Rango
 Rango is a neural proof synthesis tool for the Coq theorem prover [(see paper)](paper.pdf).
