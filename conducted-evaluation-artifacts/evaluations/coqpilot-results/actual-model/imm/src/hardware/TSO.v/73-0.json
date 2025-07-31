@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/hardware/TSO.v",
+    "theorem_start_pos": {
+      "line": 73,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 73,
+      "column": 24
+    },
+    "proof_start_pos": {
+      "line": 74,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 74,
+      "column": 28
+    },
+    "hash": "eaf3d55047305325bd81bbf65517bac47fa31f4edc9213bea3f0081029c41890"
+  },
+  "proof": "\nProof using CON. split; [|reflexivity]. do 2 (apply CON; type_solver); auto.\nQed.",
+  "time": 4.102191925048828,
+  "n_attempts": 1
+}

@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/basic/Events.v",
+    "theorem_start_pos": {
+      "line": 337,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 338,
+      "column": 33
+    },
+    "proof_start_pos": {
+      "line": 339,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 339,
+      "column": 45
+    },
+    "hash": "5efaed5381733d835b30fbba6c77e213a2168359758aeec1022614f305f79cd2"
+  },
+  "proof": "\nProof using. unfold loc at 1 3 in SAME; red; cbn in *; ins; auto. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply WX. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME.\nProof using.\nunfold is_lab_u2v, loc. unfolder; cbn; solver. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME.\nunfold is_lab_u2v, loc. unfolder. (intros; do 2 desf; eapply SAME; eauto). by apply SAME. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. unfold loc. apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. unfold loc. apply SAMO. by apply SAMO. by apply SAMO.  unfold loc. apply SAMO. by apply SAMO. by apply SAMO. unfold loc. intros x Hx. unfold same_lab_u2v_dom in SAME. specialize (SAME x); destruct (lab1 x); destruct (lab2 x); auto; try solve [by fail]. specialize (SAME Hx). unfold same_label_u2v in SAME; cbn in SAME. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. specialize (SAME Hx). unfold same_label_u2v in SAME. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. do 2 desf; eauto. unfold same_label_u2v in SAME. by destruct SAME.\nQed.",
+  "time": 224.1645348072052,
+  "n_attempts": 1
+}

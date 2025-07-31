@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/traversal/TraversalConfigAltOld.v",
+    "theorem_start_pos": {
+      "line": 141,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 141,
+      "column": 52
+    },
+    "proof_start_pos": {
+      "line": 142,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 147,
+      "column": 4
+    },
+    "hash": "2fd246c6a6e2d55e41118ccb864b4a358fe5ebd73f543c0c0f96fa5cc153c4ea"
+  },
+  "proof": "\nProof using tc_old.\n  rewrite fwbob_in_sb.\n  apply tc_old.\n  apply otc_tc_fwbob_I.\n  rewrite dom_rel_union' with (F:=\u222a\u2997W\u2998 \u2a3e \u2997I\u2998); ins. \n  rewrite <- (dom_rel_helper (W:=Wf G, I:=I));\n    [| by apply fin_sub_triv in bob_trans | by eapply dom_rel_sub in tc_dr_b_b_pb_I | ].\n  rewrite <- (dom_rel_helper (W:=Wf G));\n    [by ins; rewrite c1_b, cx_n |by rewrite ub_n, rb_n|apply fin_sub_actid].\n  arewrite (WF \u2286 \u2997W\u2998).\n  apply tc_old. rewrite ct_end, seqA.\n  rewrite dom_rel_union'; unionL.\n  { apply otc_rfirmw_I. eapply dom_rel_trans.\n    by intro t; rewrite dom_rel_union'.\n    rewrite dom_rel_union'; unionL; eapply dom_rel_trans.\n    do 2 (apply otc_rf_ppo_loc_I). \n    by intro; intro; rewrite dom_rel_union'.\n    by rewrite dom_rel_union'; unionL.\n    intro; rewrite dom_rel_union'.\n    apply otc_rfirmw_I.\n    rewrite dom_rel_union'.\n    unionL.\n    rewrite dom_rel_union'.\n    apply tc_old.\n    rewrite (dom_rel_helper I).\n    apply tc_old.\n    rewrite !dom_rel_union'.\n    rewrite dom_rel_union'; unionL.\n    apply otc_rfirmw_I.\n    rewrite dom_rel_union'.\n    apply otc_rfirmw_I.\n    rewrite dom_rel_union'.\n    apply otc_tc_fwbob_I.\n    rewrite <- dom_rel_union'.\n    rewrite <- dom_rel_union'.\n    apply tc_old.\n    rewrite dom_rel_union'.\n    rewrite dom_rel_union'.\n    rewrite <- dom_rel_union'.\n    { do 3 (apply otc_rf_ppo_loc_I).\n      by intro; intro; rewrite <- dom_rel_union'.\n      do 2 (apply otc_rfirmw_I).\n      do 4 (apply otc_rf_ppo_loc_I).\n      by intro; intro; apply dom_rel_union'.\n    }\nQed.",
+  "time": 80.31455969810486,
+  "n_attempts": 1
+}

@@ -1,5 +1,7 @@
 # Benchmarking Rango on `imm` project
 
+This guide explains how to integrate a custom project into Rango and benchmark it, using `imm` as an example. For reference, the [conducted-evaluation-artifacts](conducted-evaluation-artifacts) directory contains artifacts from a completed evaluation.
+
 1. Initialize this repo and setup its Python dependencies. 
 
     Download and run the setup script:

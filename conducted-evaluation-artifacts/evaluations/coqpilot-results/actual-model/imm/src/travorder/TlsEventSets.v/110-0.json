@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TlsEventSets.v",
+    "theorem_start_pos": {
+      "line": 110,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 111,
+      "column": 37
+    },
+    "proof_start_pos": {
+      "line": 112,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 116,
+      "column": 4
+    },
+    "hash": "1ddfd61769b362bd68db6aeb2f85c984fde71ee26b43df9c9c3652a5bbcea54b"
+  },
+  "proof": "\nProof using.\n  unfold covered.\n  unfolder; split; ins; desf.\n  destruct y; ins; subst. desf.\nQed.",
+  "time": 8.508951187133789,
+  "n_attempts": 1
+}

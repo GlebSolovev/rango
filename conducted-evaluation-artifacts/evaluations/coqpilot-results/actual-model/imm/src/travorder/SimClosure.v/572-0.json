@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/SimClosure.v",
+    "theorem_start_pos": {
+      "line": 572,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 573,
+      "column": 28
+    },
+    "proof_start_pos": {
+      "line": 574,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 581,
+      "column": 4
+    },
+    "hash": "faeadf50b344ebdc6eb98ded919a13a86385084c3ed1724d9347154fbc0bfe08"
+  },
+  "proof": null,
+  "time": 600.7276911735535,
+  "n_attempts": 1
+}

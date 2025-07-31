@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/AuxEE.v",
+    "theorem_start_pos": {
+      "line": 86,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 86,
+      "column": 30
+    },
+    "proof_start_pos": {
+      "line": 87,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 87,
+      "column": 73
+    },
+    "hash": "a07a7cc7a4a7bb55cb528a692296e08d5176f8926edd0a409c38fa063d6892d9"
+  },
+  "proof": null,
+  "time": 600.7947170734406,
+  "n_attempts": 1
+}

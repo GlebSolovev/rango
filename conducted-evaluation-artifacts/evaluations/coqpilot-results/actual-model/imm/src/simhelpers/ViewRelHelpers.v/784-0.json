@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/simhelpers/ViewRelHelpers.v",
+    "theorem_start_pos": {
+      "line": 784,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 804,
+      "column": 21
+    },
+    "proof_start_pos": {
+      "line": 805,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 812,
+      "column": 4
+    },
+    "hash": "b314004e3545e797a11f638b65fb239e6d7887b8cf8008a84a9176d15609e615"
+  },
+  "proof": "\n  Proof.\n    OPEN_CONJ_HYP \"(t_rel_\"\n    ; [ repeat rewrite <- (same_lab_u2v_is_sc TCCOH); intros; xtransitivity\n      | repeat rewrite <- (same_lab_u2v_is_acqrel TCCOH); intros; xtransitivity\n      | repeat rewrite <- (same_lab_u2v_is_rel TCCOH); intros; xtransitivity ].\n\n    move=> l l'.\n    rewrite t_rel_n_sc_fence_step.\n    apply: t_rel_n_step; split; extensionality t; try xtransitivity => // l'_ W.\n    case (eq_dec l l').\n    + move=> l1 l2.\n      have SC : is_sc lab f by exists l1.\n      rewrite SC (NCOV _ SC)=> {LCO_} NCOV.\n      move=> l l'.\n      rewrite (same_lab_u2v_is_sc TCCOH) => SC.\n      rewrite (same_lab_u2v_is_acqrel TCCOH) => ACQ.\n      rewrite /Trav_Config.swf_fence_W.\n      case (eq_dec l l').\n      - move=> L1 L2.\n        rewrite L1 L2  LocSetProps.union_0r -? LocSet.set_eq_alt => /W_ /Tid_ /(conseq (Loc_Pred M)) L /TCO_ => HL /T_AT_R_ /=.\n        unfold tc_coherent in *; rewrite TCCOH; clear; eauto.\n      - rewrite -? LocSet.union_20.\n        by move: SC => [l W_ LACQ].\n      - rewrite T.location_location_eq_dec.\n        rewrite T.location_location_eq_dec.\n        case (LocSet.Facts.eq_dec l l')=> L L'.\n        * move=> l1 l2.\n          have SC : is_sc lab f by exists l1.\n          move /NCOV; rewrite -? LocSet.set_eq_alt => HNCOV.\n          move=> l l'.\n          rewrite (same_lab_u2v_is_sc TCCOH) => SC.\n          rewrite (same_lab_u2v_is_acqrel TCCOH) => ACQ.\n          rewrite /Trav_Config.swf_fence_T //.\n          rewrite /Trav_Config.swf_fence_W //.\n          case (eq_dec l l')=> L L'.\n          { rewrite L L'.\n            rewrite (same_lab_u2v_is_sc TCCOH) => SC => /SC{SC}.\n            rewrite (same_lab_u2v_is_acqrel TCCOH) => ACQ => /ACQ{ACQ}.\n            rewrite (same_lab_u2v_is_rel TCCOH); eauto.\n            move=> l l'. rewrite ? (same_lab_u2v_is_sc TCCOH).\n            case (eq_dec l l')=> ->; [by left | right]; apply H.\n          }\nQed.",
+  "time": 110.94511938095093,
+  "n_attempts": 1
+}

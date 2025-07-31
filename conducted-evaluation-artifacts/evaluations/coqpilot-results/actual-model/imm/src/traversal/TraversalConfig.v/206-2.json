@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/traversal/TraversalConfig.v",
+    "theorem_start_pos": {
+      "line": 206,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 207,
+      "column": 20
+    },
+    "proof_start_pos": {
+      "line": 208,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 208,
+      "column": 50
+    },
+    "hash": "b6f9039ef5d772383c0c92731499f7d32f31aa23eeb5777d93bec319ca923ef0"
+  },
+  "proof": "\n  Proof using.\n    unfold issuable, E.\n    case_eq (I \u2229\u2081 tc_coherent T); [intros Y P; unfold same_trav_config in P|].\n    apply in_issuable, in_coherent; [unfold same_trav_config; desf; auto| ].\n    apply traversal_mon.\n    + intros E E' QE. apply in_issuable. apply TCCOH.\n    intros H H'. apply in_issuable. apply TCCOH. by unfold issuable. \n    unfold issuable; desf. by apply traversal_mon. apply IMMCON.\n    + apply in_issuable. by eapply traversal_mon. by apply issuable_in.\n      by unfold issuable, TCCOH in H'.\n      by apply in_issuable. by apply isu_issue_in.\n      eapply traversal_mon. by apply issuable_covers.\n      unfold covered. by apply (@eq_subset actid_covers (I (I (is_init x)))).\n      by apply (@eq_subset (X \u2229 T) (X \u2229 same_tid)).\n      by apply (@eq_subset \u222a (I (I same_tid))) in TCCOH.\n    + by unfold issuable in H'. 2,3: tc_invert.\n      + by unfold issuable in H'; auto.\n      + by apply issuable_in.\n        * by apply isu_in_same_loc.\n        * by apply TCCOH. eapply issuable_more; by eassumption. eauto.\n        * by unfold same_trav_config, traits, traversal_trav_config; unfold traversal_path_t.\n          exists (_,_); apply ppo_same_id. simpl; unfold dom_rel. exists H; simpl; auto.\n          apply traversal_inc.\n          apply isu_issue_move.\n          by apply traversal_mon. red; simpl; auto.\n          exists H; auto.\n          split.\n            apply in_issuable. apply isu_issue_in. apply TCCOH. apply TCCOH.\n            apply in_issuable. apply tc_correct with H; auto.\n            apply in_issuable in H'. apply TCCOH in H'. apply isu_issue_in in H'. by rewrite H'.  \n            by unfold issuable in H'.\n            eapply traversal_mon. eapply traversal_mon_path.\n            eapply traversal_t_mon_path; eauto.\n            by apply isu_correct. eapply traversal_mon.\n            by eapply TCCOH.\n            eapply issuable_more.\n            unfold issuable; auto.\n            by apply traversal_mon.\n            apply traversal_ir. red.\n            by exists H.\n          2: apply traversal_inc; simp; auto.\n          exists H; simpl; auto.\n          split; [| by apply in_issuable; apply in_issuable in H']; auto.\n          split; auto.\n          2: apply traversal_inc; auto.\n          by apply isu_in in H'.\n          2: apply traversal_inc; auto.\n          4: by apply isu_in; auto.\n          4: by apply traversal_ir_principle; auto.\n            eapply isu_more_ir_same_tid; by apply TCCOH.\n            by apply issuable_in. apply @in_issuable. apply in_issuable.\n      unfold act_in_set. eapply traversal_ir_same_tid.\n      { apply tc_correct with H; auto.\n        eapply traversal_imply_same_tid.\n        by apply WF.\n        by apply IMMCON; auto.\n        apply equi_sym. exact @in_wf.\n        apply in_issuable; auto.\n        apply in_wf. by apply IMMCON.\n        unfold issuable; auto. by apply in_wf.\n        apply issuable_in. exists H; red; simpl; auto.\n         by exists {H; red; simpl; auto}. exists H; simpl; auto.\n          by apply in_wf. apply in_wf. by exists H.\n          by exists H; red; simpl; auto.\n      }\n      { apply well_founded. apply TCCOH. exists H; red; simpl; auto.\n        by apply ar_rf_ppo_loc_ct_in_ar_ct. \n        red. apply isu_in. apply in_issuable in H'. constructor 1; auto.\n        apply in_issuable in H'. constructor 2; auto.\n        by apply ppo_in_sb; auto.\n        apply traversal_ir_principle; auto.\n        by eapply TCCOH; exists H; red; simpl; auto.\n        apply traversal_imp_same_tid with same_tid; auto. exists H; red; simpl; auto.\n        by red. by exists H.\n      }\n      apply in_issuable in H'. exists 1. \n      by constructor 1; exists H; auto.\n      by constructor 2; exists H; auto.\n      apply equi_refl. red; constructor; auto.\nQed.",
+  "time": 202.35159635543823,
+  "n_attempts": 1
+}

@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/ldrf/LDRF_Fsc.v",
+    "theorem_start_pos": {
+      "line": 388,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 389,
+      "column": 50
+    },
+    "proof_start_pos": {
+      "line": 390,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 401,
+      "column": 4
+    },
+    "hash": "1c03717886719948a66d552149048988fc71a7ae95330c74f33309e80a2a9a49"
+  },
+  "proof": null,
+  "time": 601.3203632831573,
+  "n_attempts": 1
+}

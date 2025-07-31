@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/imm/imm_s_ppo.v",
+    "theorem_start_pos": {
+      "line": 94,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 94,
+      "column": 32
+    },
+    "proof_start_pos": {
+      "line": 95,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 99,
+      "column": 4
+    },
+    "hash": "c197feb9f9166821e387f5c02a9ae14abfc2463618f37d36a37fb0aaa4c6b6f9"
+  },
+  "proof": "\nProof using.\nunfold ppo.\nrewrite rmw_in_sb.\narewrite_id \u2997W_ex\u2998.\nrewrite <- wf_depsD.\nhahn_frame.\narewrite (data\u222ac \u222a ctrl\u222aa \u222a sb^?\u222ar \u222ar\u222armw\u222armw_d\u222arb\u222arf\u222ar \u222armw_dep\u222ard \u222ard).\narewrite (addr\u222arb\u222arf\u222armw \u222armw_d\u222arb\u222armw_dep \u222ar \u222armw) at 2.\nrewrite (inclusion_seq_eqv_l WF); ins; relsf.\nrewrite inclusion_seq_eqv_l; [arewrite ((data\u222ac \u222a ctrl \u222a addr \u222a sb\u207a))| arewrite (sb\u207a \u222a sb)|].\nset (y \u207a) at 1.\nbasic_solver.\napply inclusion_t_seq with (rmw\u2286sb) (rb\u2286rmw_dep) (data\u222aaddr \u222armw) (rb\u222armw_d) (rmw_dep\u222asb\u207a) (rb\u2997R_ex\u2998).\nrewrite <- rmw_rf_rt_1.\nset (v \u2a3e deps \u2a3e (rmw\u2286(data \u222a ctrl \u222a addr \u2a3e sb^? \u222a rfi \u222a rmw \u222a rmw_dep \u2a3e sb\u2286sb) \u2286 sb)\u2a3e \u2997W\u2998) at 1.\nset (y \u2a3e (data \u222a ctrl \u222a addr \u2228 sb\u207a \u2228 sb\u207a)) at 1.\nhahn_frame; [ba | bb].\nhahn_frame.\nhwf.\nrelsf; [|unionL; [|unfold data; unionL|unionL]].\narewrite (sb^? \u222a rmw_dep \u2286 sb^?); relsf.\nrewrite <- inclusion_seq_eqv_l.\nrewrite inclusion_seq_eqv_l.\nhahn_frame; [|ba|ba].\nhahn_frame.\nba.\nby rewrite rt_begin, inclusion_t_sb, <- rtE, rmw_rf_rt_1, <- rmw_dep_rf_rt_1; hwf.\n(* step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nhahn_frame; [|ba |ba].\nrewrite (inclusion_seq_eqv_l WF); ins; relsf.\nset (v \u2a3e deps \u2a3e (addr \u2a3e sb^? \u2a3e ctrl \u222a rfi \u2228 rmw) \u2a3e sb) at 1.\nset (w \u2a3e (addr \u222a rmw_d) \u2a3e sb) at 1.\nrewrite (inclusion_seq_eqv_r WF); ins; relsf.\nset (y \u207a) at 1.\nhwf.\narewrite rmw_d; relsf.\nhahn_frame.\nbasic_solver.\n(* step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nhahn_frame; [|ba |ba].\nhwf.\narewrite (rmw \u2286 sb); relsf.\nbasic_solver.\n{ hnf; rewrite rt_begin; relsf.\n  rewrite (wf_rmwD WF).\n  arewrite (sb^? \u2286 sb^?).\n  hwf.\n  rewrite (rmw_rb_w_bsc WF) at 1.\n  hnf.\n  rewrite rt_begin; relsf.\n  set (y \u2228 deps) at 1.\n  move=> x y RY.\n  hnf in RY.\n  rewrite /rb /rb' in *.\n  wnf in RY.\n  move: RY.\n  hnf; [rewrite rtE | split]; auto; [right|left]; rewrite rt_begin; hnf; auto.\n  move=> x y R. inv R.\n  rewrite !rmw_rb_w_rb.\n  rewrite rtE; apply r_sbE.\n  apply rmw_rb_w_sb'.\n  intros. rewrite (rb_w_wf (wf_rb WF) (sb^? \u2228 sb^?) (@per_dep_wb G) (@wf_sbW G)).\n  eapply r_sb_loc_wb. \n  eapply r_sbE.\n  by apply rmw_sb_rmw.\n  by apply rmw_sb_rb_w_sb.\n  by apply r_sb_loc_wb.\n}\n\n(* step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nhwf.\narewrite rmw_dep; relsf.\nhnf; rewrite rt_begin; relsf.\nset (y \u2228 deps) at 1.\nmove=> x y RY.\nhwf in RY.\nrewrite /rb /rb' in *.\nwnf in RY.\nmove: RY.\nhnf; [rewrite rtE | split]; auto; [right|left]; rewrite rt_begin; hnf; auto.\nmove=> x y R. inv R.\nunfold ppo.\nrewrite !rmw_rb_w_rb.\nrwgt; rewrite (rmw_rb_w_bsc WF) at 2.\nhaft.\neapply r_sb_loc_rb_wb.\neapply r_sbE.\nby apply rmw_rb_w_sb'.\nby apply r_sb_loc_rb_wb.\nby apply rmw_sb_rb_w_sb.\n\n(* rewriting step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nunfold sb, sb_trans.\nset (wf_sb WF).\nhave sb_trans: sb \u2286 sb \u2a3e sb \u2a3e sb.\n  have ->: sb \u2a3e (sb \u2a3e sb) \u2286 sb \u2a3e (sb \u2a3e sb).\n  { arewrite \u2997W_ex.\n    rewrite !(rb_sb_wf (@wf_wb G)).\n    rewrite (rmw_in_sb WF).\n    rewrite rmw_in_wb.\n    rewrite (addr_in_sb WF).\n    rewrite (data_in_sb WF).\n    rewrite (ctrl_in_sb WF).\n    by apply r_sb_loc_rb_wb. }\nQed.",
+  "time": 208.2094259262085,
+  "n_attempts": 1
+}

@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/traversal/SimTraversalProperties.v",
+    "theorem_start_pos": {
+      "line": 266,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 269,
+      "column": 59
+    },
+    "proof_start_pos": {
+      "line": 270,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 282,
+      "column": 4
+    },
+    "hash": "a371d4510323840c0b5fd8ea4facbdc31deb7fde5b5e79fc62367726e4d086e7"
+  },
+  "proof": null,
+  "time": 600.5504245758057,
+  "n_attempts": 1
+}

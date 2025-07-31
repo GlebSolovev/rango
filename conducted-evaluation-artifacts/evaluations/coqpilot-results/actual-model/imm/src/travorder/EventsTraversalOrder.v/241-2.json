@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/EventsTraversalOrder.v",
+    "theorem_start_pos": {
+      "line": 241,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 242,
+      "column": 33
+    },
+    "proof_start_pos": {
+      "line": 243,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 251,
+      "column": 6
+    },
+    "hash": "3619ea9ce7d4f15fd15f2bb350fe44433227633e36ba6540cba3d7e6df9df503"
+  },
+  "proof": "\n  Proof using TLSCOH IORDCOH WF IOR.\n    rewrite coverableC.\n    apply ar_coverable_in_CI.\n    eauto using dom_rb_covered.\n    eauto using dom_raf_covered, ar_coverable_in_CI.\n    eauto using dom_rf_covered.\n    trivial using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered.\n    eauto using dom_rb_covered, TLSCOH, IORDCOH, sc_covered.\n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered, TLSCOH, IORDCOH.\n    eauto using dom_rf_covered, ar_coverable_in_CI, ar_coverable_in_CI, sc_covered,\n     IORDCOH.\n    apply dom_rf_covered. eauto using dom_rf_covered.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI. apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI. apply (ar_coverable_in_CI).\n    rewrite (iunion_comm IORDCOH).\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI. \n    eauto using ar_coverable_in_CI.\n    eauto using dom_rf_covered.\n    eauto using ar_coverable_in_CI, TLSCOH, IORDCOH.\n    apply ar_coverable_in_CI.\n    eauto using dom_rf_covered, IORDCOH, sc_covered.\n    apply ar_coverable_in_CI.  \n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered.\n    eauto using ar_coverable_in_CI, sc_covered.\n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI. \n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered. \n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    rewrite (iunion_comm IORDCOH) ; eauto.\n    rewrite (iunion_comm IORDCOH), Repl_not_init.\n    eapply (@ar_coverable_in_CI _ _ _ WF);auto.\n    rewrite covered_in_coverable at 1; auto. apply ar_coverable_in_CI. assumption. auto. assumption.\nQed.",
+  "time": 115.56607413291931,
+  "n_attempts": 1
+}

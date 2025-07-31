@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/EventsTraversalOrder.v",
+    "theorem_start_pos": {
+      "line": 356,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 357,
+      "column": 34
+    },
+    "proof_start_pos": {
+      "line": 358,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 360,
+      "column": 6
+    },
+    "hash": "3619ea9ce7d4f15fd15f2bb350fe44433227633e36ba6540cba3d7e6df9df503"
+  },
+  "proof": "\n  Proof using WF TLSCOH IORDCOH WFSC.\n    rewrite dom_eqv1. unfold ar_coverable.\n    rewrite c_in_coverable by eauto.\n    rewrite ar_C_in_CI. rewrite (@union_comm C). \n    rewrite set_inter_union_l; unionL.\n    rewrite <- w_covered_issued; eauto.\n    eapply w_covered_issued; eauto.\n    eapply w_covered_issued; eauto.\n    rewrite wf_RW_per_I. basic_solver.\n    by rewrite set_inter_union_l; unionL.\n    eapply seq_subset_eqL. unfold imp_s.w, w.\n    rewrite set_inter_union_l; unionL. eapply @union_monotone1.\n    rewrite set_inter_union_r; unionL. eapply seq_subset_eqL.\n    do 2 rewrite <- set_inter_comm. eapply w_covered_issued; eauto.\n    eapply seq_subset_eqL. by rewrite set_inter_A. eapply w_covered_issued; eauto.\n    rewrite set_inter_comm; eauto.\n    eapply seq_subset_eqL. eapply (sub_monotone1 S).\n    rewrite set_inter_comm; eauto.\n    eapply seq_subset_eqL. eapply (@sub_monotone_ind (C:=fun '(T, W_ex) => (I \u222a\u2081 T))).\n    rewrite set_inter_comm; eauto. eapply sub_monotone_ind. eapply subset_subset_issued.\n    by rewrite set_inter_comm; eauto.\n    eapply (@sub_transitive0 (I:=I)); auto.\n    rewrite set_inter_comm; eauto.\n    eapply (@sub_monotone_ind (C:=fun '(T, W_ex) => (I \u222a\u2081 T))).\n    rewrite set_inter_comm; eauto. eapply sub_monotone_ind. eapply subset_subset_issued.\n    by rewrite set_inter_comm; eauto.\n    eapply (@sub_transitive0 (I:=I)); auto.\n    by rewrite <- set_inter_union_l; eauto.\n    eapply w_covered_issued; eauto.\n    eapply sub_transitive1; eauto. eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive1; eauto. eauto. eapply sub_monotone; eauto.\n    by rewrite set_inter_comm; eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive1; eauto. eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive0; eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive0; eauto.\n    eapply sub_monotone_ind. eapply rel_transitive_to_issued; eauto.\n    eapply sub_monotone_ind; eauto with rel.\n    rewrite (@set_inter_comm_rev I); unfold I; auto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    eapply rel_to_issued_subset. eapply set_inter_subset; eauto.\n    rewrite set_inter_comm; eauto.\n    rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); auto.\n    unfold I. by rewrite (@set_inter_comm_rev I); eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    by rewrite (@sub_monotone0 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    eapply (@sub_traversable (I:=I)); eauto.\n    eapply (@sub_traversable (I:=I)); eauto.\n    rewrite (@set_inter_comm_rev I); unfold I; auto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    eapply rel_to_issued_subset; eapply set_inter_subset; eauto.\n    by rewrite set_inter_comm; eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    rewrite (@set_inter_cm_rev I); eauto.\n    basic_solver.\nQed.",
+  "time": 168.6537048816681,
+  "n_attempts": 1
+}

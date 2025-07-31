@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/hardware/Power_ppo.v",
+    "theorem_start_pos": {
+      "line": 202,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 202,
+      "column": 41
+    },
+    "proof_start_pos": {
+      "line": 203,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 207,
+      "column": 4
+    },
+    "hash": "147f43cede0883ca400dc61b799bfef12b3cc21f4ba1e4606f5022be75a479ca"
+  },
+  "proof": "\nProof using.\nsplit; [|basic_solver].\nunfold ppo.\nrewrite (wf_frD WF) at 1.\nbasic_solver 52.\nQed.",
+  "time": 6.872546195983887,
+  "n_attempts": 1
+}

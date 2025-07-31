@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TlsEventSets.v",
+    "theorem_start_pos": {
+      "line": 279,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 279,
+      "column": 78
+    },
+    "proof_start_pos": {
+      "line": 280,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 280,
+      "column": 51
+    },
+    "hash": "1ddfd61769b362bd68db6aeb2f85c984fde71ee26b43df9c9c3652a5bbcea54b"
+  },
+  "proof": " \nProof using. unfold reserved. basic_solver 10.\nQed.",
+  "time": 5.850225448608398,
+  "n_attempts": 1
+}

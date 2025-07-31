@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/c11/C11Toimm_s.v",
+    "theorem_start_pos": {
+      "line": 24,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 26,
+      "column": 19
+    },
+    "proof_start_pos": {
+      "line": 27,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 29,
+      "column": 4
+    },
+    "hash": "25cd6f4d7b48f3497e1ce70098b7b5295cfbc08de992340ad8b6eeca294672c5"
+  },
+  "proof": "\nProof.\n  arewrite sc in ecco by autoclass.\n  apply init_c11_consistent.\n  (* Prove both the P1 and P2 relation exists in the set\n     * of actual executions of xy and the subgraphs of xy *)\n  exists (fun r => exists r1 r2, psc\u207a \u2286 r1 \u222a r2 \u2227 r = dom psc r1 \u222a r2)\n    as ys.\n  assert (psc = \u2205\u2082).\n  { rewrite <- domA. cset_ind_right.\n    rewrite <- C_EXT_helper2.\n    eapply c_ext_consistentbyandcountable and_comm.\n    eapply and_assoc in IPC. simpl in IPC.\n    tauto. des; eauto.\n    splits. exists (@set_full G) (@set_of_nat G (countable_fin G)).\n    split; eauto.\nQed.",
+  "time": 28.20268726348877,
+  "n_attempts": 1
+}

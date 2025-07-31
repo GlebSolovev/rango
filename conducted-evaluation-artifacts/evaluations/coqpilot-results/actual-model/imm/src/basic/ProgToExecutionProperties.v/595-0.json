@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/basic/ProgToExecutionProperties.v",
+    "theorem_start_pos": {
+      "line": 595,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 598,
+      "column": 37
+    },
+    "proof_start_pos": {
+      "line": 599,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 602,
+      "column": 4
+    },
+    "hash": "0af7832d58573edc23beab16462578563031cf863ab3d36e1d56465b1bafeb0c"
+  },
+  "proof": null,
+  "time": 600.8142750263214,
+  "n_attempts": 1
+}

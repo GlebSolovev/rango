@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TLSCoherency.v",
+    "theorem_start_pos": {
+      "line": 197,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 198,
+      "column": 43
+    },
+    "proof_start_pos": {
+      "line": 199,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 199,
+      "column": 65
+    },
+    "hash": "797bb8b58dd44742be7cafee25a9ac674abd9773e34c7dfaab2d523d76838092"
+  },
+  "proof": " \n  Proof using.\n    intros [lt1 s1] [lt2 s2]; apply tlsc_init_issue.\n    eapply set_disjoint_iff; eauto.\n    apply set_disjoint_tls_in_exec G.\n    intro s. intros [l BL] [lt BE].\n    assert (s = singletons s \u2229\u2081 actid) as SL.\n    { destruct s as [r]. rewrite set_pair_alt; intro. cbn; desf. \n      intros [Hl | [H|[H|H]]; des]. intros [He [Hl0 _]] [[_ _] [_] [_]]; des. firstorder; des.\nQed.",
+  "time": 24.179483890533447,
+  "n_attempts": 1
+}

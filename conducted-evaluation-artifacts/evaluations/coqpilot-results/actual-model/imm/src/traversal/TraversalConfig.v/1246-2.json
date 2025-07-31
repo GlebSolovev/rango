@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/traversal/TraversalConfig.v",
+    "theorem_start_pos": {
+      "line": 1246,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 1247,
+      "column": 56
+    },
+    "proof_start_pos": {
+      "line": 1248,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 1256,
+      "column": 6
+    },
+    "hash": "b6f9039ef5d772383c0c92731499f7d32f31aa23eeb5777d93bec319ca923ef0"
+  },
+  "proof": "\n  Proof using TCCOH.\n    basic_solver 21.\n    case dom_sb_covered': (sbis) => H H'.\n    { simpl; rewrite seqA.\n      apply dom_W_Rel_sb_loc_I_in_C.\n      apply C_Rel_inclusion.\n      generalize dom_sb_covered.\n      basic_solver 21.\n      revert RELCOV; simpl.\n      basic_solver 21; relsf.\nQed.",
+  "time": 24.049320936203003,
+  "n_attempts": 1
+}

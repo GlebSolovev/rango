@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/ldrf/LDRF_Fsc.v",
+    "theorem_start_pos": {
+      "line": 426,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 426,
+      "column": 70
+    },
+    "proof_start_pos": {
+      "line": 427,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 427,
+      "column": 47
+    },
+    "hash": "1c03717886719948a66d552149048988fc71a7ae95330c74f33309e80a2a9a49"
+  },
+  "proof": "\nProof using DIFMODE WATF2.\n  intros A r. \n  split. { intro. intro. rewrite (ac_inj H) in H. apply (H x x). intros. assert (ex: Execution_immediate sb \u2a3e \u2997F \u2229\u2081 Sc\u2998 = [r (x \u2254 x).1\u00b2]). exact (exe_im_sc_weaken WF). rewrite <- H0. assert (r \u2997RW\u2998 \u2286 ac_irrelevant). (** a contradiction if x is x'*)\n    auto with coc. apply (H x). trivial. }\n  intros H. intro. intro. red in H0. assert (irr: irreflexive (R:=actid\u21be(R \u21aa (RW \u2a3e Sc)))) by []. apply (H x x). intros. apply r. assert (r \u2997A\u2997F \u2a3e immediate sb \u2a3e \u2997F \u2229\u2081 Sc\u2998). (** if x is x' then a contradiction if x is x'*)\n   apply (H x). trivial.\nQed.",
+  "time": 38.8867130279541,
+  "n_attempts": 1
+}

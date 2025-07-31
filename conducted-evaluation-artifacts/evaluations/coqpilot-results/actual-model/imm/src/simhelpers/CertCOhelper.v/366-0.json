@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/simhelpers/CertCOhelper.v",
+    "theorem_start_pos": {
+      "line": 366,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 366,
+      "column": 72
+    },
+    "proof_start_pos": {
+      "line": 367,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 383,
+      "column": 4
+    },
+    "hash": "a40a4c4240d84db25bd88db8853eb7b897ae52887a8f4a3d216c2307f0b51026"
+  },
+  "proof": "\nProof using wf_coE wf_coD.\nunfold codom_rel; unfolder; cbn. \nintros x [y [z [Hxz [Hyx [Hx Hy]]]]]. \nintros l [x' [y' [Hx' [Ix' [Hy' [Hy Ix]]]]]]. cbn in *.\nintros cx [a [b [Hax [Ha [Hx Hb]]]]].\nassert (forall a:actid, new_co a x -> new_co c x -> False).\n{ intros. destruct H as [[a' [b [H [Hx [Hy Ha]]]]]].\n  symmetry in Ha. destruct H; subst.\n  destruct H; subst.\n  desf; desf; split.\n  apply Hx; trivial.\n  destruct H. unfold new_co in H0. simpl in *.\n  apply H0 in H; subst; desf. destruct H; subst.\n  destruct H0. exists x1; apply new_colI; exists x, x1.\n  unfold new_col in H0; simpl in *.\n  eapply H0; [exists x1; exists x1; split; trivial | eexists]; subst.\n  firstorder. destruct H.\n  destruct H; subst.\n  firstorder. desf. destruct H; subst.\n  desf; desf; split; trivial.\n  destruct H; subst. exists x1; exists x0.\n  - destruct H8 as [[y' y''|y']].\n    apply H6 in H8; desf.\n    eapply colE; try eexists; eauto.\n    unfold col0 in *.\n    firstorder.\n  - apply H6 in H8; desf.\n    eapply colE. try. eexists; eauto.\n    unfold col0 in *.\n    firstorder.\nQed.",
+  "time": 127.54678249359131,
+  "n_attempts": 1
+}

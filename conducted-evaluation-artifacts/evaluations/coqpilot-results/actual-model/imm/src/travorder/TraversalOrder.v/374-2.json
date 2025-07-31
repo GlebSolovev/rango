@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TraversalOrder.v",
+    "theorem_start_pos": {
+      "line": 374,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 374,
+      "column": 50
+    },
+    "proof_start_pos": {
+      "line": 375,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 375,
+      "column": 56
+    },
+    "hash": "220bb3813d8ffcf4d122278f45c3bda98a336b526d696efc8c22745ad9856782"
+  },
+  "proof": "\nProof using. ins. iord_unfolder. eauto using seq_refl. unfold sb. apply sb_tid_init'. auto. simpl. eapply subsecless_strext; unfold_events. eapply subseq_ext_sb_simplified. ins.\nrewrite <- wf_subset_incl_sub_is_supremum_is_sub_1.\n  unfold ext_sb. basic_solver. unfold ext_sb, E, sc. ins_events_with.\n  unfold_events_with. unfold E, sc. unfold sc. ins. firstorder. unfold sc.\n  apply sub_trans with (I := ((\u2997(fun e r =>\n  match e with | InitEvent l => r <| l | ThreadEvent t i => r <| _ end) \u2261 s) \u2227 e)) as H.\n  simpl. by apply sub_refl.\n  unfold sub. intros ? ? ? [? | ] _ ->. firstorder. firstorder. simpl_events. unfold E, actid in *.  unfold_actid. simpl.\n  unfold sc. simpl. unfold sb. in_tac. split; ins. eauto 13 using in_unionL.\n  unfold_events_with. unfold E, sc. unfold sc. ins. firstorder. unfold sc.\n  simpl. unfold sc. simp. unfold sc. unfold ext_sb, sub. unfold sc.\n  ins. unfold_events_with. firstorder. unfold sc.\n  intros ? ?. simpl. firstorder. unfold E. unfold_actid. eapply sub_add.\n  simpl; firstorder.\nunfold sub; intros ? ? ? [? | [<- _]] _ ->. simpl in H0, H1. subst. split; eauto; unfold E, sc.\nsimpl_events. eapply subseq_ext_sb_simplified. unfold ext_sb, E, sc. simpl.\nright. red; simpl in *. exists 0, (0,0). eapply lt_sub. eapply (@sup_sub_strong_le (fun _ : actid => True)).\neauto.\nQed.",
+  "time": 94.33156490325928,
+  "n_attempts": 1
+}

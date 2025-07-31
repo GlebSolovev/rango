@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/basic/RMWinstrProps.v",
+    "theorem_start_pos": {
+      "line": 192,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 198,
+      "column": 16
+    },
+    "proof_start_pos": {
+      "line": 199,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 202,
+      "column": 4
+    },
+    "hash": "66b7ca8338634055ea04246237d9746b79e40e421c6ce5718d1d8eea8c242bd5"
+  },
+  "proof": "\nProof using.\n  symmetry in ISTEP; apply nth_error_In in ISTEP.\n  apply RMWREX in ISTEP; simpls; desf.\nQed.",
+  "time": 6.447479248046875,
+  "n_attempts": 1
+}

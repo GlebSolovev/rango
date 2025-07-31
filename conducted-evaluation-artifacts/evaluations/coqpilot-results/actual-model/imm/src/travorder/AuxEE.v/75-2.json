@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/AuxEE.v",
+    "theorem_start_pos": {
+      "line": 75,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 75,
+      "column": 34
+    },
+    "proof_start_pos": {
+      "line": 76,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 76,
+      "column": 45
+    },
+    "hash": "a07a7cc7a4a7bb55cb528a692296e08d5176f8926edd0a409c38fa063d6892d9"
+  },
+  "proof": "\n  Proof using WF.\n    intros t1 s1 t2 s2 Hc.\n    destruct s1 as (s1, e1, H1).\n    destruct h0 as (h0, e0, H0).\n    destruct s1 as (s2, s1, H1).\n    subst t2. subst t1.\n    rewrite <-s1.\n    rewrite <- Hc.\n    eauto. eauto.\n    subst t1. apply union_inj in s2; eauto.\n    eauto.\n    apply union_inj in s2;  eauto.\n    apply union_inj in Hc;  eauto.\n    eauto. eauto.\n    apply union_inj in s2;  eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    destruct s2 as (s2, H2).\n    destruct Hc as (t2, H2, Hc).\n    rewrite Hc. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto.\n    eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    (* same act *)\n    assert (H': \u2203 n, E t n /\\ (E p \\/ is_init n)).\n    eapply SCPL; eauto. assert (H': exists p, {t2 = t1 /\\ E p}).\n      destruct Hc as (a1, Hc).\n    exists a1. split; auto;eauto.\nQed.",
+  "time": 154.74038815498352,
+  "n_attempts": 1
+}

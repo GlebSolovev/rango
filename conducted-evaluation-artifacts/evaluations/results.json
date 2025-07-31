@@ -1,0 +1,1910 @@
+{
+  "imm/src/ldrf/LDRF_Fsc.v": [
+    {
+      "name": "ac_irr",
+      "start_line": 426,
+      "proof": "\nProof using DIFMODE WATF2.\n  intros A r. \n  split. { intro. intro. rewrite (ac_inj H) in H. apply (H x x). intros. assert (ex: Execution_immediate sb \u2a3e \u2997F \u2229\u2081 Sc\u2998 = [r (x \u2254 x).1\u00b2]). exact (exe_im_sc_weaken WF). rewrite <- H0. assert (r \u2997RW\u2998 \u2286 ac_irrelevant). (** a contradiction if x is x'*)\n    auto with coc. apply (H x). trivial. }\n  intros H. intro. intro. red in H0. assert (irr: irreflexive (R:=actid\u21be(R \u21aa (RW \u2a3e Sc)))) by []. apply (H x x). intros. apply r. assert (r \u2997A\u2997F \u2a3e immediate sb \u2a3e \u2997F \u2229\u2081 Sc\u2998). (** if x is x' then a contradiction if x is x'*)\n   apply (H x). trivial.\nQed.",
+      "elapsed_time": 38.8867130279541
+    },
+    {
+      "name": "imm_to_ocaml_causal",
+      "start_line": 388,
+      "proof": null,
+      "elapsed_time": 601.3203632831573
+    },
+    {
+      "name": "sb_f_at",
+      "start_line": 236,
+      "proof": null,
+      "elapsed_time": 600.5589830875397
+    }
+  ],
+  "imm/src/imm/imm_bob.v": [
+    {
+      "name": "sb_from_f_in_bob",
+      "start_line": 109,
+      "proof": "\nProof using.\n  etransitivity; [|by apply fwbob_in_bob].\n  apply sb_from_f_in_fwbob.\nQed.",
+      "elapsed_time": 5.292713403701782
+    },
+    {
+      "name": "bob_in_sb",
+      "start_line": 133,
+      "proof": null,
+      "elapsed_time": 600.5548613071442
+    },
+    {
+      "name": "sb_from_f_in_fwbob",
+      "start_line": 85,
+      "proof": "\nProof using. unfold fwbob. basic_solver 10.\nQed.",
+      "elapsed_time": 3.424057722091675
+    },
+    {
+      "name": "fwbob_in_sb",
+      "start_line": 118,
+      "proof": null,
+      "elapsed_time": 600.1126501560211
+    },
+    {
+      "name": "wf_bobE",
+      "start_line": 151,
+      "proof": null,
+      "elapsed_time": 601.9186103343964
+    },
+    {
+      "name": "wf_fwbobE",
+      "start_line": 143,
+      "proof": null,
+      "elapsed_time": 688.1888527870178
+    },
+    {
+      "name": "fwbob_in_bob",
+      "start_line": 88,
+      "proof": "\nProof using. constructor; unfold rfi; basic_solver 10.\nQed.",
+      "elapsed_time": 3.0036306381225586
+    }
+  ],
+  "imm/src/imm/imm_hb.v": [
+    {
+      "name": "hb_trans",
+      "start_line": 83,
+      "proof": null,
+      "elapsed_time": 602.0652511119843
+    },
+    {
+      "name": "release_in_hb_co",
+      "start_line": 469,
+      "proof": null,
+      "elapsed_time": 600.9487352371216
+    },
+    {
+      "name": "wf_swD",
+      "start_line": 226,
+      "proof": null,
+      "elapsed_time": 601.032541513443
+    },
+    {
+      "name": "w_hb_loc_r_in_co_rf",
+      "start_line": 642,
+      "proof": null,
+      "elapsed_time": 600.2392263412476
+    },
+    {
+      "name": "wf_rsE",
+      "start_line": 139,
+      "proof": null,
+      "elapsed_time": 600.2436816692352
+    },
+    {
+      "name": "cr_hb_cr_hb",
+      "start_line": 95,
+      "proof": null,
+      "elapsed_time": 601.0264568328857
+    },
+    {
+      "name": "wf_swE",
+      "start_line": 177,
+      "proof": null,
+      "elapsed_time": 602.2657279968262
+    },
+    {
+      "name": "w_hb_loc_w_in_co",
+      "start_line": 636,
+      "proof": null,
+      "elapsed_time": 600.8752274513245
+    },
+    {
+      "name": "rs_rf_rmw",
+      "start_line": 497,
+      "proof": null,
+      "elapsed_time": 600.5781571865082
+    },
+    {
+      "name": "wf_releaseE",
+      "start_line": 159,
+      "proof": "\nProof using.\nunfold rel, release at 2 4 6 20.\nrewrite (rtE (WF)).\ntype_solver.\narewrite (\u2997W \u2229\u2081 Rel\u2998 \u2a3e \u2997W \u2229\u2081 Rel\u2990 \u2286 release).\nunfold release.\nrelsf; unionR right -> right. rewrite (rel_r (@wf_rbE WF)).\nrewrite <-(sb_in_hb (\u2997F\u2998 \u2a3e sb)^? \u2a3e rs).\nsin_rewrite rel_rmw_rsE.\nrewrite <- (rel_r (WF)).\nsin_solve_by_id; subst.\napply rel_s_rel1.\narewrite (@wf_rsW G).\nrewrite <- rel_sb_co_trans.\nrewrite <- (rel_s (@wf_rmwE WF)).\napply rel_s_seq. ins. desf; eauto.\nrewrite <- seq_union_r, <- !seq_union_l.\nrewrite rel_rs_rel1.\nrewrite (cr_rs_rel WF).\narewrite (\u2997Rel\u2998 \u2a3e (\u2997F\u2998 \u2a3e sb)^? \u2a3e rs \u2a3e (\u2997W \u2229\u2081 Rel\u2998 \u222a \u2997E\u2998) \u2286 (\u2997W \u2229\u2081 Rel\u2990 \u2a3e \u2997W \u2229\u2081 Rel\u2990 \u2286 \u2997W \u2229\u2081 Rel\u2990)).\neapply ct_compat.\nrewrite <- rel_rs_rel1.\nsin_solve_by_id; subst.\nrewrite (cr_rsW WF), <- rel_sb_co_trans.\nrewrite (rel_sb_co_trans WF).\nrewrite (cr_rs_rel WF).\nrewrite <- rel_rs_rel1.\nrewrite seqA.\nrewrite (@sw_in_ar_helper WF).\nassert (sw: \u2997W\u2998 \u222a \u2997E\u2998 \u2a3e \u2997W\u2998 \u222a \u2997E\u2998 \u2286 (\u2997W \u2229\u2081 Rel\u2998 \u222a \u2997E\u2990)^?). {\n  rewrite (rel_s). desf.\n  unfold sw.\n  sin_solve_by_id; subst.\n  rewrite (rel_sub_ct_seq WF).\n  rewrite (rel_s).\n  assert (sub1 := sb_in_hb).\n  sin_solve_by_id; subst.\n  specialize (sub1 := (sb \u2286 hb)^?).\n  apply (comp_eq_setW1_union (sub1 _ (hb_in_2 hb))).\n  unfold rs, rs'; arewrite (\u2997Rel\u2998 \u2229\u2081 (rs\u2a3e \u2997E\u2a3e rs) \u2a3e (sb \u2a3e _ \u2229\u2081 _)^? \u2261 rs).\n  symmetry. neself.\n  apply @rel_s_sprop.\n  rewrite <- (rel_s1 _ (sub1 _ (hb_in_2 hb))).\n  symmetry. apply @rel_s_sprop.\n  rewrite <- (sub1 \u222a\u2081 sw).\n  rewrite <- @rel_cs1_ct_seq_r1.\n  hnf. unionR.\n  { rewrite rel_cs1_ct_seq_r1, <- rel_sub_ct_seq; eauto.\n    neself.\n    unfold rs.\n    rewrite (seqA (\u2997E\u2a3e \u2997W\u2998 \u222a sb\u2a3e sb)^?).\n    coset_sin_sin_trans.\n    rewrite (rel_s1 (sb\u2229same_loc\u2a3e\u2997W\u2998)).\n    rewrite rel_cs1_ct_seq_r1.\n    rewrite (rel_s _ _ (sb\u2229same_loc\u2a3erb\u2a3ermw)).\n    rewrite (rel_cs1_ct_seq_r1 _ _ (sb\u2229same_loc\u2a3erb\u2a3ermw)).\n    arewrite ((sb \u2a3e _ \u2229\u2081 _)^? \u2a3e \u2997W\u2998 \u2a3e rf\u2a3e rmw \u2286 sb\u2a3e sb\u2a3e sb\u2a3e rb\u2a3e sw).\n    rewrite (seqA (rb\u2a3e sw)).\n    rewrite <- rel_ext.\n    sin_solve_by_id; subst; type_solver.\n    intros ? ??. desf; type_solver.\n    type_solver.\n    cbn -[and].\n    fold_rel. fold_rel.\n    sin_solve_by_id.\n    type_solver.\n    neself; type_solver.\n    apply @sub_trans.\n    rewrite rel_sub_rr_ct_seq.\n    specialize (seq_union_r (\u2997F\u2998 \u2a3e sb)^? \u2a3e \u2997W\u2998 \u222a ((sb \u2229 same_loc)^? \u2a3e rf \u2a3e rmw)\uff09 in |- *.\n    rewrite sw_in_hb.\n    3: { subst.\n         rewrite <- (s_sw_in_ar_helper WF).\n         assert (I2 := ssw I).\n         rewrite I2.\n         rsubL' (sw: (sb \u2229 same_loc \u2a3e sw) 1\ufd2e \u2a3e \u2997W\u2998 \u2a3e release \u2260 nil).\n         rewrite ct_end.\n         setoid_rewrite sw_in_hb_helper.\n         arewrite (\u2997Rel\u2998 \u2a3e \u2997W\u2998 \u2a3e sb\u2a3e sb\u2a3e sb\u2a3e sw\u2a3e release \u222a \u2997W\u2998 \u2260 emptyset \u222a \u2997E\u2998).\n         ins.\n         cbn. fold_rel. fold_rel.\n         setoid_apply_rel.\n         type_solver.\n         type_solver.\n         type_solver.\n         rewrite (rw_mono_idem (F:=F)).\n         rewrite rel_bind.\n         type_solver.\n         type_solver.\n         type_solver.\n         rewrite rel_ext; intros ? ? ?. desf.\n         setoid_rewrite sw_in_hb_helper.\n         apply ssw_in_ar; type_solver.\n         setoid_rewrite sw_in_hb_helper.\n         ins.\n         cbn [ssw rel]. fold_rel.\n         rewrite sw_in_ar_helper.\n         setoid_rewrite <- sw_in_ar_helper.\n         rsubL' (ssw _ 2\ufd2e)%rel.\n         rename r0 into SL.\n         rsubL' (ssw (1\ufd2e) 2\ufd2e)%rel.\n         rename r0 into L.\n         rewrite rel_diff in SL.\n         rewrite rel_ext; try type_solver.\n         rewrite sub1.\n         setoid_rewrite rf.\n         rewrite pm_s.\n         rsubL' (sw: (sb \u2229 same_loc) 1\ufd2e \u2a3e sw)%rel.\n         rename r0 into SL.\n         rsubL' (sw: (sb \u2229 same_loc) 2\ufd2e \u2a3e sb \u2229 same_loc 2\ufd2e)%rel.\n         rename r0 into SL.\n         rewrite sub1 in SL.\n         rewrite rel_ext; type_solver.\n         rewrite sub1.\n         setoid_rewrite same_loc_swap.\n         rewrite sub1.\n         simpl. fold_rel. fold_rel. \n         type_solver.\n         type_solver.\n         type_solver.\n         type_solver.\n         type_solver.\n         rsubL (sw: (sb \u2229 same_loc))%rel.\n         fold_rel.\n         rsubL (sw: sb \u2229 same_loc)%rel.\n         rsubL' (S1w:=sw)%rel. rename r0 into SL.\n         subv SL. cbn [sindex1 sindex2].\n         rewrite ?actid_alt_isomorphic.\n         reflexivity.\n         ins; type_solver; type_solver; ext_tid_all; desf; try reflexivity.\n\n         (* SW/RF/RMW *)\n         intros l2 Hf1 ->. (* l2 ??= l2 \u2194 SW l2 /\\ RF l2 /\\ ??= RMW l2 *)\n         inversion Hf1.\n         rewrite ?actid_alt_isomorphic in Hf1. subst; unfold same_loc in Hf1.\n         specialize (Hf1' (tid_prop l2 Hf1 Ht)). desf.\n         rsub_n Hf1' (tid_prop l2 Hf1 Ht).\n         rsubL' (sw: (sw\u2a3e sw)\u2997F\u2998)%rel. fold_rel.\n         rsubL' (sw: (sw\u2a3e sw)\u2997W\u2998)%rel. fold_rel.\n         rsub_n' (sWRf:=sw\u2a3e sw)%rel.\n         fold_rel'. rewrite sWRf.\n         apply rel_ext'; type_solver; type_solver; try reflexivity.\n         unfold sw; inversion Hf1.\n         rsubL (sw: sw)%rel. fold_rel; try reflexivity.\n         ins; type_solver; reflexivity.\n         ins; fold_rel; try reflexivity.\n\n         (* SW *)\n         intros l2 Hf1 ->. (* l2 ??= l2 \u219d SW l2 /\\ RMWl2 l2^? /\\ ??= RMF l2 *)\n         inversion Hf1.\n         rewrite ?actid_alt_isomorphic in Hf1. subst; unfold same_loc in Hf1.\n         specialize (Hf1' (tid_prop l2 Hf1 Ht)). desf.\n         rsub_n Hf1' (tid_prop l2 Hf1 Ht).\n         rsubL' (swf: \u2997sw\u2997F\u2998)%rel. fold_rel.\n         rsubL' (sww: \u2997sw\u2997W\u2998)%rel. fold_rel.\n         apply rel_ext'; type_solver; type_solver; try reflexivity.\n         rsubL' (sWRf:=sw\u2a3e sw)%rel. rewrite <- sWRf. fold_rel'.\n         sub (rb:=rmw). fold_rel. apply rel_ext'; type_solver.\n         type_solver.\n         sub (rb:=rmw). fold_rel. sub (rb1:=rb). fold_rel.\n         ins; fold_rel'. type_solver. type_solver.\n         apply sub_trans with (sw:=\u2997sw\u2997F\u2998)%rel.\n         fold_rel. sub (rb:=sw). fold_rel'.\n         apply sub_trans with (sw:=\u2997sw\u2997W\u2998)%rel.\n         fold_rel. sub (rb:=sw). fold_rel.\n         apply sub_trans with (sw:=rb).\n         apply rmw_sub_same_s. fold_rel.\n\n         intros l2 Hf2 ->. (* l2 ??= l2 \u219d false /\\ (RMF \u2997sw)\u2997F\u2998 \u2a3e (Rf\u2997W) \u2997sw<- /\\ RMW\u2997E\u2997W *)\n         inversion Hf2.\n         rewrite ?actid_alt_isomorphic in Hf2. subst; unfold same_loc in Hf2.\n         specialize (Hf2' (tid_prop l2 Hf2 Ht)). desf.\n         rsub_n Hf2' (sw: \u2997sw\u2997F\u2998)%rel. fold_rel.\n         rsubL' (sWRf:=sw\u2a3e sw)%rel.  rewrite <- sWRf. fold_rel'.\n         sub (rb:=sb). fold_rel.\n         apply rel_ext'; type_solver; type_solver.\n         type_solver.\n         apply sub_trans with (sw:=\u2997sw\u2997W\u2998)%rel.\n         fold_rel. sub (rb:=sw). fold_rel.\n         type_solver.\n         apply sub_trans with (sw:=\u2997sw\u2997E\u2998)%rel.\n         rsub (wRfw:=\u2997W\u2997E\u2998)%rel (rb:=wRfw)%rel.\n         fold_rel. sub (rb:=sw). fold_rel.\n         type_solver; type_solver.\n         apply sub_trans with (sw:=\u2997W\u2998)%rel.\n         fold_rel. sub (rb:=sw). fold_rel.\n         cut (sw = W). { intros. subst. type_solver. type_solver. type_solver. type_solver. sol_bisel. destruct a. tauto.\n         type_solver; type_solver. type_solver. type_solver. }\nQed.",
+      "elapsed_time": 498.0734965801239
+    },
+    {
+      "name": "eco_sw",
+      "start_line": 442,
+      "proof": null,
+      "elapsed_time": 1111.3423063755035
+    }
+  ],
+  "imm/src/imm/Sc_opt.v": [
+    {
+      "name": "psc_base_rw_rw",
+      "start_line": 133,
+      "proof": null,
+      "elapsed_time": 928.1645047664642
+    }
+  ],
+  "imm/src/imm/imm_rfppo.v": [
+    {
+      "name": "IMM_ar_rf_ppo_loc_ct_in_ar_ct",
+      "start_line": 98,
+      "proof": null,
+      "elapsed_time": 601.310631275177
+    },
+    {
+      "name": "IMM_no_ar_rf_ppo_loc_to_init",
+      "start_line": 143,
+      "proof": null,
+      "elapsed_time": 600.4770367145538
+    }
+  ],
+  "imm/src/imm/SubExecution.v": [
+    {
+      "name": "sub_imm_consistent",
+      "start_line": 582,
+      "proof": null,
+      "elapsed_time": 600.9146106243134
+    },
+    {
+      "name": "sub_rfe_in",
+      "start_line": 318,
+      "proof": null,
+      "elapsed_time": 1149.1626334190369
+    },
+    {
+      "name": "sub_iord",
+      "start_line": 492,
+      "proof": null,
+      "elapsed_time": 600.2577955722809
+    },
+    {
+      "name": "sub_Rel",
+      "start_line": 178,
+      "proof": "\nProof using SUB. by rewrite (sub_lab SUB).\nQed.",
+      "elapsed_time": 4.437719821929932
+    },
+    {
+      "name": "restrict_sub",
+      "start_line": 617,
+      "proof": null,
+      "elapsed_time": 861.6725642681122
+    },
+    {
+      "name": "sub_sw_in",
+      "start_line": 390,
+      "proof": null,
+      "elapsed_time": 600.9511234760284
+    },
+    {
+      "name": "sub_val",
+      "start_line": 200,
+      "proof": "\nProof using SUB. by rewrite (sub_lab SUB).\nQed.",
+      "elapsed_time": 4.543199062347412
+    },
+    {
+      "name": "sub_IPROP",
+      "start_line": 475,
+      "proof": null,
+      "elapsed_time": 600.4381604194641
+    },
+    {
+      "name": "sub_rfi_in",
+      "start_line": 309,
+      "proof": "\nProof using SUB. unfold Execution.rfi'; rewrite sub_sf, sub_rf; apply sub_rf. basic_solver. rewrite sub_rfi; auto. apply sub_rf. basic_solver.\nQed.",
+      "elapsed_time": 10.908289670944214
+    },
+    {
+      "name": "sub_SB",
+      "start_line": 437,
+      "proof": null,
+      "elapsed_time": 600.8259875774384
+    },
+    {
+      "name": "sub_addr_in",
+      "start_line": 207,
+      "proof": "\nProof using SUB. rewrite (sub_addr SUB); basic_solver.\nQed.",
+      "elapsed_time": 5.007262706756592
+    },
+    {
+      "name": "restrict_threads_bound",
+      "start_line": 667,
+      "proof": null,
+      "elapsed_time": 601.520804643631
+    }
+  ],
+  "imm/src/imm/imm_sToimm.v": [
+    {
+      "name": "imm_consistentimplies_s_imm_psc_consistent",
+      "start_line": 152,
+      "proof": null,
+      "elapsed_time": 600.3114936351776
+    }
+  ],
+  "imm/src/imm/imm_s.v": [
+    {
+      "name": "wf_pscE",
+      "start_line": 131,
+      "proof": null,
+      "elapsed_time": 600.6667060852051
+    },
+    {
+      "name": "bob_in_ar",
+      "start_line": 473,
+      "proof": null,
+      "elapsed_time": 602.1369915008545
+    },
+    {
+      "name": "rfe_rmw_in_ar_ct",
+      "start_line": 646,
+      "proof": null,
+      "elapsed_time": 600.3240497112274
+    },
+    {
+      "name": "rf_sb_sc_rt_sb_fwbob_in_ar",
+      "start_line": 746,
+      "proof": null,
+      "elapsed_time": 721.1268396377563
+    },
+    {
+      "name": "rfrmw_in_im_co",
+      "start_line": 584,
+      "proof": null,
+      "elapsed_time": 601.2728049755096
+    },
+    {
+      "name": "wf_ar_rfrmw_ctE",
+      "start_line": 780,
+      "proof": null,
+      "elapsed_time": 600.5089073181152
+    },
+    {
+      "name": "wf_ar_rfrmwE",
+      "start_line": 771,
+      "proof": null,
+      "elapsed_time": 602.9296147823334
+    },
+    {
+      "name": "wf_ar_rf_ppo_locE",
+      "start_line": 803,
+      "proof": null,
+      "elapsed_time": 1080.7676889896393
+    }
+  ],
+  "imm/src/imm/imm_ppo.v": [
+    {
+      "name": "fwbob_ppo",
+      "start_line": 164,
+      "proof": null,
+      "elapsed_time": 601.4833204746246
+    },
+    {
+      "name": "rmw_sb_W_in_ppo",
+      "start_line": 97,
+      "proof": null,
+      "elapsed_time": 601.6624908447266
+    },
+    {
+      "name": "detour_in_ar_int",
+      "start_line": 254,
+      "proof": "\nProof using.\nunfold ar_int.\nbasic_solver 6.\nQed.",
+      "elapsed_time": 4.07580304145813
+    }
+  ],
+  "imm/src/imm/Rel_opt.v": [
+    {
+      "name": "fr_eq",
+      "start_line": 267,
+      "proof": "\nProof using. by unfold G', relax_release_labels, is_f, is_rel, is_rel'; ins. done.\nQed.",
+      "elapsed_time": 5.231407880783081
+    },
+    {
+      "name": "same_loc_eq",
+      "start_line": 253,
+      "proof": null,
+      "elapsed_time": 601.1173522472382
+    },
+    {
+      "name": "F_Rel_eq",
+      "start_line": 218,
+      "proof": "\nProof using. \npose proof F_AcqRel_eq. rewrite <- H; eauto; intros; apply F_AcqRel_eq. \nsymmetry. apply F_eq. unfold G', relax_release_labels, is_f, is_ra, is_rel, Events.mod; ins.\nunfolder; ins; split; ins; desf; splits; eauto.\nQed.",
+      "elapsed_time": 13.21340036392212
+    },
+    {
+      "name": "complete_eq",
+      "start_line": 541,
+      "proof": null,
+      "elapsed_time": 601.0521075725555
+    },
+    {
+      "name": "F_AcqRel_eq",
+      "start_line": 212,
+      "proof": null,
+      "elapsed_time": 624.773603439331
+    },
+    {
+      "name": "F_sw_eq",
+      "start_line": 376,
+      "proof": "\nProof using SC_F W_REL.\nunfold sw; rewrite sw_eq, rs_eq, F_eq, Rel_eq.\nunfold sw'; type_solver 21.\nbasic_solver 21.\nunfolder in *; desf; unfold sc_sub; desf; splits; eauto;\nin_sc; in_w; tauto.\nunfolder; ins; descf; split; eauto.\napply swap_releaseE1; auto.\nintros x y [xR xE lxR]; in_w; elim_rel.\ntype_solver 12.\nassert( (sw \u2a3e \u2997W\u2998 \u2286 sw)^? \u2a3e sw'^? \u2a3e (sw \u2a3e \u2997W\u2998 \u2a3e sw)^?).\n{\n  apply same_loc_sw. \n  unfold sw'; type_solver 16; inversion F2; apply same_loc_sw; eauto.\n  inversion_clear F2; subst. inversion_clear F3; subst. exact F1.\n  rewrite SW_D; auto.\n  rewrite SW_D in *; auto.\n}\nQed.",
+      "elapsed_time": 37.62296175956726
+    },
+    {
+      "name": "rmw_sw_eq",
+      "start_line": 383,
+      "proof": null,
+      "elapsed_time": 610.9553637504578
+    }
+  ],
+  "imm/src/imm/imm_s_hb_hb.v": [
+    {
+      "name": "s_rs_in_rs",
+      "start_line": 77,
+      "proof": null,
+      "elapsed_time": 601.0143332481384
+    }
+  ],
+  "imm/src/imm/imm_s_rfppo.v": [
+    {
+      "name": "no_ar_rfppo_rt_to_init",
+      "start_line": 181,
+      "proof": null,
+      "elapsed_time": 601.0126903057098
+    }
+  ],
+  "imm/src/imm/CombRelations.v": [
+    {
+      "name": "urr_hb_sc_hb_irr",
+      "start_line": 681,
+      "proof": null,
+      "elapsed_time": 601.3187983036041
+    },
+    {
+      "name": "furr_hb_sc_hb_irr",
+      "start_line": 691,
+      "proof": null,
+      "elapsed_time": 600.9235198497772
+    },
+    {
+      "name": "urr_f_sc",
+      "start_line": 202,
+      "proof": null,
+      "elapsed_time": 648.7103366851807
+    },
+    {
+      "name": "wf_S_tmrD",
+      "start_line": 137,
+      "proof": "\nProof using.\nsplit; [|basic_solver].\nunfold S_tmr.\nrewrite wf_urrD.\nbasic_solver 20.\nQed.",
+      "elapsed_time": 8.07094955444336
+    },
+    {
+      "name": "s_tm_union",
+      "start_line": 443,
+      "proof": "\nProof using. unfold S_tm; basic_solver 21. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. apply s_tmr_union. unfold S_tm. basic_solver 21. unfold S_tmr; basic_solver 21.\nQed.",
+      "elapsed_time": 44.48393678665161
+    },
+    {
+      "name": "wf_urrD",
+      "start_line": 104,
+      "proof": null,
+      "elapsed_time": 600.5215322971344
+    },
+    {
+      "name": "t_rel_other_thread",
+      "start_line": 517,
+      "proof": "\nProof using.\n  unfold t_rel, c_rel. rewrite <- !id_inter.\n  rewrite !set_inter_union_l.\n  arewrite (Init \u2229\u2081 C \u2261\u2081 Init \u2229\u2081 C').\n  { split; [basic_solver|].\n    rewrite CE. generalize CINIT. basic_solver. }\n  basic_solver 21.\nQed.",
+      "elapsed_time": 17.645485639572144
+    },
+    {
+      "name": "furr_bunion",
+      "start_line": 578,
+      "proof": null,
+      "elapsed_time": 600.633739233017
+    },
+    {
+      "name": "t_cur_in_t_acq",
+      "start_line": 301,
+      "proof": null,
+      "elapsed_time": 600.5193862915039
+    },
+    {
+      "name": "urr_alt",
+      "start_line": 630,
+      "proof": null,
+      "elapsed_time": 1165.5886487960815
+    }
+  ],
+  "imm/src/imm/imm.v": [
+    {
+      "name": "CoherentPSC",
+      "start_line": 187,
+      "proof": null,
+      "elapsed_time": 600.5913505554199
+    },
+    {
+      "name": "wf_arE",
+      "start_line": 146,
+      "proof": null,
+      "elapsed_time": 600.8811178207397
+    }
+  ],
+  "imm/src/imm/imm_s_ppo.v": [
+    {
+      "name": "ppo_rfi_ppo",
+      "start_line": 209,
+      "proof": null,
+      "elapsed_time": 601.2940962314606
+    },
+    {
+      "name": "w_ex_acq_sb_w_in_ar_int",
+      "start_line": 268,
+      "proof": null,
+      "elapsed_time": 601.0821042060852
+    },
+    {
+      "name": "ppo_in_ar_int",
+      "start_line": 262,
+      "proof": "\nProof using.\nunfold ar_int.\nrewrite bob_r_sb.\nrewrite ppo_rfi_ppo.\nassimp.\nsimpl.\nunfold bob as bo.\nrewrite s_rti.\nbasic_solver.\nrewrite (ppo_bob E), (ppo_rfi E).\nbasic_solver.\nunfold bo.\nsin_abstra.\nrewrite ppo_rfi_ppo.\narewrite (rfi \u2286 \u2997R \u2229\u2081 Acq\u2998).\nrewrite s_rfi, ppo_rfi_ppo.\nbasic_solver 30.\nQed.",
+      "elapsed_time": 23.646055698394775
+    },
+    {
+      "name": "rmw_in_ppo",
+      "start_line": 94,
+      "proof": "\nProof using.\nunfold ppo.\nrewrite rmw_in_sb.\narewrite_id \u2997W_ex\u2998.\nrewrite <- wf_depsD.\nhahn_frame.\narewrite (data\u222ac \u222a ctrl\u222aa \u222a sb^?\u222ar \u222ar\u222armw\u222armw_d\u222arb\u222arf\u222ar \u222armw_dep\u222ard \u222ard).\narewrite (addr\u222arb\u222arf\u222armw \u222armw_d\u222arb\u222armw_dep \u222ar \u222armw) at 2.\nrewrite (inclusion_seq_eqv_l WF); ins; relsf.\nrewrite inclusion_seq_eqv_l; [arewrite ((data\u222ac \u222a ctrl \u222a addr \u222a sb\u207a))| arewrite (sb\u207a \u222a sb)|].\nset (y \u207a) at 1.\nbasic_solver.\napply inclusion_t_seq with (rmw\u2286sb) (rb\u2286rmw_dep) (data\u222aaddr \u222armw) (rb\u222armw_d) (rmw_dep\u222asb\u207a) (rb\u2997R_ex\u2998).\nrewrite <- rmw_rf_rt_1.\nset (v \u2a3e deps \u2a3e (rmw\u2286(data \u222a ctrl \u222a addr \u2a3e sb^? \u222a rfi \u222a rmw \u222a rmw_dep \u2a3e sb\u2286sb) \u2286 sb)\u2a3e \u2997W\u2998) at 1.\nset (y \u2a3e (data \u222a ctrl \u222a addr \u2228 sb\u207a \u2228 sb\u207a)) at 1.\nhahn_frame; [ba | bb].\nhahn_frame.\nhwf.\nrelsf; [|unionL; [|unfold data; unionL|unionL]].\narewrite (sb^? \u222a rmw_dep \u2286 sb^?); relsf.\nrewrite <- inclusion_seq_eqv_l.\nrewrite inclusion_seq_eqv_l.\nhahn_frame; [|ba|ba].\nhahn_frame.\nba.\nby rewrite rt_begin, inclusion_t_sb, <- rtE, rmw_rf_rt_1, <- rmw_dep_rf_rt_1; hwf.\n(* step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nhahn_frame; [|ba |ba].\nrewrite (inclusion_seq_eqv_l WF); ins; relsf.\nset (v \u2a3e deps \u2a3e (addr \u2a3e sb^? \u2a3e ctrl \u222a rfi \u2228 rmw) \u2a3e sb) at 1.\nset (w \u2a3e (addr \u222a rmw_d) \u2a3e sb) at 1.\nrewrite (inclusion_seq_eqv_r WF); ins; relsf.\nset (y \u207a) at 1.\nhwf.\narewrite rmw_d; relsf.\nhahn_frame.\nbasic_solver.\n(* step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nhahn_frame; [|ba |ba].\nhwf.\narewrite (rmw \u2286 sb); relsf.\nbasic_solver.\n{ hnf; rewrite rt_begin; relsf.\n  rewrite (wf_rmwD WF).\n  arewrite (sb^? \u2286 sb^?).\n  hwf.\n  rewrite (rmw_rb_w_bsc WF) at 1.\n  hnf.\n  rewrite rt_begin; relsf.\n  set (y \u2228 deps) at 1.\n  move=> x y RY.\n  hnf in RY.\n  rewrite /rb /rb' in *.\n  wnf in RY.\n  move: RY.\n  hnf; [rewrite rtE | split]; auto; [right|left]; rewrite rt_begin; hnf; auto.\n  move=> x y R. inv R.\n  rewrite !rmw_rb_w_rb.\n  rewrite rtE; apply r_sbE.\n  apply rmw_rb_w_sb'.\n  intros. rewrite (rb_w_wf (wf_rb WF) (sb^? \u2228 sb^?) (@per_dep_wb G) (@wf_sbW G)).\n  eapply r_sb_loc_wb. \n  eapply r_sbE.\n  by apply rmw_sb_rmw.\n  by apply rmw_sb_rb_w_sb.\n  by apply r_sb_loc_wb.\n}\n\n(* step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nhwf.\narewrite rmw_dep; relsf.\nhnf; rewrite rt_begin; relsf.\nset (y \u2228 deps) at 1.\nmove=> x y RY.\nhwf in RY.\nrewrite /rb /rb' in *.\nwnf in RY.\nmove: RY.\nhnf; [rewrite rtE | split]; auto; [right|left]; rewrite rt_begin; hnf; auto.\nmove=> x y R. inv R.\nunfold ppo.\nrewrite !rmw_rb_w_rb.\nrwgt; rewrite (rmw_rb_w_bsc WF) at 2.\nhaft.\neapply r_sb_loc_rb_wb.\neapply r_sbE.\nby apply rmw_rb_w_sb'.\nby apply r_sb_loc_rb_wb.\nby apply rmw_sb_rb_w_sb.\n\n(* rewriting step *)\nset (y \u207a) at 1.\nhahn_frame; [ba|ba|ba].\nunfold sb, sb_trans.\nset (wf_sb WF).\nhave sb_trans: sb \u2286 sb \u2a3e sb \u2a3e sb.\n  have ->: sb \u2a3e (sb \u2a3e sb) \u2286 sb \u2a3e (sb \u2a3e sb).\n  { arewrite \u2997W_ex.\n    rewrite !(rb_sb_wf (@wf_wb G)).\n    rewrite (rmw_in_sb WF).\n    rewrite rmw_in_wb.\n    rewrite (addr_in_sb WF).\n    rewrite (data_in_sb WF).\n    rewrite (ctrl_in_sb WF).\n    by apply r_sb_loc_rb_wb. }\nQed.",
+      "elapsed_time": 208.2094259262085
+    }
+  ],
+  "imm/src/imm/imm_s_hb.v": [
+    {
+      "name": "release_rf_rmw_steps",
+      "start_line": 320,
+      "proof": null,
+      "elapsed_time": 600.7545013427734
+    },
+    {
+      "name": "hb_irr",
+      "start_line": 341,
+      "proof": null,
+      "elapsed_time": 601.3527584075928
+    },
+    {
+      "name": "sw_in_hb",
+      "start_line": 85,
+      "proof": "\nProof using. vauto.\nQed.",
+      "elapsed_time": 2.184417247772217
+    },
+    {
+      "name": "loceq_rs",
+      "start_line": 103,
+      "proof": null,
+      "elapsed_time": 601.5706310272217
+    },
+    {
+      "name": "hb_first_Rel",
+      "start_line": 289,
+      "proof": null,
+      "elapsed_time": 694.9063420295715
+    }
+  ],
+  "imm/src/hardware/immToARMhelper.v": [
+    {
+      "name": "hb_f_sy_in_ord",
+      "start_line": 357,
+      "proof": null,
+      "elapsed_time": 601.1002662181854
+    },
+    {
+      "name": "W_ex_acq_sb_in_boba1",
+      "start_line": 511,
+      "proof": null,
+      "elapsed_time": 600.4002461433411
+    },
+    {
+      "name": "WF",
+      "start_line": 96,
+      "proof": null,
+      "elapsed_time": 613.2908985614777
+    }
+  ],
+  "imm/src/hardware/imm_sToARM.v": [
+    {
+      "name": "IMM_s_psc_consistent",
+      "start_line": 245,
+      "proof": null,
+      "elapsed_time": 601.2033784389496
+    },
+    {
+      "name": "RMW_COI",
+      "start_line": 125,
+      "proof": null,
+      "elapsed_time": 602.0766069889069
+    },
+    {
+      "name": "C_SC",
+      "start_line": 224,
+      "proof": null,
+      "elapsed_time": 601.2882699966431
+    }
+  ],
+  "imm/src/hardware/TSO.v": [
+    {
+      "name": "CON_WF",
+      "start_line": 73,
+      "proof": "\nProof using CON. split; [|reflexivity]. do 2 (apply CON; type_solver); auto.\nQed.",
+      "elapsed_time": 4.102191925048828
+    }
+  ],
+  "imm/src/hardware/Power.v": [
+    {
+      "name": "fence_hb_fri",
+      "start_line": 251,
+      "proof": null,
+      "elapsed_time": 600.6390514373779
+    },
+    {
+      "name": "wf_hbD",
+      "start_line": 141,
+      "proof": "\nProof using.\nsplit; [|basic_solver].\nunfold hb.\nrewrite (wf_ppoD WF) at 1.\nrewrite (wf_fenceD WF) at 1.\nrewrite (wf_rfeD WF) at 1.\nrewrite (wf_rdwD WF) at 1.\ntype_solver 42.\nQed.",
+      "elapsed_time": 12.57443904876709
+    },
+    {
+      "name": "S_rw",
+      "start_line": 450,
+      "proof": null,
+      "elapsed_time": 600.793776512146
+    },
+    {
+      "name": "rw_S",
+      "start_line": 442,
+      "proof": null,
+      "elapsed_time": 601.5135564804077
+    }
+  ],
+  "imm/src/hardware/immToPower.v": [
+    {
+      "name": "W_ex_rfi_R_Acq_ct_step",
+      "start_line": 639,
+      "proof": null,
+      "elapsed_time": 601.8508176803589
+    },
+    {
+      "name": "rmw_sb_W_in_ppo",
+      "start_line": 245,
+      "proof": null,
+      "elapsed_time": 600.5388503074646
+    },
+    {
+      "name": "rs_in_rs_big",
+      "start_line": 146,
+      "proof": null,
+      "elapsed_time": 600.0270998477936
+    },
+    {
+      "name": "RMW_CTRL_FAIL'",
+      "start_line": 240,
+      "proof": null,
+      "elapsed_time": 600.4954512119293
+    },
+    {
+      "name": "sw_in_sw_big",
+      "start_line": 163,
+      "proof": null,
+      "elapsed_time": 602.9160168170929
+    },
+    {
+      "name": "C_EXT_helper08",
+      "start_line": 675,
+      "proof": null,
+      "elapsed_time": 600.8337502479553
+    }
+  ],
+  "imm/src/hardware/Power_ppo.v": [
+    {
+      "name": "cc_in_sb",
+      "start_line": 386,
+      "proof": "\nProof using.\nunfolder. ins; desf; splits; eauto; basic_solver.\nins; desf; splits; eauto; basic_solver.\nins; desf; splits; auto; basic_solver.\nins; desf; splits; auto; basic_solver.\nins; desf; splits; auto; basic_solver. intros. by apply cc_ci_in_ci in H.\napply cc_ci_in_cc in H; auto.\napply cc_cc_in_cc in H; auto.\nby apply cc_ci_in_cc in H.\napply cc_in_cc in H; auto.\napply cc_ci_in_cc in H; auto.\napply cc_in_cc in H; auto.\nby apply cc_in_cc in H.\neapply cc_in_ic in H; auto.\napply ic_in_sb in H; auto.\nQed.",
+      "elapsed_time": 29.87510585784912
+    },
+    {
+      "name": "rdw_rbi_in_rbi",
+      "start_line": 463,
+      "proof": null,
+      "elapsed_time": 600.4613337516785
+    },
+    {
+      "name": "addrsbW_in_ppo",
+      "start_line": 455,
+      "proof": null,
+      "elapsed_time": 600.2670857906342
+    },
+    {
+      "name": "ctrli_RW_in_ic",
+      "start_line": 681,
+      "proof": null,
+      "elapsed_time": 600.0040311813354
+    },
+    {
+      "name": "wf_ci0E",
+      "start_line": 117,
+      "proof": null,
+      "elapsed_time": 600.6709163188934
+    },
+    {
+      "name": "Li_in_L",
+      "start_line": 629,
+      "proof": null,
+      "elapsed_time": 600.142804145813
+    },
+    {
+      "name": "wf_ppoD",
+      "start_line": 202,
+      "proof": "\nProof using.\nsplit; [|basic_solver].\nunfold ppo.\nrewrite (wf_frD WF) at 1.\nbasic_solver 52.\nQed.",
+      "elapsed_time": 6.872546195983887
+    },
+    {
+      "name": "wf_helperE",
+      "start_line": 137,
+      "proof": null,
+      "elapsed_time": 600.6713609695435
+    },
+    {
+      "name": "Li_is_ii",
+      "start_line": 586,
+      "proof": null,
+      "elapsed_time": 600.99360871315
+    },
+    {
+      "name": "ct_ppo_ctrli_rw_in_ppo",
+      "start_line": 731,
+      "proof": null,
+      "elapsed_time": 601.9085352420807
+    },
+    {
+      "name": "ii_in_sb",
+      "start_line": 371,
+      "proof": null,
+      "elapsed_time": 601.7705037593842
+    },
+    {
+      "name": "basic_to_transitional",
+      "start_line": 537,
+      "proof": null,
+      "elapsed_time": 600.9085445404053
+    },
+    {
+      "name": "wf_ii0E",
+      "start_line": 106,
+      "proof": null,
+      "elapsed_time": 688.942319393158
+    },
+    {
+      "name": "ctrli_in_ctrl",
+      "start_line": 293,
+      "proof": null,
+      "elapsed_time": 601.1856224536896
+    },
+    {
+      "name": "L_in_union",
+      "start_line": 517,
+      "proof": null,
+      "elapsed_time": 600.3199665546417
+    },
+    {
+      "name": "ci_ii_in_ci",
+      "start_line": 325,
+      "proof": "\nProof using. unfolder; ins; desf; vauto.\nQed.",
+      "elapsed_time": 3.136429786682129
+    },
+    {
+      "name": "wf_cc0D",
+      "start_line": 229,
+      "proof": null,
+      "elapsed_time": 603.0405788421631
+    },
+    {
+      "name": "rfi_in_ii",
+      "start_line": 405,
+      "proof": null,
+      "elapsed_time": 600.924840927124
+    }
+  ],
+  "imm/src/hardware/Power_fences.v": [
+    {
+      "name": "RW_sb_lwsync_in_lwsync",
+      "start_line": 185,
+      "proof": null,
+      "elapsed_time": 617.2335157394409
+    },
+    {
+      "name": "fence_trans",
+      "start_line": 257,
+      "proof": null,
+      "elapsed_time": 600.1932234764099
+    },
+    {
+      "name": "lwsync_alt",
+      "start_line": 112,
+      "proof": null,
+      "elapsed_time": 1132.1468000411987
+    },
+    {
+      "name": "wf_fenceD",
+      "start_line": 94,
+      "proof": null,
+      "elapsed_time": 758.5078613758087
+    }
+  ],
+  "imm/src/hardware/Arm.v": [
+    {
+      "name": "deps_in_ctrl_or_dob",
+      "start_line": 402,
+      "proof": null,
+      "elapsed_time": 601.2905402183533
+    },
+    {
+      "name": "dob_alt",
+      "start_line": 336,
+      "proof": null,
+      "elapsed_time": 601.4702184200287
+    }
+  ],
+  "imm/src/hardware/immToTSO.v": [
+    {
+      "name": "psc_ft",
+      "start_line": 373,
+      "proof": null,
+      "elapsed_time": 600.3826322555542
+    },
+    {
+      "name": "ct_psct",
+      "start_line": 368,
+      "proof": null,
+      "elapsed_time": 601.0462348461151
+    }
+  ],
+  "imm/src/simhelpers/CertCOhelper.v": [
+    {
+      "name": "col_trans",
+      "start_line": 82,
+      "proof": null,
+      "elapsed_time": 600.0504200458527
+    },
+    {
+      "name": "co_for_split",
+      "start_line": 366,
+      "proof": "\nProof using wf_coE wf_coD.\nunfold codom_rel; unfolder; cbn. \nintros x [y [z [Hxz [Hyx [Hx Hy]]]]]. \nintros l [x' [y' [Hx' [Ix' [Hy' [Hy Ix]]]]]]. cbn in *.\nintros cx [a [b [Hax [Ha [Hx Hb]]]]].\nassert (forall a:actid, new_co a x -> new_co c x -> False).\n{ intros. destruct H as [[a' [b [H [Hx [Hy Ha]]]]]].\n  symmetry in Ha. destruct H; subst.\n  destruct H; subst.\n  desf; desf; split.\n  apply Hx; trivial.\n  destruct H. unfold new_co in H0. simpl in *.\n  apply H0 in H; subst; desf. destruct H; subst.\n  destruct H0. exists x1; apply new_colI; exists x, x1.\n  unfold new_col in H0; simpl in *.\n  eapply H0; [exists x1; exists x1; split; trivial | eexists]; subst.\n  firstorder. destruct H.\n  destruct H; subst.\n  firstorder. desf. destruct H; subst.\n  desf; desf; split; trivial.\n  destruct H; subst. exists x1; exists x0.\n  - destruct H8 as [[y' y''|y']].\n    apply H6 in H8; desf.\n    eapply colE; try eexists; eauto.\n    unfold col0 in *.\n    firstorder.\n  - apply H6 in H8; desf.\n    eapply colE. try. eexists; eauto.\n    unfold col0 in *.\n    firstorder.\nQed.",
+      "elapsed_time": 127.54678249359131
+    },
+    {
+      "name": "T_I_new_co_I_T",
+      "start_line": 354,
+      "proof": null,
+      "elapsed_time": 600.0701718330383
+    },
+    {
+      "name": "col_in_co",
+      "start_line": 51,
+      "proof": null,
+      "elapsed_time": 601.3167774677277
+    },
+    {
+      "name": "wf_colE",
+      "start_line": 67,
+      "proof": null,
+      "elapsed_time": 602.0254225730896
+    }
+  ],
+  "imm/src/simhelpers/ViewRelHelpers.v": [
+    {
+      "name": "t_rel_fence_step",
+      "start_line": 784,
+      "proof": "\n  Proof.\n    OPEN_CONJ_HYP \"(t_rel_\"\n    ; [ repeat rewrite <- (same_lab_u2v_is_sc TCCOH); intros; xtransitivity\n      | repeat rewrite <- (same_lab_u2v_is_acqrel TCCOH); intros; xtransitivity\n      | repeat rewrite <- (same_lab_u2v_is_rel TCCOH); intros; xtransitivity ].\n\n    move=> l l'.\n    rewrite t_rel_n_sc_fence_step.\n    apply: t_rel_n_step; split; extensionality t; try xtransitivity => // l'_ W.\n    case (eq_dec l l').\n    + move=> l1 l2.\n      have SC : is_sc lab f by exists l1.\n      rewrite SC (NCOV _ SC)=> {LCO_} NCOV.\n      move=> l l'.\n      rewrite (same_lab_u2v_is_sc TCCOH) => SC.\n      rewrite (same_lab_u2v_is_acqrel TCCOH) => ACQ.\n      rewrite /Trav_Config.swf_fence_W.\n      case (eq_dec l l').\n      - move=> L1 L2.\n        rewrite L1 L2  LocSetProps.union_0r -? LocSet.set_eq_alt => /W_ /Tid_ /(conseq (Loc_Pred M)) L /TCO_ => HL /T_AT_R_ /=.\n        unfold tc_coherent in *; rewrite TCCOH; clear; eauto.\n      - rewrite -? LocSet.union_20.\n        by move: SC => [l W_ LACQ].\n      - rewrite T.location_location_eq_dec.\n        rewrite T.location_location_eq_dec.\n        case (LocSet.Facts.eq_dec l l')=> L L'.\n        * move=> l1 l2.\n          have SC : is_sc lab f by exists l1.\n          move /NCOV; rewrite -? LocSet.set_eq_alt => HNCOV.\n          move=> l l'.\n          rewrite (same_lab_u2v_is_sc TCCOH) => SC.\n          rewrite (same_lab_u2v_is_acqrel TCCOH) => ACQ.\n          rewrite /Trav_Config.swf_fence_T //.\n          rewrite /Trav_Config.swf_fence_W //.\n          case (eq_dec l l')=> L L'.\n          { rewrite L L'.\n            rewrite (same_lab_u2v_is_sc TCCOH) => SC => /SC{SC}.\n            rewrite (same_lab_u2v_is_acqrel TCCOH) => ACQ => /ACQ{ACQ}.\n            rewrite (same_lab_u2v_is_rel TCCOH); eauto.\n            move=> l l'. rewrite ? (same_lab_u2v_is_sc TCCOH).\n            case (eq_dec l l')=> ->; [by left | right]; apply H.\n          }\nQed.",
+      "elapsed_time": 110.94511938095093
+    }
+  ],
+  "imm/src/basic/Receptiveness.v": [
+    {
+      "name": "sim_execution_same_acts",
+      "start_line": 195,
+      "proof": null,
+      "elapsed_time": 805.4786152839661
+    },
+    {
+      "name": "is_r_increasing",
+      "start_line": 76,
+      "proof": null,
+      "elapsed_time": 600.9934959411621
+    },
+    {
+      "name": "TWF_helper_rmw",
+      "start_line": 41,
+      "proof": "\nProof using.\nred in TWF.\nintro.\nspecialize (TWF (ThreadEvent tid (eindex s1 + 1)) H); desf.\nby lia.\nQed.",
+      "elapsed_time": 6.15507435798645
+    }
+  ],
+  "imm/src/basic/ProgToExecutionProperties.v": [
+    {
+      "name": "same_lab_u2v_dom_restricted",
+      "start_line": 557,
+      "proof": null,
+      "elapsed_time": 600.7379944324493
+    },
+    {
+      "name": "tid_initi",
+      "start_line": 902,
+      "proof": null,
+      "elapsed_time": 601.909277677536
+    },
+    {
+      "name": "depf_preserves_set_lexpr",
+      "start_line": 42,
+      "proof": null,
+      "elapsed_time": 600.2807948589325
+    },
+    {
+      "name": "steps_preserve_lab",
+      "start_line": 579,
+      "proof": null,
+      "elapsed_time": 600.8905329704285
+    },
+    {
+      "name": "step_preserves_instrs",
+      "start_line": 205,
+      "proof": null,
+      "elapsed_time": 601.5000820159912
+    },
+    {
+      "name": "istep_eindex_shift",
+      "start_line": 917,
+      "proof": null,
+      "elapsed_time": 600.2855672836304
+    },
+    {
+      "name": "step_empty_same_E",
+      "start_line": 595,
+      "proof": null,
+      "elapsed_time": 600.8142750263214
+    },
+    {
+      "name": "step_threads_set",
+      "start_line": 970,
+      "proof": null,
+      "elapsed_time": 600.9708435535431
+    }
+  ],
+  "imm/src/basic/FinThreads.v": [
+    {
+      "name": "BinPos_lt_fin",
+      "start_line": 31,
+      "proof": null,
+      "elapsed_time": 600.8415057659149
+    }
+  ],
+  "imm/src/basic/Events.v": [
+    {
+      "name": "same_lab_u2v_dom_mod",
+      "start_line": 341,
+      "proof": "\nProof using.\nsame_lab_set_solver_f SAME.\nQed.",
+      "elapsed_time": 2.514385938644409
+    },
+    {
+      "name": "restr_eq_rel_same_loc",
+      "start_line": 253,
+      "proof": "\nProof using. unfold same_loc; basic_solver.\nQed.",
+      "elapsed_time": 1.8793323040008545
+    },
+    {
+      "name": "same_lab_u2v_dom_trans",
+      "start_line": 534,
+      "proof": null,
+      "elapsed_time": 600.0051069259644
+    },
+    {
+      "name": "same_lab_u2v_dom_xmod",
+      "start_line": 345,
+      "proof": "\nProof using. same_lab_set_solver_f SAME.\nQed.",
+      "elapsed_time": 2.4780538082122803
+    },
+    {
+      "name": "same_lab_u2v_is_rlx",
+      "start_line": 467,
+      "proof": "\nProof using. generalize (same_lab_u2v_dom_is_rlx SAME). relsf.\nQed.",
+      "elapsed_time": 3.984956741333008
+    },
+    {
+      "name": "same_lab_u2v_is_acqrel",
+      "start_line": 479,
+      "proof": "\nProof using. generalize (same_lab_u2v_dom_is_acqrel SAME). relsf.\nQed.",
+      "elapsed_time": 3.737694025039673
+    },
+    {
+      "name": "same_lab_u2v_is_sc",
+      "start_line": 483,
+      "proof": "\nProof using. generalize (same_lab_u2v_dom_is_sc SAME). relsf.\nQed.",
+      "elapsed_time": 3.6344196796417236
+    },
+    {
+      "name": "tid_n_init_ext_sb",
+      "start_line": 638,
+      "proof": null,
+      "elapsed_time": 600.4134900569916
+    },
+    {
+      "name": "ext_sb_tid_init'",
+      "start_line": 624,
+      "proof": null,
+      "elapsed_time": 600.5937576293945
+    },
+    {
+      "name": "tid_set_dec",
+      "start_line": 45,
+      "proof": null,
+      "elapsed_time": 600.0418288707733
+    },
+    {
+      "name": "ext_sb_semi_total_r",
+      "start_line": 608,
+      "proof": null,
+      "elapsed_time": 600.256415605545
+    },
+    {
+      "name": "same_label_u2v_trans",
+      "start_line": 523,
+      "proof": "\nProof using. by unfold same_label_u2v in *; desf; desf.\nQed.",
+      "elapsed_time": 3.126248598098755
+    },
+    {
+      "name": "same_lab_u2v_dom_inclusion",
+      "start_line": 517,
+      "proof": "\nProof using.\nunfold same_lab_u2v_dom, same_lab_u2v in *. auto.\nQed.",
+      "elapsed_time": 3.924654483795166
+    },
+    {
+      "name": "same_lab_u2v_dom_loc",
+      "start_line": 337,
+      "proof": "\nProof using. unfold loc at 1 3 in SAME; red; cbn in *; ins; auto. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply WX. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME.\nProof using.\nunfold is_lab_u2v, loc. unfolder; cbn; solver. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME. by apply SAME.\nunfold is_lab_u2v, loc. unfolder. (intros; do 2 desf; eapply SAME; eauto). by apply SAME. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. unfold loc. apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. by apply SAMO. unfold loc. apply SAMO. by apply SAMO. by apply SAMO.  unfold loc. apply SAMO. by apply SAMO. by apply SAMO. unfold loc. intros x Hx. unfold same_lab_u2v_dom in SAME. specialize (SAME x); destruct (lab1 x); destruct (lab2 x); auto; try solve [by fail]. specialize (SAME Hx). unfold same_label_u2v in SAME; cbn in SAME. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. do 2 desf; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. specialize (SAME Hx). unfold same_label_u2v in SAME. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. by destruct SAME; subst; eauto. by destruct SAME; subst; eauto. do 2 desf; eauto. by destruct SAMO; subst; eauto. by destruct SAMO; subst; eauto. do 2 desf; eauto. unfold same_label_u2v in SAME. by destruct SAME.\nQed.",
+      "elapsed_time": 224.1645348072052
+    },
+    {
+      "name": "initninit_in_ext_sb",
+      "start_line": 653,
+      "proof": "\nProof using.\nunfold actid, is_init, cross_rel; unfolder.\nins; tauto.\nunfold tid, same_tid at 3.\napply ext_sb_semi_total_r with (index2 := (index1)%index); eauto.\napply same_tid_rel_in.\nunfold ext_sb; basic_solver.\nQed.",
+      "elapsed_time": 11.96065616607666
+    }
+  ],
+  "imm/src/basic/Execution_eco.v": [
+    {
+      "name": "coi_coe",
+      "start_line": 512,
+      "proof": null,
+      "elapsed_time": 600.0520465373993
+    },
+    {
+      "name": "eco_refl",
+      "start_line": 532,
+      "proof": null,
+      "elapsed_time": 600.5574762821198
+    },
+    {
+      "name": "loceq_eco",
+      "start_line": 92,
+      "proof": null,
+      "elapsed_time": 602.590695142746
+    }
+  ],
+  "imm/src/basic/RMWinstrProps.v": [
+    {
+      "name": "rmw_is_rex_instr_rexmod",
+      "start_line": 150,
+      "proof": "\nProof using.\n  symmetry in ISTEP; apply nth_error_In in ISTEP.\n  apply RMWREX in ISTEP; simpls; desf.\nQed.",
+      "elapsed_time": 6.441035270690918
+    },
+    {
+      "name": "cas_produces_R_ex_instr_rexmod",
+      "start_line": 192,
+      "proof": "\nProof using.\n  symmetry in ISTEP; apply nth_error_In in ISTEP.\n  apply RMWREX in ISTEP; simpls; desf.\nQed.",
+      "elapsed_time": 6.447479248046875
+    }
+  ],
+  "imm/src/basic/Execution.v": [
+    {
+      "name": "rfi_rmw_in_sb_loc",
+      "start_line": 1132,
+      "proof": null,
+      "elapsed_time": 795.9801499843597
+    },
+    {
+      "name": "wf_friD",
+      "start_line": 672,
+      "proof": null,
+      "elapsed_time": 600.8780646324158
+    },
+    {
+      "name": "rfi_in_sb",
+      "start_line": 681,
+      "proof": null,
+      "elapsed_time": 601.0389788150787
+    },
+    {
+      "name": "W_ex_eq_EW_W_ex",
+      "start_line": 922,
+      "proof": null,
+      "elapsed_time": 610.3668391704559
+    },
+    {
+      "name": "wf_rfeE",
+      "start_line": 662,
+      "proof": null,
+      "elapsed_time": 930.613195180893
+    },
+    {
+      "name": "wf_coiD",
+      "start_line": 670,
+      "proof": null,
+      "elapsed_time": 685.1430943012238
+    },
+    {
+      "name": "init_ninit_sb",
+      "start_line": 506,
+      "proof": null,
+      "elapsed_time": 601.9995665550232
+    },
+    {
+      "name": "wf_addrE",
+      "start_line": 234,
+      "proof": null,
+      "elapsed_time": 857.4867689609528
+    },
+    {
+      "name": "deps_in_sb",
+      "start_line": 183,
+      "proof": null,
+      "elapsed_time": 600.4569897651672
+    },
+    {
+      "name": "co_co",
+      "start_line": 577,
+      "proof": null,
+      "elapsed_time": 600.2764391899109
+    },
+    {
+      "name": "wf_rfeD",
+      "start_line": 674,
+      "proof": "\nProof using.\nsplit; [|basic_solver].\nunfold rfe.\nrewrite (wf_rfD WF) at 1.\nbasic_solver.\nQed.",
+      "elapsed_time": 6.704906702041626
+    },
+    {
+      "name": "codom_rfi_rfe_empty",
+      "start_line": 733,
+      "proof": null,
+      "elapsed_time": 600.0584895610809
+    },
+    {
+      "name": "wf_rmw_invf",
+      "start_line": 619,
+      "proof": null,
+      "elapsed_time": 601.9643974304199
+    },
+    {
+      "name": "fri_in_sb",
+      "start_line": 715,
+      "proof": "\nProof using.\nunfold fri, sb; case; [by apply I|].\nunfold sb in *; apply (i_dom (fr_dom WF)).\nunfold fri, sb.\nrewrite i_restr.\napply (i_dom (fr_dom WF)).\nrewrite frE, ext_sbE, ext_sbE.\nbasic_solver 21.\nQed.",
+      "elapsed_time": 12.90753722190857
+    },
+    {
+      "name": "rmw_rf_rt_1",
+      "start_line": 836,
+      "proof": null,
+      "elapsed_time": 600.1287620067596
+    },
+    {
+      "name": "rmw_W_ex",
+      "start_line": 936,
+      "proof": null,
+      "elapsed_time": 602.8828816413879
+    },
+    {
+      "name": "same_tid_trans",
+      "start_line": 486,
+      "proof": "\nProof using. unfold same_tid; red; ins. congruence.\nQed.",
+      "elapsed_time": 3.5044870376586914
+    },
+    {
+      "name": "detour_transp_rfi",
+      "start_line": 878,
+      "proof": null,
+      "elapsed_time": 600.3598177433014
+    },
+    {
+      "name": "fr_co",
+      "start_line": 177,
+      "proof": null,
+      "elapsed_time": 1013.7823462486267
+    },
+    {
+      "name": "co_E_W_Loc",
+      "start_line": 1111,
+      "proof": null,
+      "elapsed_time": 601.0014805793762
+    },
+    {
+      "name": "sb_semi_total_r",
+      "start_line": 440,
+      "proof": null,
+      "elapsed_time": 600.825779914856
+    },
+    {
+      "name": "wf_depsD",
+      "start_line": 303,
+      "proof": null,
+      "elapsed_time": 722.3537292480469
+    },
+    {
+      "name": "rf_rmw_sb_minus_sb",
+      "start_line": 788,
+      "proof": null,
+      "elapsed_time": 1036.2263824939728
+    },
+    {
+      "name": "ri_union_re",
+      "start_line": 641,
+      "proof": null,
+      "elapsed_time": 600.0464205741882
+    },
+    {
+      "name": "re_dom",
+      "start_line": 653,
+      "proof": "\nProof using. rewrite DOM at 1; basic_solver.\nQed.",
+      "elapsed_time": 3.1399030685424805
+    }
+  ],
+  "imm/src/basic/FinExecution.v": [
+    {
+      "name": "fin_exec_full_equiv",
+      "start_line": 15,
+      "proof": null,
+      "elapsed_time": 600.6661701202393
+    }
+  ],
+  "imm/src/travorder/TlsAux2.v": [
+    {
+      "name": "tls_coherent_more",
+      "start_line": 46,
+      "proof": null,
+      "elapsed_time": 600.8029446601868
+    }
+  ],
+  "imm/src/travorder/TraversalOrder.v": [
+    {
+      "name": "FWBOB_trans",
+      "start_line": 407,
+      "proof": "\n  Proof using. iord_dom_solver.\nQed.",
+      "elapsed_time": 3.935075283050537
+    },
+    {
+      "name": "eSB_in_sb_sc_ct",
+      "start_line": 374,
+      "proof": "\nProof using. ins. iord_unfolder. eauto using seq_refl. unfold sb. apply sb_tid_init'. auto. simpl. eapply subsecless_strext; unfold_events. eapply subseq_ext_sb_simplified. ins.\nrewrite <- wf_subset_incl_sub_is_supremum_is_sub_1.\n  unfold ext_sb. basic_solver. unfold ext_sb, E, sc. ins_events_with.\n  unfold_events_with. unfold E, sc. unfold sc. ins. firstorder. unfold sc.\n  apply sub_trans with (I := ((\u2997(fun e r =>\n  match e with | InitEvent l => r <| l | ThreadEvent t i => r <| _ end) \u2261 s) \u2227 e)) as H.\n  simpl. by apply sub_refl.\n  unfold sub. intros ? ? ? [? | ] _ ->. firstorder. firstorder. simpl_events. unfold E, actid in *.  unfold_actid. simpl.\n  unfold sc. simpl. unfold sb. in_tac. split; ins. eauto 13 using in_unionL.\n  unfold_events_with. unfold E, sc. unfold sc. ins. firstorder. unfold sc.\n  simpl. unfold sc. simp. unfold sc. unfold ext_sb, sub. unfold sc.\n  ins. unfold_events_with. firstorder. unfold sc.\n  intros ? ?. simpl. firstorder. unfold E. unfold_actid. eapply sub_add.\n  simpl; firstorder.\nunfold sub; intros ? ? ? [? | [<- _]] _ ->. simpl in H0, H1. subst. split; eauto; unfold E, sc.\nsimpl_events. eapply subseq_ext_sb_simplified. unfold ext_sb, E, sc. simpl.\nright. red; simpl in *. exists 0, (0,0). eapply lt_sub. eapply (@sup_sub_strong_le (fun _ : actid => True)).\neauto.\nQed.",
+      "elapsed_time": 94.33156490325928
+    },
+    {
+      "name": "dom_rel_collect_event",
+      "start_line": 113,
+      "proof": null,
+      "elapsed_time": 601.3571321964264
+    },
+    {
+      "name": "dom_rel_tls_helper",
+      "start_line": 139,
+      "proof": null,
+      "elapsed_time": 600.7570476531982
+    },
+    {
+      "name": "iord_alt",
+      "start_line": 307,
+      "proof": null,
+      "elapsed_time": 628.9032576084137
+    },
+    {
+      "name": "IPROP_fsupp",
+      "start_line": 650,
+      "proof": null,
+      "elapsed_time": 600.7504658699036
+    },
+    {
+      "name": "AR_fsupp",
+      "start_line": 617,
+      "proof": null,
+      "elapsed_time": 600.4577417373657
+    },
+    {
+      "name": "FWBOB_irr",
+      "start_line": 412,
+      "proof": "\n  Proof using. iord_dom_solver.\nQed.",
+      "elapsed_time": 4.326091766357422
+    },
+    {
+      "name": "iord_irreflexive",
+      "start_line": 318,
+      "proof": "\n  Proof using.\n    unfold iord. iord_dom_unfolder; ins; cintuition.\n    rewrite restr_relE; iorder.\n    destruct a; rewrite no_sb_to_init, no_fi_to_init; try discriminate.\n    specialize CONS with (G := G) (sc := actid \u22c3 (sc_dom (wf_sbE WF) (wf_sfE WF))).\n    intros [a [a_sb a_rf a_fw a_ar a_iprog]].\n    simpl. apply CONS; simpl.\n    eapply iord_simpl_irreflexive; eauto.\n    revert COMP WFSC CONS. apply complete_set_inv, irreflexive_to_complete; auto; iorder.\n    intros. rewrite iord_alt. iorder. apply irreflexive_restr; simpl.\n    apply iord_simpl_irreflexive; auto.\nQed.",
+      "elapsed_time": 31.97611427307129
+    }
+  ],
+  "imm/src/travorder/SimIordTraversal.v": [
+    {
+      "name": "trav_prefix_union_init_tls_coherent",
+      "start_line": 130,
+      "proof": null,
+      "elapsed_time": 600.0884954929352
+    },
+    {
+      "name": "sim_traversal_inf_full",
+      "start_line": 267,
+      "proof": null,
+      "elapsed_time": 601.3160719871521
+    }
+  ],
+  "imm/src/travorder/SimClosure.v": [
+    {
+      "name": "sim_clos_dist",
+      "start_line": 199,
+      "proof": null,
+      "elapsed_time": 601.3606503009796
+    },
+    {
+      "name": "rmw_clos_once",
+      "start_line": 160,
+      "proof": null,
+      "elapsed_time": 686.4056994915009
+    },
+    {
+      "name": "iiord_step_minus_reserved",
+      "start_line": 1303,
+      "proof": null,
+      "elapsed_time": 601.2742495536804
+    },
+    {
+      "name": "sim_clos_sim_coherent",
+      "start_line": 205,
+      "proof": null,
+      "elapsed_time": 600.1433703899384
+    },
+    {
+      "name": "sim_clos_empty",
+      "start_line": 153,
+      "proof": null,
+      "elapsed_time": 601.070333480835
+    },
+    {
+      "name": "rel_clos_exec_tls",
+      "start_line": 572,
+      "proof": null,
+      "elapsed_time": 600.7276911735535
+    },
+    {
+      "name": "rel_clos_idemp",
+      "start_line": 190,
+      "proof": null,
+      "elapsed_time": 600.0597825050354
+    },
+    {
+      "name": "ICOHs",
+      "start_line": 698,
+      "proof": null,
+      "elapsed_time": 602.8471584320068
+    }
+  ],
+  "imm/src/travorder/ReserveClos.v": [
+    {
+      "name": "reserve_clos_init_tls",
+      "start_line": 122,
+      "proof": null,
+      "elapsed_time": 600.8914632797241
+    }
+  ],
+  "imm/src/travorder/EventsTraversalOrder.v": [
+    {
+      "name": "dom_F_Rel_sb_I_in_C",
+      "start_line": 1060,
+      "proof": null,
+      "elapsed_time": 601.1540863513947
+    },
+    {
+      "name": "dom_c_rel_covered",
+      "start_line": 1282,
+      "proof": "\n  Proof using WF WFSC RELCOV TLSCOH IORDCOH. by_similar dom_c_rel_coverable.\nQed.",
+      "elapsed_time": 8.370724439620972
+    },
+    {
+      "name": "dom_sw_coverable",
+      "start_line": 1135,
+      "proof": null,
+      "elapsed_time": 603.1164474487305
+    },
+    {
+      "name": "W_ar_C_in_I",
+      "start_line": 356,
+      "proof": "\n  Proof using WF TLSCOH IORDCOH WFSC.\n    rewrite dom_eqv1. unfold ar_coverable.\n    rewrite c_in_coverable by eauto.\n    rewrite ar_C_in_CI. rewrite (@union_comm C). \n    rewrite set_inter_union_l; unionL.\n    rewrite <- w_covered_issued; eauto.\n    eapply w_covered_issued; eauto.\n    eapply w_covered_issued; eauto.\n    rewrite wf_RW_per_I. basic_solver.\n    by rewrite set_inter_union_l; unionL.\n    eapply seq_subset_eqL. unfold imp_s.w, w.\n    rewrite set_inter_union_l; unionL. eapply @union_monotone1.\n    rewrite set_inter_union_r; unionL. eapply seq_subset_eqL.\n    do 2 rewrite <- set_inter_comm. eapply w_covered_issued; eauto.\n    eapply seq_subset_eqL. by rewrite set_inter_A. eapply w_covered_issued; eauto.\n    rewrite set_inter_comm; eauto.\n    eapply seq_subset_eqL. eapply (sub_monotone1 S).\n    rewrite set_inter_comm; eauto.\n    eapply seq_subset_eqL. eapply (@sub_monotone_ind (C:=fun '(T, W_ex) => (I \u222a\u2081 T))).\n    rewrite set_inter_comm; eauto. eapply sub_monotone_ind. eapply subset_subset_issued.\n    by rewrite set_inter_comm; eauto.\n    eapply (@sub_transitive0 (I:=I)); auto.\n    rewrite set_inter_comm; eauto.\n    eapply (@sub_monotone_ind (C:=fun '(T, W_ex) => (I \u222a\u2081 T))).\n    rewrite set_inter_comm; eauto. eapply sub_monotone_ind. eapply subset_subset_issued.\n    by rewrite set_inter_comm; eauto.\n    eapply (@sub_transitive0 (I:=I)); auto.\n    by rewrite <- set_inter_union_l; eauto.\n    eapply w_covered_issued; eauto.\n    eapply sub_transitive1; eauto. eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive1; eauto. eauto. eapply sub_monotone; eauto.\n    by rewrite set_inter_comm; eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive1; eauto. eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive0; eauto. eapply sub_monotone; eauto.\n    eapply sub_transitive0; eauto.\n    eapply sub_monotone_ind. eapply rel_transitive_to_issued; eauto.\n    eapply sub_monotone_ind; eauto with rel.\n    rewrite (@set_inter_comm_rev I); unfold I; auto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    eapply rel_to_issued_subset. eapply set_inter_subset; eauto.\n    rewrite set_inter_comm; eauto.\n    rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); auto.\n    unfold I. by rewrite (@set_inter_comm_rev I); eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    by rewrite (@sub_monotone0 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    eapply (@sub_traversable (I:=I)); eauto.\n    eapply (@sub_traversable (I:=I)); eauto.\n    rewrite (@set_inter_comm_rev I); unfold I; auto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    eapply rel_to_issued_subset; eapply set_inter_subset; eauto.\n    by rewrite set_inter_comm; eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))).\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    by rewrite (@sub_monotone_rev2 (fun '(T, W_ex) => (I \u222a\u2081 T))); eauto.\n    rewrite (@set_inter_cm_rev I); eauto.\n    basic_solver.\nQed.",
+      "elapsed_time": 168.6537048816681
+    },
+    {
+      "name": "msg_rel_issued",
+      "start_line": 1349,
+      "proof": null,
+      "elapsed_time": 600.9630467891693
+    },
+    {
+      "name": "rf_ppo_loc_rt_I_in_I",
+      "start_line": 466,
+      "proof": null,
+      "elapsed_time": 601.0043385028839
+    },
+    {
+      "name": "dom_detour_rfe_ppo_issuable",
+      "start_line": 718,
+      "proof": null,
+      "elapsed_time": 601.4665050506592
+    },
+    {
+      "name": "ar_rf_ppo_loc_rt_I_in_I",
+      "start_line": 283,
+      "proof": null,
+      "elapsed_time": 600.4601123332977
+    },
+    {
+      "name": "ar_rfrmw_ct_CI_in_I",
+      "start_line": 606,
+      "proof": "\n  Proof using WF WFSC TLSCOH IORDCOH .\n    rewrite covered_in_coverable; eauto.\n    rewrite issued_in_issuable at 1; eauto.\n    rewrite (rmw_in_ppo_loc WF) at 1; eauto.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I; auto.\n    rewrite <- seq_union, dom_unionL.\n    apply W_ar_coverable_issuable_in_CI.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_in_CI.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    rewrite seq_union_l, seq_union_r, dom_union; unionL.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I; auto.\n    rewrite (rmw_rf_ppo_loc WF) at 1; eauto with hahn.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I; auto.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_in_CI.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    apply ar_rf_ppo_loc_coverable_issuable_in_I.\n    eapply rsw_trans. { apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     apply ar_rf_ppo_loc_coverable_in_CI.\n                     rewrite seq_union_l, dom_union; unionL.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     eapply rsw_trans. {\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     apply ar_rf_ppo_loc_coverable_in_CI.\n                     rewrite seq_union_l, dom_union; unionL.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     rewrite seq_union_l, dom_union; unionL.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     rewrite seq_union_l, dom_union; unionL.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     rewrite seq_union_l, dom_union; unionL.\n                     apply ar_rf_ppo_loc_coverable_issuable_in_I.\n                     apply ar_rf_ppo_loc_coverable_in_CI. }\nQed.",
+      "elapsed_time": 153.66409468650818
+    },
+    {
+      "name": "urr_coverable",
+      "start_line": 1214,
+      "proof": null,
+      "elapsed_time": 606.9158179759979
+    },
+    {
+      "name": "dom_W_sb_C_in_I",
+      "start_line": 387,
+      "proof": "\n  Proof using WF TLSCOH IORDCOH.\n    rewrite covered_in_coverable; eauto. apply dom_W_sb_coverable_in_I.\nQed.",
+      "elapsed_time": 8.183027982711792
+    },
+    {
+      "name": "hb_coverable",
+      "start_line": 1166,
+      "proof": null,
+      "elapsed_time": 601.7679018974304
+    },
+    {
+      "name": "dom_detour_rmwrfi_rfe_acq_sb_issued",
+      "start_line": 845,
+      "proof": null,
+      "elapsed_time": 601.8502945899963
+    },
+    {
+      "name": "dom_rfe_acq_sb_issued",
+      "start_line": 859,
+      "proof": null,
+      "elapsed_time": 601.5865886211395
+    },
+    {
+      "name": "dom_sb_sc_ct_coverable",
+      "start_line": 1482,
+      "proof": null,
+      "elapsed_time": 1082.529658794403
+    },
+    {
+      "name": "ar_rt_I_in_I",
+      "start_line": 371,
+      "proof": null,
+      "elapsed_time": 731.1522483825684
+    },
+    {
+      "name": "dom_detour_rfe_acq_sb_issued",
+      "start_line": 760,
+      "proof": "\n  Proof using WF TLSCOH IORDCOH.\n    rewrite issued_in_issuable at 1; eauto.\n    apply dom_detour_rfe_acq_sb_issuable.\nQed.",
+      "elapsed_time": 9.86991572380066
+    },
+    {
+      "name": "ar_rfrmw_issuable_in_I",
+      "start_line": 304,
+      "proof": null,
+      "elapsed_time": 600.645272731781
+    },
+    {
+      "name": "t_acq_covered",
+      "start_line": 1307,
+      "proof": null,
+      "elapsed_time": 600.5359020233154
+    },
+    {
+      "name": "ar_rfrmw_ct_I_in_I",
+      "start_line": 277,
+      "proof": "\n  Proof using WF TLSCOH IORDCOH WFSC.\n    transitivity (AR G sc); [| unfold iord_simpl; basic_solver 10].\n    eapply dom_rel_iord_ext_parts.\n    3: by apply init_issued.\n    eapply dom_rel_iord_ext_parts.\n    2: by apply ar_rf_ppo_loc_ct_I_in_I.\n    rewrite (rmw_in_ppo_loc WF). apply ar_rf_ppo_loc_ct_I_in_I.\nQed.",
+      "elapsed_time": 20.35944700241089
+    },
+    {
+      "name": "ar_rf_ppo_loc_ct_issuable_in_I",
+      "start_line": 253,
+      "proof": null,
+      "elapsed_time": 600.3489978313446
+    },
+    {
+      "name": "dom_sc_covered",
+      "start_line": 199,
+      "proof": "\n  Proof using WF TLSCOH IORDCOH. \n    rewrite covered_in_coverable at 1; eauto. apply dom_sc_coverable.\nQed.",
+      "elapsed_time": 8.383598566055298
+    },
+    {
+      "name": "rfrmw_rt_I_in_I",
+      "start_line": 473,
+      "proof": "\n  Proof using WF TLSCOH IORDCOH .\n    rewrite rmw_in_ppo_loc. 2:eapply ppo_loc_in_fr; eauto. \n    apply rf_ppo_loc_rt_I_in_I. auto.\nQed.",
+      "elapsed_time": 11.55814790725708
+    },
+    {
+      "name": "ar_C_in_CI",
+      "start_line": 241,
+      "proof": "\n  Proof using TLSCOH IORDCOH WF IOR.\n    rewrite coverableC.\n    apply ar_coverable_in_CI.\n    eauto using dom_rb_covered.\n    eauto using dom_raf_covered, ar_coverable_in_CI.\n    eauto using dom_rf_covered.\n    trivial using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered.\n    eauto using dom_rb_covered, TLSCOH, IORDCOH, sc_covered.\n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered, TLSCOH, IORDCOH.\n    eauto using dom_rf_covered, ar_coverable_in_CI, ar_coverable_in_CI, sc_covered,\n     IORDCOH.\n    apply dom_rf_covered. eauto using dom_rf_covered.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI. apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI. apply (ar_coverable_in_CI).\n    rewrite (iunion_comm IORDCOH).\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI. \n    eauto using ar_coverable_in_CI.\n    eauto using dom_rf_covered.\n    eauto using ar_coverable_in_CI, TLSCOH, IORDCOH.\n    apply ar_coverable_in_CI.\n    eauto using dom_rf_covered, IORDCOH, sc_covered.\n    apply ar_coverable_in_CI.  \n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered.\n    eauto using ar_coverable_in_CI, sc_covered.\n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI. \n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    eauto using ar_coverable_in_CI, dom_rf_covered, sc_covered. \n    eauto using ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    apply ar_coverable_in_CI.\n    rewrite (iunion_comm IORDCOH) ; eauto.\n    rewrite (iunion_comm IORDCOH), Repl_not_init.\n    eapply (@ar_coverable_in_CI _ _ _ WF);auto.\n    rewrite covered_in_coverable at 1; auto. apply ar_coverable_in_CI. assumption. auto. assumption.\nQed.",
+      "elapsed_time": 115.56607413291931
+    },
+    {
+      "name": "dom_c_rel_coverable",
+      "start_line": 1274,
+      "proof": "\n  Proof using WF WFSC TLSCOH IORDCOH RELCOV.\n    unfold CombRelations.c_rel.\n    generalize (@dom_urr_coverable l).\n    basic_solver 21.\nQed.",
+      "elapsed_time": 12.931410551071167
+    }
+  ],
+  "imm/src/travorder/AuxEE.v": [
+    {
+      "name": "rf_E_ENI",
+      "start_line": 86,
+      "proof": null,
+      "elapsed_time": 600.7947170734406
+    },
+    {
+      "name": "E_E_trans",
+      "start_line": 75,
+      "proof": "\n  Proof using WF.\n    intros t1 s1 t2 s2 Hc.\n    destruct s1 as (s1, e1, H1).\n    destruct h0 as (h0, e0, H0).\n    destruct s1 as (s2, s1, H1).\n    subst t2. subst t1.\n    rewrite <-s1.\n    rewrite <- Hc.\n    eauto. eauto.\n    subst t1. apply union_inj in s2; eauto.\n    eauto.\n    apply union_inj in s2;  eauto.\n    apply union_inj in Hc;  eauto.\n    eauto. eauto.\n    apply union_inj in s2;  eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    destruct s2 as (s2, H2).\n    destruct Hc as (t2, H2, Hc).\n    rewrite Hc. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto.\n    eauto. eauto. eauto.\n    eauto. eauto. eauto. eauto. eauto. eauto. eauto. eauto.\n    eauto. eauto.\n    (* same act *)\n    assert (H': \u2203 n, E t n /\\ (E p \\/ is_init n)).\n    eapply SCPL; eauto. assert (H': exists p, {t2 = t1 /\\ E p}).\n      destruct Hc as (a1, Hc).\n    exists a1. split; auto;eauto.\nQed.",
+      "elapsed_time": 154.74038815498352
+    },
+    {
+      "name": "sc_E_ENI",
+      "start_line": 116,
+      "proof": null,
+      "elapsed_time": 600.9849071502686
+    },
+    {
+      "name": "furr_E_ENI_cr",
+      "start_line": 121,
+      "proof": null,
+      "elapsed_time": 600.3204145431519
+    }
+  ],
+  "imm/src/travorder/TlsViewRelHelpers.v": [
+    {
+      "name": "t_cur_msg_rel_rfrmw",
+      "start_line": 372,
+      "proof": null,
+      "elapsed_time": 601.998548746109
+    },
+    {
+      "name": "t_rel_msg_rel_rfrmw",
+      "start_line": 358,
+      "proof": null,
+      "elapsed_time": 601.5710031986237
+    }
+  ],
+  "imm/src/travorder/TLSCoherency.v": [
+    {
+      "name": "iord_exec_tls_cip",
+      "start_line": 183,
+      "proof": null,
+      "elapsed_time": 600.8838522434235
+    },
+    {
+      "name": "tlsc_I_in_W",
+      "start_line": 103,
+      "proof": null,
+      "elapsed_time": 600.3179967403412
+    },
+    {
+      "name": "init_exec_tls_disjoint",
+      "start_line": 197,
+      "proof": " \n  Proof using.\n    intros [lt1 s1] [lt2 s2]; apply tlsc_init_issue.\n    eapply set_disjoint_iff; eauto.\n    apply set_disjoint_tls_in_exec G.\n    intro s. intros [l BL] [lt BE].\n    assert (s = singletons s \u2229\u2081 actid) as SL.\n    { destruct s as [r]. rewrite set_pair_alt; intro. cbn; desf. \n      intros [Hl | [H|[H|H]]; des]. intros [He [Hl0 _]] [[_ _] [_] [_]]; des. firstorder; des.\nQed.",
+      "elapsed_time": 24.179483890533447
+    },
+    {
+      "name": "tls_coherent_ext",
+      "start_line": 150,
+      "proof": null,
+      "elapsed_time": 601.0349032878876
+    }
+  ],
+  "imm/src/travorder/TlsEventSets.v": [
+    {
+      "name": "issuedW",
+      "start_line": 468,
+      "proof": null,
+      "elapsed_time": 601.3183381557465
+    },
+    {
+      "name": "reserved_union",
+      "start_line": 279,
+      "proof": " \nProof using. unfold reserved. basic_solver 10.\nQed.",
+      "elapsed_time": 5.850225448608398
+    },
+    {
+      "name": "covered_eq_ta_propagate",
+      "start_line": 142,
+      "proof": null,
+      "elapsed_time": 601.1956369876862
+    },
+    {
+      "name": "issued_ta_issue",
+      "start_line": 85,
+      "proof": null,
+      "elapsed_time": 600.2440197467804
+    },
+    {
+      "name": "init_propagated_thread",
+      "start_line": 529,
+      "proof": null,
+      "elapsed_time": 602.2364463806152
+    },
+    {
+      "name": "issued_singleton",
+      "start_line": 299,
+      "proof": " \nProof using. unfold issued. basic_solver.\nQed.",
+      "elapsed_time": 5.34759259223938
+    },
+    {
+      "name": "issued_eq_ta_issue",
+      "start_line": 130,
+      "proof": "\nProof using.\n  unfold issued. clear. basic_solver 10.\nQed.",
+      "elapsed_time": 5.532447338104248
+    },
+    {
+      "name": "issued_EW",
+      "start_line": 605,
+      "proof": null,
+      "elapsed_time": 600.8714549541473
+    },
+    {
+      "name": "set_minus_empty",
+      "start_line": 638,
+      "proof": "\nProof using. rewrite set_minus_alt. basic_solver.\nQed.",
+      "elapsed_time": 5.656201601028442
+    },
+    {
+      "name": "reserved_ta_reserve",
+      "start_line": 45,
+      "proof": null,
+      "elapsed_time": 600.3116986751556
+    },
+    {
+      "name": "issued_minus",
+      "start_line": 276,
+      "proof": "\nProof using. apply tls_set_minus_helper.\nQed.",
+      "elapsed_time": 4.922927379608154
+    },
+    {
+      "name": "IPROP_in_iord_simpl",
+      "start_line": 512,
+      "proof": " \n  Proof using.\n    etransitivity; [|apply TLSCOH].\n    set a := init_tls G.\n    remember (init_tls G) as init.\n    unfold IPROP. unfold init. unfold init_tls.\n    rewrite iord_simpl_E_ENI. simpl.\n    rewrite <- seqA with (r3 := _ \u2a3e _). rewrite seq_eqvC.\n    rewrite <- seqA with (r2 := _ \u2a3e _).\n    rewrite iord_simpl_E_ENI. simpl. rewrite tlsc_E, map_rel_union. \n\n    rewrite tra_seqE, <- seqA.\n    rewrite tra_seqE, seq_eqvC.\n    rewrite iord_simpl_E_ENI. simpl. \n    rewrite <- iord_morph, <- seqA with (r2 := _ \u2a3e \u2997W\u2998).\n    unfold iord_simpl. rewrite tlsc_E, seqA.\n    rewrite <- iord_morph, seq_eqvC. simpl. simpl_of_rel.\n    simpl.\n    unfold PROP.\n    unfold AR. rewrite <- union_ASS.\n    unfold SB, RF, FWBOB, W, IPROP.\n    repeat (rewrite <- traA; auto).\n    rewrite <- traA.\n    set (C := tra _). unfold C. arewrite C. now apply acyclic_sub_trans with (S:=S) (AC:=Acycl).\n\n    rewrite !seqA. \n    do 4 (intuition_simpl; try apply IORDCOH). simpl.\n    assert (H := TLSCOH _ _ _) as H1. simpl in H1. unfold init in H1. simpl in H1.\n    rewrite !tb_E, ?sc_E, ?ra_E, tl_E. unfold SB, RF, FWBOB, IPROP, PROP. simpl. unfold T in H1. eauto. eauto.\n    simpl.\n    apply dom_rel_trans. generalize (tb_E G).\n    unfold Wf. unfold Wf in WF. unfold init. unfold init_tls in WF. simpl in WF.\n    unfold event in WF. simpl in WF.\n    generalize (WF _ WFsc). simpl.\n\n    apply union_is_in_lub.\n    apply inv_image. rewrite dom_rel_event_tls. simpl.\n    rewrite ev_ts, !inclusion_eqv_seq; auto.\n    simpl.\n    apply union_is_in_lub, inv_image. rewrite dom_rel_action_ta, dom_rel_event. simpl.\n    apply trans_seq with (f:=(tra _)) (g:=(ra _)). \n    rewrite <-traA.\n    assert (H := iord_coherent_defs_equiv G). simpl in H. destruct H as [HE [H1 [H2 [H3 [H4 H5]]]]].\n    unfold init in H5. simpl in H5. unfold init_tls in H5.\n    simpl in H5. simpl. clear - H3.\n    generalize H1. unfold event at 1. simpl. clear H1.\n    intuition_solve. simpl.\n\n    apply union_is_in_lub, inv_image. rewrite dom_rel_event. simpl.\n    rewrite <- !traA. intuition.\nQed.",
+      "elapsed_time": 167.5268850326538
+    },
+    {
+      "name": "issuable_iord_dom_cond",
+      "start_line": 622,
+      "proof": null,
+      "elapsed_time": 600.3570945262909
+    },
+    {
+      "name": "covered_ta_reserve",
+      "start_line": 110,
+      "proof": "\nProof using.\n  unfold covered.\n  unfolder; split; ins; desf.\n  destruct y; ins; subst. desf.\nQed.",
+      "elapsed_time": 8.508951187133789
+    },
+    {
+      "name": "issued_is_ta_propagate_to_G",
+      "start_line": 102,
+      "proof": null,
+      "elapsed_time": 601.1254544258118
+    },
+    {
+      "name": "reserved_minus",
+      "start_line": 283,
+      "proof": "\nProof using. apply tls_set_minus_helper.\nQed.",
+      "elapsed_time": 4.831883907318115
+    }
+  ],
+  "imm/src/travorder/IordCoherency.v": [
+    {
+      "name": "init_tls_iord_coherent",
+      "start_line": 96,
+      "proof": null,
+      "elapsed_time": 601.6408560276031
+    },
+    {
+      "name": "iord_coherent_crt",
+      "start_line": 279,
+      "proof": null,
+      "elapsed_time": 601.3582007884979
+    },
+    {
+      "name": "iord_coherent_equiv_wo_reserved",
+      "start_line": 302,
+      "proof": " \n  Proof using.\n    etransitivity; [eauto|apply ICOH| | ]. unfold iord_coherent, iord_rel in *. iorder_tac. \n    eapply iord_coherent_wo_reserved in EQ' as <-.\n    etransitivity; try eauto;\n      [apply icoh_exec_tls in EQ' as [_ -> _]; try set_goal].\n    eapply iord_coherent_restr_eq in EQ' as [EQ REQ].\n    eapply tlsc_coherent_equiv. eauto. \n    etransitivity; eauto. set_goal. apply ICOH.\n    etransitivity; eauto. set_goal. eapply icoh_restr_eq; eauto.\n    etransitivity; eauto. set_goal. eapply iord_coherent_restr_eq in EQ; auto.\n    eapply icoh_restr_eq in EQ as [EQ _]; eauto.\n    eapply iord_coherent_equiv. eauto.\n    etransitivity; eauto. eapply tlsc_coherent_equiv; eauto.\n    rewrite EQ', iord_no_reserve; eauto.\n    transitivity (iord G sc \u2286 (T1 \u222a T2)). eauto. \n    unfold iord_coherent, iord_rel in *. set_goal. \n    eapply icoh_restr_eq in EQ' as [EQ REQ].\n    eapply icoh_restr_eq. eapply ICOH.\n    eapply icoh_restr_eq. eapply icoh_exact. \n    eapply icoh_restr_eq in EQ'; auto.\n    eapply icoh_restr_eq in EQ' as [EQ REQ].\n    eapply iord_coherent_equiv; eauto.\n    etransitivity; eauto. apply (icoh_exact _ EQ').\n    eapply icoh_restr_eq in EQ'; auto. \n    eapply icoh_restr_eq. eauto. eapply icoh_restr_eq. \n    eapply iord_coherent_equiv; auto; apply icoh_exact. \n    rewrite EQ'. eapply ICOH.\n    eapply iord_coherent_equiv; eauto. eapply icoh_restr_eq in EQ'. \n    \n    eapply iord_coherent_equiv. eauto. symmetry in EQ'.\n    eapply tlsc_coherent_equiv. eauto. eauto. eauto.\n    etransitivity; eauto. eapply icoh_restr_eq; auto. clear.  \n    \n    intros x [y EX] %iord_irreflexive. apply (iord_coherent_sc (is_init := is_init)).\n    eapply init_tls_iord_coherent.\n    eapply isoce_coherent. apply ICOH.\n\n    apply iord_coh_implies_iord_simpl_coh; eauto. clear; intros.\n    \n    intros l t. destruct t as [u [UU UE]%seq_eqv_r]. assert(REQ: exists (sc1:sc), sc \u2261\u21c5 sc1). \n    { apply T2_comp in UE. apply (fst UE). apply (fst UU). }\nQed.",
+      "elapsed_time": 112.69100499153137
+    }
+  ],
+  "imm/src/ocamlmm/OCamlToimm_s.v": [
+    {
+      "name": "imm_to_ocaml_consistent",
+      "start_line": 778,
+      "proof": null,
+      "elapsed_time": 600.4712970256805
+    },
+    {
+      "name": "sb_rf_sc_sc",
+      "start_line": 403,
+      "proof": null,
+      "elapsed_time": 600.2780022621155
+    },
+    {
+      "name": "sc_scb_pscb",
+      "start_line": 260,
+      "proof": null,
+      "elapsed_time": 649.7069883346558
+    },
+    {
+      "name": "sbnl_hb_scb",
+      "start_line": 474,
+      "proof": null,
+      "elapsed_time": 601.2011089324951
+    }
+  ],
+  "imm/src/traversal/TraversalConfigAlt.v": [
+    {
+      "name": "tc_I_ar_rfrmw_I",
+      "start_line": 89,
+      "proof": null,
+      "elapsed_time": 600.003839969635
+    }
+  ],
+  "imm/src/traversal/SimTraversalProperties.v": [
+    {
+      "name": "isim_trav_step_new_issued_tid",
+      "start_line": 266,
+      "proof": null,
+      "elapsed_time": 600.5504245758057
+    }
+  ],
+  "imm/src/traversal/TraversalConfig.v": [
+    {
+      "name": "msg_rel_issued",
+      "start_line": 1498,
+      "proof": null,
+      "elapsed_time": 600.1976935863495
+    },
+    {
+      "name": "dom_detour_rmwrfi_rfe_acq_sb_issued",
+      "start_line": 944,
+      "proof": null,
+      "elapsed_time": 603.4980409145355
+    },
+    {
+      "name": "dom_F_Rel_sb_I_in_C",
+      "start_line": 1148,
+      "proof": null,
+      "elapsed_time": 601.3804700374603
+    },
+    {
+      "name": "ar_rf_ppo_loc_rt_I_in_I",
+      "start_line": 431,
+      "proof": null,
+      "elapsed_time": 601.1259999275208
+    },
+    {
+      "name": "sc_coverable",
+      "start_line": 372,
+      "proof": "\n  Proof using TCCOH.\n  rewrite (dom_rel_helper dom_sc_coverable).\n  type_solver 43.\nQed.",
+      "elapsed_time": 6.859029769897461
+    },
+    {
+      "name": "rf_ppo_loc_coverable_in_I",
+      "start_line": 550,
+      "proof": null,
+      "elapsed_time": 600.1873300075531
+    },
+    {
+      "name": "ar_rf_ppo_loc_ct_issuable_in_I",
+      "start_line": 405,
+      "proof": null,
+      "elapsed_time": 601.9401416778564
+    },
+    {
+      "name": "rf_coverable",
+      "start_line": 342,
+      "proof": null,
+      "elapsed_time": 602.6930768489838
+    },
+    {
+      "name": "ar_rf_ppo_loc_ct_I_in_I",
+      "start_line": 418,
+      "proof": null,
+      "elapsed_time": 600.5108759403229
+    },
+    {
+      "name": "init_issued",
+      "start_line": 257,
+      "proof": null,
+      "elapsed_time": 600.8419241905212
+    },
+    {
+      "name": "issuedE",
+      "start_line": 210,
+      "proof": null,
+      "elapsed_time": 601.674328327179
+    },
+    {
+      "name": "dom_sb_W_rel_issued",
+      "start_line": 1246,
+      "proof": "\n  Proof using TCCOH.\n    basic_solver 21.\n    case dom_sb_covered': (sbis) => H H'.\n    { simpl; rewrite seqA.\n      apply dom_W_Rel_sb_loc_I_in_C.\n      apply C_Rel_inclusion.\n      generalize dom_sb_covered.\n      basic_solver 21.\n      revert RELCOV; simpl.\n      basic_solver 21; relsf.\nQed.",
+      "elapsed_time": 24.049320936203003
+    },
+    {
+      "name": "dom_detour_rfe_acq_sb_issuable",
+      "start_line": 902,
+      "proof": null,
+      "elapsed_time": 600.5712373256683
+    },
+    {
+      "name": "sw_covered",
+      "start_line": 1281,
+      "proof": null,
+      "elapsed_time": 600.7561430931091
+    },
+    {
+      "name": "ar_rf_ppo_loc_rt_CI_in_I",
+      "start_line": 776,
+      "proof": null,
+      "elapsed_time": 772.8564355373383
+    },
+    {
+      "name": "ar_rt_CI_in_I",
+      "start_line": 812,
+      "proof": null,
+      "elapsed_time": 601.2872385978699
+    },
+    {
+      "name": "urr_coverable",
+      "start_line": 1348,
+      "proof": null,
+      "elapsed_time": 600.060955286026
+    },
+    {
+      "name": "dom_detour_rfe_acq_sb_issued",
+      "start_line": 916,
+      "proof": null,
+      "elapsed_time": 602.3354079723358
+    },
+    {
+      "name": "dom_ar_ct_issuable",
+      "start_line": 875,
+      "proof": "\n  Proof using.\n    apply IMMCON. apply ar_ct_issuable_in_I.\nQed.",
+      "elapsed_time": 6.165623903274536
+    },
+    {
+      "name": "W_Rel_sb_loc_I",
+      "start_line": 1116,
+      "proof": null,
+      "elapsed_time": 600.1044161319733
+    },
+    {
+      "name": "dom_rfe_acq_sb_issuable",
+      "start_line": 951,
+      "proof": null,
+      "elapsed_time": 600.0957050323486
+    },
+    {
+      "name": "W_rel_sb_loc_W_CI",
+      "start_line": 1098,
+      "proof": null,
+      "elapsed_time": 600.4690692424774
+    },
+    {
+      "name": "t_acq_covered",
+      "start_line": 1444,
+      "proof": null,
+      "elapsed_time": 601.8447225093842
+    },
+    {
+      "name": "issuableE",
+      "start_line": 206,
+      "proof": "\n  Proof using.\n    unfold issuable, E.\n    case_eq (I \u2229\u2081 tc_coherent T); [intros Y P; unfold same_trav_config in P|].\n    apply in_issuable, in_coherent; [unfold same_trav_config; desf; auto| ].\n    apply traversal_mon.\n    + intros E E' QE. apply in_issuable. apply TCCOH.\n    intros H H'. apply in_issuable. apply TCCOH. by unfold issuable. \n    unfold issuable; desf. by apply traversal_mon. apply IMMCON.\n    + apply in_issuable. by eapply traversal_mon. by apply issuable_in.\n      by unfold issuable, TCCOH in H'.\n      by apply in_issuable. by apply isu_issue_in.\n      eapply traversal_mon. by apply issuable_covers.\n      unfold covered. by apply (@eq_subset actid_covers (I (I (is_init x)))).\n      by apply (@eq_subset (X \u2229 T) (X \u2229 same_tid)).\n      by apply (@eq_subset \u222a (I (I same_tid))) in TCCOH.\n    + by unfold issuable in H'. 2,3: tc_invert.\n      + by unfold issuable in H'; auto.\n      + by apply issuable_in.\n        * by apply isu_in_same_loc.\n        * by apply TCCOH. eapply issuable_more; by eassumption. eauto.\n        * by unfold same_trav_config, traits, traversal_trav_config; unfold traversal_path_t.\n          exists (_,_); apply ppo_same_id. simpl; unfold dom_rel. exists H; simpl; auto.\n          apply traversal_inc.\n          apply isu_issue_move.\n          by apply traversal_mon. red; simpl; auto.\n          exists H; auto.\n          split.\n            apply in_issuable. apply isu_issue_in. apply TCCOH. apply TCCOH.\n            apply in_issuable. apply tc_correct with H; auto.\n            apply in_issuable in H'. apply TCCOH in H'. apply isu_issue_in in H'. by rewrite H'.  \n            by unfold issuable in H'.\n            eapply traversal_mon. eapply traversal_mon_path.\n            eapply traversal_t_mon_path; eauto.\n            by apply isu_correct. eapply traversal_mon.\n            by eapply TCCOH.\n            eapply issuable_more.\n            unfold issuable; auto.\n            by apply traversal_mon.\n            apply traversal_ir. red.\n            by exists H.\n          2: apply traversal_inc; simp; auto.\n          exists H; simpl; auto.\n          split; [| by apply in_issuable; apply in_issuable in H']; auto.\n          split; auto.\n          2: apply traversal_inc; auto.\n          by apply isu_in in H'.\n          2: apply traversal_inc; auto.\n          4: by apply isu_in; auto.\n          4: by apply traversal_ir_principle; auto.\n            eapply isu_more_ir_same_tid; by apply TCCOH.\n            by apply issuable_in. apply @in_issuable. apply in_issuable.\n      unfold act_in_set. eapply traversal_ir_same_tid.\n      { apply tc_correct with H; auto.\n        eapply traversal_imply_same_tid.\n        by apply WF.\n        by apply IMMCON; auto.\n        apply equi_sym. exact @in_wf.\n        apply in_issuable; auto.\n        apply in_wf. by apply IMMCON.\n        unfold issuable; auto. by apply in_wf.\n        apply issuable_in. exists H; red; simpl; auto.\n         by exists {H; red; simpl; auto}. exists H; simpl; auto.\n          by apply in_wf. apply in_wf. by exists H.\n          by exists H; red; simpl; auto.\n      }\n      { apply well_founded. apply TCCOH. exists H; red; simpl; auto.\n        by apply ar_rf_ppo_loc_ct_in_ar_ct. \n        red. apply isu_in. apply in_issuable in H'. constructor 1; auto.\n        apply in_issuable in H'. constructor 2; auto.\n        by apply ppo_in_sb; auto.\n        apply traversal_ir_principle; auto.\n        by eapply TCCOH; exists H; red; simpl; auto.\n        apply traversal_imp_same_tid with same_tid; auto. exists H; red; simpl; auto.\n        by red. by exists H.\n      }\n      apply in_issuable in H'. exists 1. \n      by constructor 1; exists H; auto.\n      by constructor 2; exists H; auto.\n      apply equi_refl. red; constructor; auto.\nQed.",
+      "elapsed_time": 202.35159635543823
+    },
+    {
+      "name": "dom_wex_sb_issued",
+      "start_line": 977,
+      "proof": null,
+      "elapsed_time": 600.6040363311768
+    }
+  ],
+  "imm/src/traversal/TraversalConfigAltOld.v": [
+    {
+      "name": "otc_tc_fwbob_I",
+      "start_line": 131,
+      "proof": null,
+      "elapsed_time": 1080.9748747348785
+    },
+    {
+      "name": "otc_rfirmw_I",
+      "start_line": 101,
+      "proof": null,
+      "elapsed_time": 600.8487832546234
+    },
+    {
+      "name": "otc_W_bob_I",
+      "start_line": 141,
+      "proof": "\nProof using tc_old.\n  rewrite fwbob_in_sb.\n  apply tc_old.\n  apply otc_tc_fwbob_I.\n  rewrite dom_rel_union' with (F:=\u222a\u2997W\u2998 \u2a3e \u2997I\u2998); ins. \n  rewrite <- (dom_rel_helper (W:=Wf G, I:=I));\n    [| by apply fin_sub_triv in bob_trans | by eapply dom_rel_sub in tc_dr_b_b_pb_I | ].\n  rewrite <- (dom_rel_helper (W:=Wf G));\n    [by ins; rewrite c1_b, cx_n |by rewrite ub_n, rb_n|apply fin_sub_actid].\n  arewrite (WF \u2286 \u2997W\u2998).\n  apply tc_old. rewrite ct_end, seqA.\n  rewrite dom_rel_union'; unionL.\n  { apply otc_rfirmw_I. eapply dom_rel_trans.\n    by intro t; rewrite dom_rel_union'.\n    rewrite dom_rel_union'; unionL; eapply dom_rel_trans.\n    do 2 (apply otc_rf_ppo_loc_I). \n    by intro; intro; rewrite dom_rel_union'.\n    by rewrite dom_rel_union'; unionL.\n    intro; rewrite dom_rel_union'.\n    apply otc_rfirmw_I.\n    rewrite dom_rel_union'.\n    unionL.\n    rewrite dom_rel_union'.\n    apply tc_old.\n    rewrite (dom_rel_helper I).\n    apply tc_old.\n    rewrite !dom_rel_union'.\n    rewrite dom_rel_union'; unionL.\n    apply otc_rfirmw_I.\n    rewrite dom_rel_union'.\n    apply otc_rfirmw_I.\n    rewrite dom_rel_union'.\n    apply otc_tc_fwbob_I.\n    rewrite <- dom_rel_union'.\n    rewrite <- dom_rel_union'.\n    apply tc_old.\n    rewrite dom_rel_union'.\n    rewrite dom_rel_union'.\n    rewrite <- dom_rel_union'.\n    { do 3 (apply otc_rf_ppo_loc_I).\n      by intro; intro; rewrite <- dom_rel_union'.\n      do 2 (apply otc_rfirmw_I).\n      do 4 (apply otc_rf_ppo_loc_I).\n      by intro; intro; apply dom_rel_union'.\n    }\nQed.",
+      "elapsed_time": 80.31455969810486
+    },
+    {
+      "name": "otc_dr_ppo_I",
+      "start_line": 231,
+      "proof": null,
+      "elapsed_time": 602.6707804203033
+    }
+  ],
+  "imm/src/traversal/Traversal.v": [
+    {
+      "name": "trav_step_coherence",
+      "start_line": 240,
+      "proof": null,
+      "elapsed_time": 601.4207437038422
+    },
+    {
+      "name": "itrav_step_mon_ext_cover",
+      "start_line": 168,
+      "proof": null,
+      "elapsed_time": 601.0876884460449
+    }
+  ],
+  "imm/src/c11/C11Toimm_s.v": [
+    {
+      "name": "s_imm_consistentimplies_c11_consistent",
+      "start_line": 24,
+      "proof": "\nProof.\n  arewrite sc in ecco by autoclass.\n  apply init_c11_consistent.\n  (* Prove both the P1 and P2 relation exists in the set\n     * of actual executions of xy and the subgraphs of xy *)\n  exists (fun r => exists r1 r2, psc\u207a \u2286 r1 \u222a r2 \u2227 r = dom psc r1 \u222a r2)\n    as ys.\n  assert (psc = \u2205\u2082).\n  { rewrite <- domA. cset_ind_right.\n    rewrite <- C_EXT_helper2.\n    eapply c_ext_consistentbyandcountable and_comm.\n    eapply and_assoc in IPC. simpl in IPC.\n    tauto. des; eauto.\n    splits. exists (@set_full G) (@set_of_nat G (countable_fin G)).\n    split; eauto.\nQed.",
+      "elapsed_time": 28.20268726348877
+    }
+  ],
+  "imm/src/jsmm/JSMMToimm_s.v": [
+    {
+      "name": "sw_js_in_sw",
+      "start_line": 72,
+      "proof": null,
+      "elapsed_time": 601.1893191337585
+    },
+    {
+      "name": "hb_js_in_hb",
+      "start_line": 88,
+      "proof": null,
+      "elapsed_time": 608.253986120224
+    }
+  ]
+}

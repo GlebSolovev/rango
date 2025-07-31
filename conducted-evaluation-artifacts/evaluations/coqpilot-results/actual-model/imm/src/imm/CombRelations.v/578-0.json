@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/imm/CombRelations.v",
+    "theorem_start_pos": {
+      "line": 578,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 579,
+      "column": 20
+    },
+    "proof_start_pos": {
+      "line": 580,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 580,
+      "column": 44
+    },
+    "hash": "9ff0d29155fe90cc002174cba94e45694f9c41a62dbc0e632185a7bf0693df04"
+  },
+  "proof": null,
+  "time": 600.633739233017,
+  "n_attempts": 1
+}

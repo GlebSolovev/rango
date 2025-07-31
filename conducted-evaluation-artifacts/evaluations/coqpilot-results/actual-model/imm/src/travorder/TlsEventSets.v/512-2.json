@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TlsEventSets.v",
+    "theorem_start_pos": {
+      "line": 512,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 512,
+      "column": 56
+    },
+    "proof_start_pos": {
+      "line": 513,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 513,
+      "column": 55
+    },
+    "hash": "1ddfd61769b362bd68db6aeb2f85c984fde71ee26b43df9c9c3652a5bbcea54b"
+  },
+  "proof": " \n  Proof using.\n    etransitivity; [|apply TLSCOH].\n    set a := init_tls G.\n    remember (init_tls G) as init.\n    unfold IPROP. unfold init. unfold init_tls.\n    rewrite iord_simpl_E_ENI. simpl.\n    rewrite <- seqA with (r3 := _ \u2a3e _). rewrite seq_eqvC.\n    rewrite <- seqA with (r2 := _ \u2a3e _).\n    rewrite iord_simpl_E_ENI. simpl. rewrite tlsc_E, map_rel_union. \n\n    rewrite tra_seqE, <- seqA.\n    rewrite tra_seqE, seq_eqvC.\n    rewrite iord_simpl_E_ENI. simpl. \n    rewrite <- iord_morph, <- seqA with (r2 := _ \u2a3e \u2997W\u2998).\n    unfold iord_simpl. rewrite tlsc_E, seqA.\n    rewrite <- iord_morph, seq_eqvC. simpl. simpl_of_rel.\n    simpl.\n    unfold PROP.\n    unfold AR. rewrite <- union_ASS.\n    unfold SB, RF, FWBOB, W, IPROP.\n    repeat (rewrite <- traA; auto).\n    rewrite <- traA.\n    set (C := tra _). unfold C. arewrite C. now apply acyclic_sub_trans with (S:=S) (AC:=Acycl).\n\n    rewrite !seqA. \n    do 4 (intuition_simpl; try apply IORDCOH). simpl.\n    assert (H := TLSCOH _ _ _) as H1. simpl in H1. unfold init in H1. simpl in H1.\n    rewrite !tb_E, ?sc_E, ?ra_E, tl_E. unfold SB, RF, FWBOB, IPROP, PROP. simpl. unfold T in H1. eauto. eauto.\n    simpl.\n    apply dom_rel_trans. generalize (tb_E G).\n    unfold Wf. unfold Wf in WF. unfold init. unfold init_tls in WF. simpl in WF.\n    unfold event in WF. simpl in WF.\n    generalize (WF _ WFsc). simpl.\n\n    apply union_is_in_lub.\n    apply inv_image. rewrite dom_rel_event_tls. simpl.\n    rewrite ev_ts, !inclusion_eqv_seq; auto.\n    simpl.\n    apply union_is_in_lub, inv_image. rewrite dom_rel_action_ta, dom_rel_event. simpl.\n    apply trans_seq with (f:=(tra _)) (g:=(ra _)). \n    rewrite <-traA.\n    assert (H := iord_coherent_defs_equiv G). simpl in H. destruct H as [HE [H1 [H2 [H3 [H4 H5]]]]].\n    unfold init in H5. simpl in H5. unfold init_tls in H5.\n    simpl in H5. simpl. clear - H3.\n    generalize H1. unfold event at 1. simpl. clear H1.\n    intuition_solve. simpl.\n\n    apply union_is_in_lub, inv_image. rewrite dom_rel_event. simpl.\n    rewrite <- !traA. intuition.\nQed.",
+  "time": 167.5268850326538,
+  "n_attempts": 1
+}

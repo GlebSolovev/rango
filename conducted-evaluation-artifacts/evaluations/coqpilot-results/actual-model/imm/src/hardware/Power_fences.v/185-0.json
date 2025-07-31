@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/hardware/Power_fences.v",
+    "theorem_start_pos": {
+      "line": 185,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 185,
+      "column": 65
+    },
+    "proof_start_pos": {
+      "line": 186,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 190,
+      "column": 4
+    },
+    "hash": "51944aebf178fbdf2c2bb2bc73542d720e8b3cfd0cdd15fcea226e6370cd0ce6"
+  },
+  "proof": null,
+  "time": 617.2335157394409,
+  "n_attempts": 1
+}

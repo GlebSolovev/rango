@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/basic/Events.v",
+    "theorem_start_pos": {
+      "line": 517,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 520,
+      "column": 31
+    },
+    "proof_start_pos": {
+      "line": 521,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 521,
+      "column": 50
+    },
+    "hash": "5efaed5381733d835b30fbba6c77e213a2168359758aeec1022614f305f79cd2"
+  },
+  "proof": "\nProof using.\nunfold same_lab_u2v_dom, same_lab_u2v in *. auto.\nQed.",
+  "time": 3.924654483795166,
+  "n_attempts": 1
+}

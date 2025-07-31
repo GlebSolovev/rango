@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/imm/Rel_opt.v",
+    "theorem_start_pos": {
+      "line": 218,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 218,
+      "column": 36
+    },
+    "proof_start_pos": {
+      "line": 219,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 223,
+      "column": 4
+    },
+    "hash": "04229a748ee6d13d5329185c452396590e3fc6d1b761497c3294a6bd72125308"
+  },
+  "proof": "\nProof using. \npose proof F_AcqRel_eq. rewrite <- H; eauto; intros; apply F_AcqRel_eq. \nsymmetry. apply F_eq. unfold G', relax_release_labels, is_f, is_ra, is_rel, Events.mod; ins.\nunfolder; ins; split; ins; desf; splits; eauto.\nQed.",
+  "time": 13.21340036392212,
+  "n_attempts": 1
+}

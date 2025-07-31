@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TLSCoherency.v",
+    "theorem_start_pos": {
+      "line": 150,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 152,
+      "column": 34
+    },
+    "proof_start_pos": {
+      "line": 153,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 156,
+      "column": 6
+    },
+    "hash": "797bb8b58dd44742be7cafee25a9ac674abd9773e34c7dfaab2d523d76838092"
+  },
+  "proof": null,
+  "time": 601.0349032878876,
+  "n_attempts": 1
+}

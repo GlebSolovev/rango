@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TlsEventSets.v",
+    "theorem_start_pos": {
+      "line": 283,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 283,
+      "column": 78
+    },
+    "proof_start_pos": {
+      "line": 284,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 284,
+      "column": 45
+    },
+    "hash": "1ddfd61769b362bd68db6aeb2f85c984fde71ee26b43df9c9c3652a5bbcea54b"
+  },
+  "proof": "\nProof using. apply tls_set_minus_helper.\nQed.",
+  "time": 4.831883907318115,
+  "n_attempts": 1
+}

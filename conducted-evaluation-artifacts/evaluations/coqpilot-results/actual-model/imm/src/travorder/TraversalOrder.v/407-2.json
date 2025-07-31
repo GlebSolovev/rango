@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TraversalOrder.v",
+    "theorem_start_pos": {
+      "line": 407,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 407,
+      "column": 39
+    },
+    "proof_start_pos": {
+      "line": 408,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 410,
+      "column": 6
+    },
+    "hash": "220bb3813d8ffcf4d122278f45c3bda98a336b526d696efc8c22745ad9856782"
+  },
+  "proof": "\n  Proof using. iord_dom_solver.\nQed.",
+  "time": 3.935075283050537,
+  "n_attempts": 1
+}

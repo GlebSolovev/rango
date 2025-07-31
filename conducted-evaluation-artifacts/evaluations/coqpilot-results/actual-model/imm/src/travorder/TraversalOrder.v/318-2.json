@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/TraversalOrder.v",
+    "theorem_start_pos": {
+      "line": 318,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 318,
+      "column": 62
+    },
+    "proof_start_pos": {
+      "line": 319,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 321,
+      "column": 6
+    },
+    "hash": "220bb3813d8ffcf4d122278f45c3bda98a336b526d696efc8c22745ad9856782"
+  },
+  "proof": "\n  Proof using.\n    unfold iord. iord_dom_unfolder; ins; cintuition.\n    rewrite restr_relE; iorder.\n    destruct a; rewrite no_sb_to_init, no_fi_to_init; try discriminate.\n    specialize CONS with (G := G) (sc := actid \u22c3 (sc_dom (wf_sbE WF) (wf_sfE WF))).\n    intros [a [a_sb a_rf a_fw a_ar a_iprog]].\n    simpl. apply CONS; simpl.\n    eapply iord_simpl_irreflexive; eauto.\n    revert COMP WFSC CONS. apply complete_set_inv, irreflexive_to_complete; auto; iorder.\n    intros. rewrite iord_alt. iorder. apply irreflexive_restr; simpl.\n    apply iord_simpl_irreflexive; auto.\nQed.",
+  "time": 31.97611427307129,
+  "n_attempts": 1
+}

@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/hardware/immToPower.v",
+    "theorem_start_pos": {
+      "line": 675,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 675,
+      "column": 67
+    },
+    "proof_start_pos": {
+      "line": 676,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 676,
+      "column": 62
+    },
+    "hash": "9ba7dbd966b428c5d1d70ad92d97043aed0cbb3c07de19da339507f84c23828e"
+  },
+  "proof": null,
+  "time": 600.8337502479553,
+  "n_attempts": 1
+}

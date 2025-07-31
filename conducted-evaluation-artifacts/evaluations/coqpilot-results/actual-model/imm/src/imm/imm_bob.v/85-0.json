@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/imm/imm_bob.v",
+    "theorem_start_pos": {
+      "line": 85,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 85,
+      "column": 54
+    },
+    "proof_start_pos": {
+      "line": 86,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 86,
+      "column": 48
+    },
+    "hash": "a669d449fcb935577f8c5468b081a9a65e0cec04cb4fb7f6072c961363a349f5"
+  },
+  "proof": "\nProof using. unfold fwbob. basic_solver 10.\nQed.",
+  "time": 3.424057722091675,
+  "n_attempts": 1
+}

@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/hardware/Power_ppo.v",
+    "theorem_start_pos": {
+      "line": 386,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 386,
+      "column": 27
+    },
+    "proof_start_pos": {
+      "line": 387,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 389,
+      "column": 4
+    },
+    "hash": "147f43cede0883ca400dc61b799bfef12b3cc21f4ba1e4606f5022be75a479ca"
+  },
+  "proof": "\nProof using.\nunfolder. ins; desf; splits; eauto; basic_solver.\nins; desf; splits; eauto; basic_solver.\nins; desf; splits; auto; basic_solver.\nins; desf; splits; auto; basic_solver.\nins; desf; splits; auto; basic_solver. intros. by apply cc_ci_in_ci in H.\napply cc_ci_in_cc in H; auto.\napply cc_cc_in_cc in H; auto.\nby apply cc_ci_in_cc in H.\napply cc_in_cc in H; auto.\napply cc_ci_in_cc in H; auto.\napply cc_in_cc in H; auto.\nby apply cc_in_cc in H.\neapply cc_in_ic in H; auto.\napply ic_in_sb in H; auto.\nQed.",
+  "time": 29.87510585784912,
+  "n_attempts": 1
+}

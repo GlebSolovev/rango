@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/basic/Events.v",
+    "theorem_start_pos": {
+      "line": 653,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 653,
+      "column": 67
+    },
+    "proof_start_pos": {
+      "line": 654,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 654,
+      "column": 46
+    },
+    "hash": "5efaed5381733d835b30fbba6c77e213a2168359758aeec1022614f305f79cd2"
+  },
+  "proof": "\nProof using.\nunfold actid, is_init, cross_rel; unfolder.\nins; tauto.\nunfold tid, same_tid at 3.\napply ext_sb_semi_total_r with (index2 := (index1)%index); eauto.\napply same_tid_rel_in.\nunfold ext_sb; basic_solver.\nQed.",
+  "time": 11.96065616607666,
+  "n_attempts": 1
+}

@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/EventsTraversalOrder.v",
+    "theorem_start_pos": {
+      "line": 387,
+      "column": 2
+    },
+    "theorem_end_pos": {
+      "line": 388,
+      "column": 34
+    },
+    "proof_start_pos": {
+      "line": 389,
+      "column": 2
+    },
+    "proof_end_pos": {
+      "line": 391,
+      "column": 6
+    },
+    "hash": "3619ea9ce7d4f15fd15f2bb350fe44433227633e36ba6540cba3d7e6df9df503"
+  },
+  "proof": "\n  Proof using WF TLSCOH IORDCOH.\n    rewrite covered_in_coverable; eauto. apply dom_W_sb_coverable_in_I.\nQed.",
+  "time": 8.183027982711792,
+  "n_attempts": 1
+}

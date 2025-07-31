@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/travorder/IordCoherency.v",
+    "theorem_start_pos": {
+      "line": 302,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 305,
+      "column": 24
+    },
+    "proof_start_pos": {
+      "line": 306,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 314,
+      "column": 4
+    },
+    "hash": "e60942d4c281181da1a086ed487e44377309ecd1cdaecfa564621fe0eeb6a2dc"
+  },
+  "proof": " \n  Proof using.\n    etransitivity; [eauto|apply ICOH| | ]. unfold iord_coherent, iord_rel in *. iorder_tac. \n    eapply iord_coherent_wo_reserved in EQ' as <-.\n    etransitivity; try eauto;\n      [apply icoh_exec_tls in EQ' as [_ -> _]; try set_goal].\n    eapply iord_coherent_restr_eq in EQ' as [EQ REQ].\n    eapply tlsc_coherent_equiv. eauto. \n    etransitivity; eauto. set_goal. apply ICOH.\n    etransitivity; eauto. set_goal. eapply icoh_restr_eq; eauto.\n    etransitivity; eauto. set_goal. eapply iord_coherent_restr_eq in EQ; auto.\n    eapply icoh_restr_eq in EQ as [EQ _]; eauto.\n    eapply iord_coherent_equiv. eauto.\n    etransitivity; eauto. eapply tlsc_coherent_equiv; eauto.\n    rewrite EQ', iord_no_reserve; eauto.\n    transitivity (iord G sc \u2286 (T1 \u222a T2)). eauto. \n    unfold iord_coherent, iord_rel in *. set_goal. \n    eapply icoh_restr_eq in EQ' as [EQ REQ].\n    eapply icoh_restr_eq. eapply ICOH.\n    eapply icoh_restr_eq. eapply icoh_exact. \n    eapply icoh_restr_eq in EQ'; auto.\n    eapply icoh_restr_eq in EQ' as [EQ REQ].\n    eapply iord_coherent_equiv; eauto.\n    etransitivity; eauto. apply (icoh_exact _ EQ').\n    eapply icoh_restr_eq in EQ'; auto. \n    eapply icoh_restr_eq. eauto. eapply icoh_restr_eq. \n    eapply iord_coherent_equiv; auto; apply icoh_exact. \n    rewrite EQ'. eapply ICOH.\n    eapply iord_coherent_equiv; eauto. eapply icoh_restr_eq in EQ'. \n    \n    eapply iord_coherent_equiv. eauto. symmetry in EQ'.\n    eapply tlsc_coherent_equiv. eauto. eauto. eauto.\n    etransitivity; eauto. eapply icoh_restr_eq; auto. clear.  \n    \n    intros x [y EX] %iord_irreflexive. apply (iord_coherent_sc (is_init := is_init)).\n    eapply init_tls_iord_coherent.\n    eapply isoce_coherent. apply ICOH.\n\n    apply iord_coh_implies_iord_simpl_coh; eauto. clear; intros.\n    \n    intros l t. destruct t as [u [UU UE]%seq_eqv_r]. assert(REQ: exists (sc1:sc), sc \u2261\u21c5 sc1). \n    { apply T2_comp in UE. apply (fst UE). apply (fst UU). }\nQed.",
+  "time": 112.69100499153137,
+  "n_attempts": 1
+}

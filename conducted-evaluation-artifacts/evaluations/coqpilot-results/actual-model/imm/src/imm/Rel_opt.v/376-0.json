@@ -1,0 +1,34 @@
+{
+  "thm": {
+    "project": {
+      "dir_name": "imm",
+      "split": {
+        "dir_name": "coqpilot-repos",
+        "thm_dir_name": "coqpilot-theorems"
+      },
+      "commit_hash": null,
+      "compile_args": []
+    },
+    "path": "src/imm/Rel_opt.v",
+    "theorem_start_pos": {
+      "line": 376,
+      "column": 0
+    },
+    "theorem_end_pos": {
+      "line": 376,
+      "column": 33
+    },
+    "proof_start_pos": {
+      "line": 377,
+      "column": 0
+    },
+    "proof_end_pos": {
+      "line": 381,
+      "column": 4
+    },
+    "hash": "04229a748ee6d13d5329185c452396590e3fc6d1b761497c3294a6bd72125308"
+  },
+  "proof": "\nProof using SC_F W_REL.\nunfold sw; rewrite sw_eq, rs_eq, F_eq, Rel_eq.\nunfold sw'; type_solver 21.\nbasic_solver 21.\nunfolder in *; desf; unfold sc_sub; desf; splits; eauto;\nin_sc; in_w; tauto.\nunfolder; ins; descf; split; eauto.\napply swap_releaseE1; auto.\nintros x y [xR xE lxR]; in_w; elim_rel.\ntype_solver 12.\nassert( (sw \u2a3e \u2997W\u2998 \u2286 sw)^? \u2a3e sw'^? \u2a3e (sw \u2a3e \u2997W\u2998 \u2a3e sw)^?).\n{\n  apply same_loc_sw. \n  unfold sw'; type_solver 16; inversion F2; apply same_loc_sw; eauto.\n  inversion_clear F2; subst. inversion_clear F3; subst. exact F1.\n  rewrite SW_D; auto.\n  rewrite SW_D in *; auto.\n}\nQed.",
+  "time": 37.62296175956726,
+  "n_attempts": 1
+}
