@@ -70,12 +70,20 @@
       mkdir -p coqpilot && ln -s "$HOME/rango/CoqStoq/coqpilot-repos" coqpilot/repos
       ```
 
-    * **Create data points.**
-      ```bash
-      rm -rf ~/.cache/coqpyt_cache
-      mkdir -p raw-data/coqpilot
-      python3 scripts/create_coqstoq_data_points.py CoqStoq coqpilot raw-data/coqpilot/data_points raw-data/coqpilot/coqpilot-sentences.db
-      ```
+    * **Create data points.** By default, data points will be created only for the source files containing target theorems to run evaluation on (their list is built at the previous step, located in the file [CoqStoq/coqpilot-theorems.json](CoqStoq/coqpilot-theorems.json)). 
+    
+        However, during evaluation, compilation may show "Could not find dependency: ..." for
+        data points that were not generated for dependent files. It is unclear whether this
+        negatively impacts evaluation (e.g., reduced proving capabilities or longer
+        compilation times). But since the original authors published the pipeline this way, we assume _missing data points for dependencies are acceptable_ for now. 
+        
+        Anyways, if you're okay with creating more data points than necessary, pass `--all_theorems` flag to the script to create data points for all source files containing any theorems, not only the target ones. It still does not cover _all_ the source files, but might be somehow beneficial at the evaluation stage (or not! but surely no negative impact is anticipated).
+
+        ```bash
+        rm -rf ~/.cache/coqpyt_cache
+        mkdir -p raw-data/coqpilot
+        python3 scripts/create_coqstoq_data_points.py CoqStoq coqpilot raw-data/coqpilot/data_points raw-data/coqpilot/coqpilot-sentences.db # optional `--all_theorems`
+        ```
 
 5. Run evaluation on the built split.
 

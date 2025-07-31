@@ -100,6 +100,23 @@ if __name__ == "__main__":
         action="store_true",
         help="Include admitted theorems in the data point.",
     )
+    parser.add_argument(
+        "--all_theorems",
+        action="store_true",
+        help="Build data points for all files including theorems available in the projects of the split, not only for ones containing target theorems to run the evaluation on.",
+    )
+    """
+    TODO (?): Consider supporting data point generation for all ".v" files in the project,
+    not just those containing theorems / theorems to evaluate.
+
+    Currently, during evaluation, compilation may show "Could not find dependency: ..." for
+    data points that were not generated for dependent files. It is unclear whether this
+    negatively impacts evaluation (e.g., reduced proving capabilities or longer
+    compilation times).
+
+    Since the original authors published the scripts this way, we assume missing data
+    points for dependencies are acceptable for now.
+    """
 
     args = parser.parse_args()
     coqstoq_loc = Path(args.coqstoq_loc)
@@ -117,7 +134,9 @@ if __name__ == "__main__":
     if not save_loc.exists():
         save_loc.mkdir(parents=True)
 
-    theorem_list = get_theorem_list(coqstoq_split, coqstoq_loc)
+    include_only_target_thms = not args.all_theorems
+    theorem_list = get_theorem_list(
+        coqstoq_split, coqstoq_loc, include_only_target_thms)
     files = list(get_coqstoq_files(theorem_list, coqstoq_loc))
     total_files_number = len(files)
 
