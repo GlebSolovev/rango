@@ -56,9 +56,10 @@
       cd CoqStoq
 
       python3 coqstoq/find_eval_thms.py --custom-split-name coqpilot
-      # check `CoqStoq/test-theorems-reports/imm.json` reports successes only 
+      # Check `CoqStoq/test-theorems-reports/imm.json` reports successes only 
 
-      python3 coqstoq/create_theorem_lists.py coqpilot imm-targets
+      # If you want to include all available theorems in the project (rather than filtering them by `imm-targets`), ommit `--targets_dir` argument.
+      python3 coqstoq/create_theorem_lists.py coqpilot --targets_dir imm-targets
       ```
 
 4. Build data points for the split.
