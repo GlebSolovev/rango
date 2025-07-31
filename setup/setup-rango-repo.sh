@@ -19,6 +19,7 @@ MODEL_NAME="deepseek-bm25-proof-tfidf-proj-thm-prem-final"
 MODEL_CHECKPOINT_URL="https://github.com/GlebSolovev/rango/releases/download/v2.4.2/$MODEL_NAME.tar.gz"
 
 INSTALL_MODEL=false
+CUDA_SETUP=false
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -28,6 +29,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --install_local_model)
       INSTALL_MODEL=true
+      shift
+      ;;
+    --cuda_setup)
+      CUDA_SETUP=true
       shift
       ;;
     *)
@@ -122,19 +127,19 @@ source venv/bin/activate
 pip install --upgrade pip
 
 echo "Installing Rango dependencies..."
-pip3 install -e .
+if $CUDA_SETUP; then
+  echo "> Installing with CUDA setup..."
+  pip3 install -r requirements.cuda.txt
+  pip3 install --no-deps -e .
+else
+  echo "> Installing default setup..."
+  pip3 install -e .
+fi
 
 cd coqpyt
 pip3 install .
 
 cd ../CoqStoq
 pip3 install -e .
-
-# Fix Python dependencies for the modern GPU machine
-cd ..
-pip3 install --upgrade --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip3 install --upgrade --force-reinstall bitsandbytes
-pip3 install transformers==4.34.0 trl==0.7.1
-python3 -c "import torch; print('Torch CUDA:', torch.cuda.is_available(), torch.version.cuda)"
 
 echo "Rango environment setup complete!"

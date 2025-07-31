@@ -4,6 +4,14 @@ set -e
 
 # Original source: https://github.com/JetBrains-Research/coqpilot/blob/cbefb3be6056504ee8e746741c693b2d2da93f81/scripts/rango/setup-remote-rango.sh
 
+CUDA_FLAG=""
+for arg in "$@"; do
+  if [ "$arg" == "--cuda_setup" ]; then
+    CUDA_FLAG="--cuda_setup"
+    shift
+  fi
+done
+
 PYENV_SETUP=$(cat <<'EOF'
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
@@ -53,6 +61,6 @@ curl -O "https://raw.githubusercontent.com/GlebSolovev/rango/imm-benchmark/setup
 chmod +x setup-rango-repo.sh
 
 echo "Setting up Rango..."
-./setup-rango-repo.sh --rango_dir "$HOME/rango" --install_local_model
+./setup-rango-repo.sh --rango_dir "$HOME/rango" --install_local_model $CUDA_FLAG
 
 echo "Setup complete!"

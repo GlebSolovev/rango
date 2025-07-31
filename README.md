@@ -5,7 +5,10 @@
     Download and run the setup script:
     ```bash
     curl -O "https://raw.githubusercontent.com/GlebSolovev/rango/imm-benchmark/setup/setup-rango-from-scratch.sh"
-    chmod +x setup-rango-from-scratch.sh
+
+    # Add `--cuda_setup` to install dependencies for the CUDA machine (tested on RTX 4090).
+    # Otherwise, the default Rango dependencies will be installed that might require some tweaking afterwards to run the evaluation using GPU.
+    chmod +x setup-rango-from-scratch.sh # optional `--cuda_setup` 
     ./setup-rango-from-scratch.sh
     ```
     It will:
